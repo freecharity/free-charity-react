@@ -1,0 +1,37 @@
+@import './../../../assets/scss/_variables';
+
+div.answer_inner {
+  border-radius: 10px;
+}
+
+div.answer {
+  padding: 0.25rem 1rem;
+  border: 1px solid #676;
+  border-radius: 10px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  p {
+    font-size: 20px;
+  }
+}
+
+div.answer {
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+// div.answer:hover {
+//   cursor: pointer;
+//   background-color: #efefef;
+//   box-shadow: rgba(0, 0, 0, 0.25) 5px 5px 5px;
+
+//   animation-delay: 0.5s;
+// }
+
+div.correct-answer {
+  background-color: $green-correct;
+}
+
+div.incorrect-answer {
+  background-color: $red-incorrect;
+}

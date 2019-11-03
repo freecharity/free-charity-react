@@ -1,0 +1,11 @@
+{
+  "questions": [
+    {
+      "id": "ABC123",
+      "question": "What is the data type of the following variable: \"Hello World\"? ",
+      "correctAnswer": "string",
+      "incorrectAnswers": ["integer", "character", "long"],
+      "difficulty": "easy"
+    }
+  ]
+}

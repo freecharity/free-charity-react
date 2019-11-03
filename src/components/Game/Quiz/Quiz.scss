@@ -24,24 +24,4 @@ div.quiz_question {
 }
 
 div.quiz_answers {
-  div.quiz_answer {
-    padding: 0.25rem 1rem;
-    border: 1px solid #676;
-    border-radius: 10px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    p {
-      font-size: 20px;
-    }
-  }
-  div.quiz_answer:not(:last-child) {
-    margin-bottom: 0.5rem;
-  }
-  div.quiz_answer:hover {
-    cursor: pointer;
-    background-color: #efefef;
-    box-shadow: rgba(0, 0, 0, 0.25) 5px 5px 5px;
-
-    animation-delay: 0.5s;
-  }
 }
