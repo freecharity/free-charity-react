@@ -1,16 +1,13 @@
+@import './../../assets/scss/_variables';
+
 nav {
   margin: 0 auto;
   max-width: 1200px;
   padding: 1rem;
   display: flex;
   align-items: center;
-  div.logo {
-    cursor: pointer;
-    user-select: none;
-    font-size: 20px;
-    margin-right: 1rem;
-    color: #fff;
-  }
+  justify-content: space-between;
+
   div.logo:hover {
     color: #ddd;
   }
@@ -25,4 +22,55 @@ nav {
       color: #ddd;
     }
   }
+}
+
+div.logo {
+  cursor: pointer;
+  user-select: none;
+  font-size: 32px;
+  margin-right: 1rem;
+  color: #fff;
+  padding: 0.5rem;
+}
+div.logo:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.33);
+}
+
+div.brand {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+div.user {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0.5rem;
+  div.user_name {
+    margin-right: 1rem;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+  div.user_icon {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    svg {
+      height: 25px;
+      width: 25px;
+      color: $dark-orange-1;
+    }
+  }
+}
+div.user:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.33);
 }

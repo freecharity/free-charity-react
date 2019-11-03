@@ -1,15 +1,21 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Route } from 'react-router-dom';
 
-import routesJson from 'routes';
+import Sidebar from 'components/Sidebar/Sidebar';
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
 import Game from 'components/Game/Game';
 
 export interface ISiteLayout {}
 
-export default class Site extends React.Component {
-  getRoutes = (routes) => {
+export default function Site() {
+  const [sidebarClosed, setSidebarClosed] = useState(true);
+
+  const handleToggleSidebar = () => {
+    setSidebarClosed(!sidebarClosed);
+  };
+
+  const getRoutes = (routes) => {
     return routes.map((prop) => {
       if (prop.layout === '') {
         return (
@@ -24,19 +30,20 @@ export default class Site extends React.Component {
     });
   };
 
-  render() {
-    return (
-      <div className="site">
-        <div className="app-navbar">
-          <Navbar />
-        </div>
-        <div className="app-content">
-          <Game />
-        </div>
-        <div className="app-footer">
-          <Footer />
-        </div>
+  return (
+    <div className="site">
+      <div className="app-sidebar">
+        <Sidebar closed={sidebarClosed} toggleSidebar={handleToggleSidebar} />
       </div>
-    );
-  }
+      <div className="app-navbar">
+        <Navbar toggleSidebar={handleToggleSidebar} />
+      </div>
+      <div className="app-content">
+        <Game />
+      </div>
+      <div className="app-footer">
+        <Footer />
+      </div>
+    </div>
+  );
 }
