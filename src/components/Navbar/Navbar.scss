@@ -1,0 +1,28 @@
+nav {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  div.logo {
+    cursor: pointer;
+    user-select: none;
+    font-size: 20px;
+    margin-right: 1rem;
+    color: #fff;
+  }
+  div.logo:hover {
+    color: #ddd;
+  }
+  div.links {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    div.link {
+      color: #fff;
+    }
+    div.link:hover {
+      color: #ddd;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+div.container {
+  text-align: center;
+  overflow: hidden;
+  img.logo {
+    width: 100%;
+    max-width: 100%;
+    user-select: none;
+    pointer-events: none;
+  }
+}

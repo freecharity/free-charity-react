@@ -1,0 +1,47 @@
+@import './../../../assets/scss/_variables';
+
+div.quiz_container {
+  margin-top: 4rem;
+}
+
+div.quiz_inner {
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 696px;
+  background-color: #fefefe;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 5px 5px 5px;
+}
+
+div.quiz_question {
+  margin: 0 auto;
+  margin-bottom: 5rem;
+  max-width: 450px;
+  p {
+    font-size: 24px;
+    text-align: center;
+  }
+}
+
+div.quiz_answers {
+  div.quiz_answer {
+    padding: 0.25rem 1rem;
+    border: 1px solid #676;
+    border-radius: 10px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    p {
+      font-size: 20px;
+    }
+  }
+  div.quiz_answer:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+  div.quiz_answer:hover {
+    cursor: pointer;
+    background-color: #efefef;
+    box-shadow: rgba(0, 0, 0, 0.25) 5px 5px 5px;
+
+    animation-delay: 0.5s;
+  }
+}
