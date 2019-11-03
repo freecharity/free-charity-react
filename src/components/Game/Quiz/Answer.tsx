@@ -6,6 +6,7 @@ interface AnswerProps {
   answer: string;
   correct: boolean;
   locked: boolean;
+  onNext: any;
   onLocked: any;
 }
 
@@ -13,9 +14,10 @@ export default function Answer({
   answer,
   correct,
   locked,
+  onNext,
   onLocked
 }: AnswerProps) {
-  const [status, setStatus] = useState('Not answered');
+  const [status, setStatus] = useState('ready');
 
   const checkCorrect = () => {
     if (!locked) {
@@ -28,6 +30,10 @@ export default function Answer({
         setStatus('incorrect');
         onLocked(true);
       }
+      setTimeout(() => {
+        onNext();
+        setStatus('ready');
+      }, 3000);
     } else {
       console.log('Quiz is locked');
     }
