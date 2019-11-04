@@ -7,9 +7,7 @@ import SiteLayout from 'layouts/Site';
 
 const App = () => (
   <BrowserRouter>
-    <Switch>
-      <Route path="*" component={SiteLayout} />
-    </Switch>
+    <SiteLayout />;
   </BrowserRouter>
 );
 

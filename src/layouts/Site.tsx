@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import Sidebar from 'components/Sidebar/Sidebar';
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
 import Game from 'components/Game/Game';
+import CreateQuestion from 'components/Questions/CreateQuestion';
+import EditQuestion from 'components/Questions/EditQuestion';
+import DeleteQuestion from 'components/Questions/DeleteQuestion';
+import ListQuestions from 'components/Questions/ListQuestions';
 
 export interface ISiteLayout {}
 
@@ -39,7 +43,13 @@ export default function Site() {
         <Navbar toggleSidebar={handleToggleSidebar} />
       </div>
       <div className="app-content">
-        <Game />
+        <Switch>
+          <Route path="/questions/create" component={CreateQuestion} />
+          <Route path="/questions/edit" component={EditQuestion} />
+          <Route path="/questions/delete" component={DeleteQuestion} />
+          <Route path="/questions" component={ListQuestions} />
+          <Route path="*" component={Game} />
+        </Switch>
       </div>
       <div className="app-footer">
         <Footer />

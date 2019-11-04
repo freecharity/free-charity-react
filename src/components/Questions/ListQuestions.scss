@@ -1,0 +1,68 @@
+@import '../../assets/scss/_variables';
+
+div.list_questions_inner {
+  margin: 0 auto;
+  margin-top: 2rem;
+  max-width: 1200px;
+  background-color: #fff;
+  height: 100%;
+  padding: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.33) 5px 5px 5px;
+  a {
+    cursor: pointer;
+    padding: 0.5rem;
+    color: #fff;
+    background-color: $dark-orange-1;
+    border: none;
+    text-decoration: none;
+  }
+  a:hover {
+    background-color: $light-orange-1;
+  }
+  a:not(:last-child) {
+    margin-right: 0.25rem;
+  }
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 2rem;
+}
+
+div.list_questions_menu {
+  display: flex;
+  justify-content: space-between;
+  div.list_questions_search {
+    margin-bottom: 1rem;
+    input {
+      font-size: 16px;
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+    }
+    button {
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0.5rem;
+      color: #fff;
+      background-color: $dark-orange-1;
+      border: 1px solid $dark-orange-1;
+    }
+  }
+}
+
+table {
+  width: 100%;
+  thead {
+    text-align: left;
+    font-size: 24px;
+    text-transform: uppercase;
+    th {
+      padding: 1rem 0rem;
+    }
+  }
+  tbody {
+    td {
+      padding: 0.5rem 0rem;
+    }
+  }
+}
