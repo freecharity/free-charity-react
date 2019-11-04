@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import jsonFile from './questions.json';
+import jsonFile from './../../../data/questions.json';
 
 import Question from './Question';
 

@@ -5,21 +5,24 @@
       "question": "What is the data type of the following variable: \"Hello World\"? ",
       "correctAnswer": "string",
       "incorrectAnswers": ["integer", "character", "float"],
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "category": "syntax"
     },
     {
       "id": "ABC231",
       "question": "What is the data type of the following variable: 45? ",
       "correctAnswer": "integer",
       "incorrectAnswers": ["string", "character", "float"],
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "category": "syntax"
     },
     {
       "id": "ABC312",
       "question": "What is the data type of the following variable: 3.14? ",
       "correctAnswer": "float",
       "incorrectAnswers": ["integer", "character", "string"],
-      "difficulty": "easy"
+      "difficulty": "easy",
+      "category": "syntax"
     }
   ]
 }
