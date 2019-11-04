@@ -29,22 +29,22 @@ export default function Sidebar(props: SidebarProps) {
         </div>
         <div className="sidebar_links">
           <div className="link selected">
-            <Link>Game</Link>
+            <Link to={'#'}>Game</Link>
           </div>
           <div className="link">
-            <Link>Categories</Link>
+            <Link to={'#'}>Categories</Link>
           </div>
           <div className="link">
-            <Link>Difficulty</Link>
+            <Link to={'#'}>Difficulty</Link>
           </div>
           <div className="link">
-            <Link>Profile</Link>
+            <Link to={'#'}>Profile</Link>
           </div>
           <div className="link">
-            <Link>Leaderboard</Link>
+            <Link to={'#'}>Leaderboard</Link>
           </div>
           <div className="link">
-            <Link>Donate</Link>
+            <Link to={'#'}>Donate</Link>
           </div>
         </div>
       </div>
