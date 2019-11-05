@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './Navbar.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,19 +10,19 @@ export interface NavbarProps {
   toggleSidebar: any;
 }
 
-const Navbar = (props: NavbarProps) => (
-  <nav>
-    <div className="logo" onClick={() => props.toggleSidebar()}>
-      <FontAwesomeIcon icon={faBars} />
-    </div>
-    <div className="brand">Free Charity</div>
-    <div className="user">
-      <div className="user_name">Login / Register</div>
-      <div className="user_icon">
-        <FontAwesomeIcon icon={faUser} />
+export default function Navbar(props: NavbarProps) {
+  return (
+    <nav>
+      <div className="logo" onClick={() => props.toggleSidebar()}>
+        <FontAwesomeIcon icon={faBars} />
       </div>
-    </div>
-  </nav>
-);
-
-export default Navbar;
+      <div className="brand">Free Charity</div>
+      <Link className="user" to={'/user/login'}>
+        <div className="user_name">Login / Register</div>
+        <div className="user_icon">
+          <FontAwesomeIcon icon={faUser} />
+        </div>
+      </Link>
+    </nav>
+  );
+}

@@ -5,6 +5,8 @@ import Sidebar from 'components/Sidebar/Sidebar';
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
 import Game from 'components/Game/Game';
+import Login from 'components/User/Login';
+import Register from 'components/User/Register';
 import CreateQuestion from 'components/Questions/CreateQuestion';
 import EditQuestion from 'components/Questions/EditQuestion';
 import DeleteQuestion from 'components/Questions/DeleteQuestion';
@@ -44,6 +46,8 @@ export default function Site() {
       </div>
       <div className="app-content">
         <Switch>
+          <Route path="/user/login" component={Login} />
+          <Route path="/user/register" component={Register} />
           <Route path="/questions/create" component={CreateQuestion} />
           <Route path="/questions/edit" component={EditQuestion} />
           <Route path="/questions/delete" component={DeleteQuestion} />
