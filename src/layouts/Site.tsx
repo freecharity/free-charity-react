@@ -11,6 +11,7 @@ import CreateQuestion from 'components/Questions/CreateQuestion';
 import EditQuestion from 'components/Questions/EditQuestion';
 import DeleteQuestion from 'components/Questions/DeleteQuestion';
 import ListQuestions from 'components/Questions/ListQuestions';
+import Leaderboard from 'components/Leaderboard/Leaderboard';
 
 export interface ISiteLayout {}
 
@@ -52,6 +53,7 @@ export default function Site() {
           <Route path="/questions/edit" component={EditQuestion} />
           <Route path="/questions/delete" component={DeleteQuestion} />
           <Route path="/questions" component={ListQuestions} />
+          <Route path="/leaderboard" component={Leaderboard} />
           <Route path="*" component={Game} />
         </Switch>
       </div>

@@ -1,0 +1,76 @@
+@import './../../assets/scss/_variables';
+
+div.leaderboard_container {
+  margin-top: 4rem;
+}
+
+div.leaderboard_inner {
+  padding: 2rem;
+  margin: 0 auto;
+  max-width: 900px;
+  background-color: #fefefe;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.25) 5px 5px 5px;
+
+  h1,
+  h3 {
+    margin: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  div.players {
+    padding-top: 1rem;
+    div.player {
+      display: flex;
+      align-items: center;
+      div.player-rank {
+        padding-right: 2rem;
+        p {
+          font-size: 2rem;
+        }
+      }
+      div.player-icon {
+        height: 75px;
+        width: 75px;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+      div.player-details {
+        padding-left: 1rem;
+        p {
+          margin: 0;
+        }
+        p.name {
+          margin-bottom: 0.5rem;
+          font-size: 1.5rem;
+        }
+        p.score {
+          color: #888;
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+
+  div.back-to-game {
+    a {
+      margin-top: 2rem;
+      background-color: #888;
+      width: 100%;
+      display: block;
+      padding: 1rem;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    a:hover {
+      background-color: #aaa;
+    }
+  }
+}
