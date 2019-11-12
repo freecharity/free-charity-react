@@ -1,10 +1,18 @@
 .app-content {
+  overflow-y: scroll;
   position: relative;
   padding-top: 88px;
   padding-bottom: 56px;
-  height: 100%;
+  height: calc(100vh - 88px - 56px);
   min-height: calc(100vh);
   background-image: url('/src/assets/img/forest.png');
   background-size: 100% 100%;
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.app-container {
+  padding: 2rem;
+  @media(max-width: $mobile-width) {
+    padding: 1rem;
+  }
 }

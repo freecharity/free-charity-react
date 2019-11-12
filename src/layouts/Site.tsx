@@ -52,30 +52,32 @@ export default function Site() {
                 <Navbar toggleSidebar={handleToggleSidebar}/>
             </div>
             <div className="app-content">
-                <Switch>
-                    <Route path="/user/login" component={Login}/>
-                    <Route path="/user/register" component={Register}/>
-                    <Route path="/questions/create" component={CreateQuestion}/>
-                    <Route path="/questions/edit" component={EditQuestion}/>
-                    <Route path="/questions/delete" component={DeleteQuestion}/>
-                    <Route path="/questions" component={ListQuestions}/>
-                    <Route path="/categories/create"
-                           component={() => <CreateCategory toggleAvatar={handleToggleAvatar}
-                                                            selectedAvatar={selectedAvatar}
-                                                            selectAvatar={handleSelectedAvatar}
-                           />}
-                    />
-                    <Route path="/categories/edit"
-                           component={() => <EditCategory toggleAvatar={handleToggleAvatar}
-                                                          selectedAvatar={selectedAvatar}
-                                                          selectAvatar={handleSelectedAvatar}
-                           />}
-                    />
-                    <Route path="/categories/delete" component={DeleteCategory}/>
-                    <Route path="/categories" component={ListCategories}/>
-                    <Route path="/leaderboard" component={Leaderboard}/>
-                    <Route path="*" component={Game}/>
-                </Switch>
+                <div className="app-container">
+                    <Switch>
+                        <Route path="/user/login" component={Login}/>
+                        <Route path="/user/register" component={Register}/>
+                        <Route path="/questions/create" component={CreateQuestion}/>
+                        <Route path="/questions/edit" component={EditQuestion}/>
+                        <Route path="/questions/delete" component={DeleteQuestion}/>
+                        <Route path="/questions" component={ListQuestions}/>
+                        <Route path="/categories/create"
+                               component={() => <CreateCategory toggleAvatar={handleToggleAvatar}
+                                                                selectedAvatar={selectedAvatar}
+                                                                selectAvatar={handleSelectedAvatar}
+                               />}
+                        />
+                        <Route path="/categories/edit"
+                               component={() => <EditCategory toggleAvatar={handleToggleAvatar}
+                                                              selectedAvatar={selectedAvatar}
+                                                              selectAvatar={handleSelectedAvatar}
+                               />}
+                        />
+                        <Route path="/categories/delete" component={DeleteCategory}/>
+                        <Route path="/categories" component={ListCategories}/>
+                        <Route path="/leaderboard" component={Leaderboard}/>
+                        <Route path="*" component={Game}/>
+                    </Switch>
+                </div>
             </div>
             <div className="app-footer">
                 <Footer/>
