@@ -1,10 +1,12 @@
 /* Import Custom Styles */
 @import './core/_core';
+
 /* Import Components */
 @import 'components/navbar/navbar';
 @import 'components/sidebar/sidebar';
 @import 'components/footer/footer';
 @import 'components/questions/questions';
+@import 'components/categories/categories';
 
 .text-center {
   text-align: center;

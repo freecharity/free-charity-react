@@ -1,0 +1,62 @@
+div.create_category_inner {
+  @include large-panel;
+  @media(max-width: $mobile-width) {
+    margin: 0;
+    padding: 1rem;
+  }
+
+  div.back {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+
+    a {
+      color: #000;
+      font-size: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      margin-left: 1rem;
+    }
+  }
+
+  form {
+    div.input-group {
+      label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 0.5rem;
+      }
+
+      input {
+        width: 100%;
+        @include text-input;
+      }
+
+      select {
+        width: 100%;
+        @include select-input;
+      }
+    }
+
+    div.input-group:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+
+    div.buttons {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+
+      a {
+        @include large-link-gray;
+      }
+
+      button {
+        @include large-button;
+      }
+    }
+  }
+}

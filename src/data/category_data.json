@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "category": "syntax",
+    "group": "computer science",
+    "description": "Questions about general programming syntax."
+  },
+  {
+    "id": "2",
+    "category": "data structures",
+    "group": "computer science",
+    "description": "Questions about data structures and algorithms."
+  },
+  {
+    "id": "3",
+    "category": "software engineering",
+    "group": "computer science",
+    "description": "Questions about principles of software development."
+  }
+]
