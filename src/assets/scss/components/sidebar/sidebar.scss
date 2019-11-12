@@ -1,4 +1,4 @@
-@import './../../assets/scss/_variables';
+@import '../../_variables';
 
 div.sidebar_container {
   position: absolute;
@@ -42,7 +42,7 @@ div.sidebar_user {
   display: flex;
   align-items: center;
   color: #fff;
-  padding: 2rem 0rem;
+  padding: 2rem 0;
   div.user_icon {
     margin-right: 1rem;
     display: flex;
@@ -60,7 +60,7 @@ div.sidebar_user {
   }
 }
 
-div.sidebar_links {
+div.sidebar_links, div.admin_sidebar_links {
   div.link {
     a {
       width: 250px;
@@ -85,5 +85,15 @@ div.sidebar_links {
   }
   div.link:not(:last-child) {
     margin-bottom: 0.5rem;
+  }
+}
+
+div.admin_sidebar_links {
+  margin-top: 2rem;
+
+  h2 {
+    padding: 1rem;
+    text-decoration: underline;
+    color: #fff;
   }
 }

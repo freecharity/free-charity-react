@@ -1,0 +1,131 @@
+div.list_questions_inner {
+  @include large-panel;
+  @media(max-width: $mobile-width) {
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  a {
+    @include small-link;
+  }
+
+  a:not(:last-child) {
+    margin-right: 0.25rem;
+  }
+
+  h1 {
+    margin: 0;
+    margin-bottom: 2rem;
+  }
+
+  div.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    input {
+      @include text-input;
+      margin-right: 0.5rem;
+    }
+
+    button {
+      @include small-button;
+    }
+
+    a {
+      @include small-button;
+    }
+
+    @media(max-width: $mobile-width) {
+      display: block;
+      input, button {
+        width: 100%;
+      }
+      button {
+        margin-top: 0.5rem;
+      }
+      a {
+        margin-top: 0.5rem;
+        display: block;
+        @include small-button;
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+
+    thead {
+      text-align: left;
+      font-size: 24px;
+      text-transform: uppercase;
+
+      th {
+        padding: 1rem 0;
+      }
+
+      th:last-child {
+        text-align: right;
+      }
+
+      @media(max-width: $mobile-width) {
+        font-size: 12px;
+      }
+    }
+
+    tbody {
+      td {
+        padding: 1.1rem 0;
+      }
+
+      td:last-child {
+        text-align: right;
+      }
+
+      @media(max-width: $mobile-width) {
+        font-size: 12px;
+        a {
+          padding: 0.5rem;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  div.pagination {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media(max-width: $mobile-width) {
+      display: block;
+      text-align: center;
+    }
+
+    div.buttons {
+      button {
+        @include small-button;
+        width: 45px;
+        height: 45px;
+        padding: 0;
+      }
+
+      button:not(:last-child) {
+        margin-right: 0.25rem;
+      }
+
+      button.selected {
+        @include small-button-gray;
+        padding: 0;
+      }
+    }
+
+    div.results {
+      color: $dark-gray-1;
+      @media(max-width: $mobile-width) {
+        margin-top: 2rem;
+      }
+    }
+  }
+}

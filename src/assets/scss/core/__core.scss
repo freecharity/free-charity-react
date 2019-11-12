@@ -1,7 +1,10 @@
 /* Variables */
-@import './__variables';
-
-/* Colors */
+@import '../__variables';
+/* Mixins */
+@import './mixins/buttons';
+@import './mixins/inputs';
+@import './mixins/links';
+@import './mixins/panels';
 
 /* Components */
 @import './navbar/__navbar';
@@ -16,8 +19,8 @@ body {
   position: relative;
   height: 100%;
   min-height: 100vh;
-  margin: 0rem;
-  padding: 0rem;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
   background-color: $light-orange-1;

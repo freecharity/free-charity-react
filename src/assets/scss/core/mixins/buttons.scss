@@ -1,0 +1,29 @@
+@mixin small-button {
+  cursor: pointer;
+  padding: 1rem;
+  box-sizing: border-box;
+  color: #fff;
+  background-color: $dark-orange-1;
+  border: 1px solid $dark-orange-1;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  &:hover {
+    background-color: $light-orange-1;
+  }
+}
+
+@mixin small-button-gray {
+  @include small-button;
+  background-color: $dark-gray-1;
+  border: 1px solid $dark-gray-1;
+  &:hover {
+    background-color: $light-gray-1;
+  }
+}
+
+@mixin large-button {
+  @include small-button;
+  width: 100%;
+  border: 1px solid $dark-gray-1;
+}

@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Sidebar from 'components/Sidebar/Sidebar';
-import Navbar from 'components/Navbar/Navbar';
-import Footer from 'components/Footer/Footer';
+import Sidebar from 'components/sidebar/sidebar';
+import Navbar from 'components/navbar/navbar';
+import Footer from 'components/footer/footer';
 import Game from 'components/Game/Game';
 import Login from 'components/User/Login';
 import Register from 'components/User/Register';
-import CreateQuestion from 'components/Questions/CreateQuestion';
-import EditQuestion from 'components/Questions/EditQuestion';
-import DeleteQuestion from 'components/Questions/DeleteQuestion';
-import ListQuestions from 'components/Questions/ListQuestions';
+import CreateQuestion from 'components/questions/createQuestion';
+import EditQuestion from 'components/questions/editQuestion';
+import DeleteQuestion from 'components/questions/deleteQuestion';
+import ListQuestions from 'components/questions/listQuestions';
 import Leaderboard from 'components/Leaderboard/Leaderboard';
 
 export interface ISiteLayout {}
@@ -20,21 +20,6 @@ export default function Site() {
 
   const handleToggleSidebar = () => {
     setSidebarClosed(!sidebarClosed);
-  };
-
-  const getRoutes = (routes) => {
-    return routes.map((prop) => {
-      if (prop.layout === '') {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={prop.layout + prop.path}
-          />
-        );
-      }
-      return null;
-    });
   };
 
   return (

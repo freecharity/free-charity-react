@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-import './Sidebar.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -29,22 +27,28 @@ export default function Sidebar(props: SidebarProps) {
         </div>
         <div className="sidebar_links">
           <div className="link selected">
-            <Link to={'#'}>Game</Link>
+              <Link to={'/game'}>Game</Link>
           </div>
           <div className="link">
-            <Link to={'#'}>Categories</Link>
+              <Link to={'/categories'}>Categories</Link>
           </div>
           <div className="link">
-            <Link to={'#'}>Difficulty</Link>
+              <Link to={'/difficulty'}>Difficulty</Link>
           </div>
           <div className="link">
-            <Link to={'#'}>Profile</Link>
+              <Link to={'/profile'}>Profile</Link>
           </div>
           <div className="link">
-            <Link to={'#'}>Leaderboard</Link>
+              <Link to={'/leaderboard'}>Leaderboard</Link>
           </div>
           <div className="link">
-            <Link to={'#'}>Donate</Link>
+              <Link to={'/donate'}>Donate</Link>
+          </div>
+        </div>
+          <div className="admin_sidebar_links">
+              <h2>Admin Links</h2>
+              <div className="link">
+                  <Link to={'/questions'}>Questions</Link>
           </div>
         </div>
       </div>

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "1",
+    "question": "What is the data type of the following variable: \"Hello World\"? ",
+    "correctAnswer": "string",
+    "incorrectAnswer1": "boolean",
+    "incorrectAnswer2": "double",
+    "incorrectAnswer3": "character",
+    "difficulty": "easy",
+    "category": "syntax"
+  }
+]

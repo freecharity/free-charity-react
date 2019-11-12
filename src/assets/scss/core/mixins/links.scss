@@ -1,0 +1,27 @@
+@mixin small-link {
+  cursor: pointer;
+  padding: 1rem;
+  box-sizing: border-box;
+  color: #fff;
+  background-color: $dark-orange-1;
+  border: 1px solid $dark-orange-1;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  &:hover {
+    background-color: $light-orange-1;
+  }
+}
+
+@mixin large-link {
+  @include small-link;
+  border: 1px solid $dark-gray-1;
+}
+
+@mixin large-link-gray {
+  @include large-link;
+  background-color: $dark-gray-1;
+  &:hover {
+    background-color: $light-gray-1;
+  }
+}
