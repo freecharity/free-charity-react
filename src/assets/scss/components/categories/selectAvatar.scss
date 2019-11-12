@@ -1,0 +1,49 @@
+div.select_avatar_container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 500;
+  background-color: $overlay-gray-1;
+}
+
+div.select_avatar_inner {
+  @include small-panel;
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  div.avatars {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+
+    div.avatar {
+      height: 100px;
+      width: 100px;
+      background-color: $light-blue-1;
+      border-radius: 50%;
+      border: 1px solid $dark-gray-1;
+
+      img {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  div.buttons {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    button:first-child {
+      @include large-button-gray;
+    }
+
+    button:last-child {
+      @include large-button;
+    }
+  }
+}

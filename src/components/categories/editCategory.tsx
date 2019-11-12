@@ -7,10 +7,20 @@ import Category from "./categoryInterface";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
-export default function EditCategory() {
+interface EditCategoryProps {
+    toggleAvatar: any;
+    selectAvatar: any;
+    selectedAvatar: number;
+}
+
+export default function EditCategory(props: EditCategoryProps) {
     const [processing, setProcessing] = useState(false);
 
     const [category, setCategory] = useState<Category>(jsonFile[0]);
+
+    const selectAvatar = () => {
+        props.toggleAvatar();
+    };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         if (event) {
@@ -50,6 +60,13 @@ export default function EditCategory() {
                     <h1>Edit Category</h1>
                 </div>
                 <form onSubmit={handleSubmit}>
+                    <div className="input-group-image">
+                        <label>Category Image</label>
+                        <div className="image-input" onClick={selectAvatar}>
+                            <img src="" alt=""/>
+                            <span>Edit</span>
+                        </div>
+                    </div>
                     <div className="input-group">
                         <label>Category</label>
                         <input id="category"

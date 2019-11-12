@@ -22,6 +22,19 @@ div.delete_category_inner {
   }
 
   form {
+    div.input-group-image {
+      text-align: center;
+
+      label {
+        display: block;
+        margin-bottom: 1rem;
+      }
+
+      div.image-input {
+        @include image-input;
+      }
+    }
+
     div.input-group {
       label {
         display: block;

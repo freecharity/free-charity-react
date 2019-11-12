@@ -9,3 +9,9 @@
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.33) 5px 5px 5px;
 }
+
+@mixin small-panel {
+  @include large-panel;
+  max-width: 600px;
+  height: auto;
+}

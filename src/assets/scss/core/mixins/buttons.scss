@@ -27,3 +27,12 @@
   width: 100%;
   border: 1px solid $dark-gray-1;
 }
+
+@mixin large-button-gray {
+  @include large-button;
+  background-color: $dark-gray-1;
+  border: 1px solid $dark-gray-1;
+  &:hover {
+    background-color: $light-gray-1;
+  }
+}

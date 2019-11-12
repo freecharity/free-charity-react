@@ -16,19 +16,35 @@ import ListCategories from "../components/categories/listCategories";
 import CreateCategory from "../components/categories/createCategory";
 import EditCategory from "../components/categories/editCategory";
 import DeleteCategory from "../components/categories/deleteCategory";
+import SelectAvatar from "../components/categories/selectAvatar";
 
 export interface ISiteLayout {
 }
 
 export default function Site() {
     const [sidebarClosed, setSidebarClosed] = useState(true);
+    const [selectAvatarClosed, setSelectAvatarClosed] = useState(true);
+    const [selectedAvatar, setSelectedAvatar] = useState(-1);
 
     const handleToggleSidebar = () => {
         setSidebarClosed(!sidebarClosed);
     };
 
+    const handleToggleAvatar = () => {
+        setSelectAvatarClosed(!selectAvatarClosed);
+    };
+
+    const handleSelectedAvatar = (id: number) => {
+        console.log('selected avatar: ' + id);
+        setSelectedAvatar(id);
+        handleToggleAvatar();
+    };
+
     return (
         <div className="site">
+            {selectAvatarClosed ? "" : <div className="app-select_avatar">
+                <SelectAvatar toggleAvatar={handleToggleAvatar} selectAvatar={handleSelectedAvatar}/>
+            </div>}
             <div className="app-sidebar">
                 <Sidebar closed={sidebarClosed} toggleSidebar={handleToggleSidebar}/>
             </div>
@@ -43,8 +59,18 @@ export default function Site() {
                     <Route path="/questions/edit" component={EditQuestion}/>
                     <Route path="/questions/delete" component={DeleteQuestion}/>
                     <Route path="/questions" component={ListQuestions}/>
-                    <Route path="/categories/create" component={CreateCategory}/>
-                    <Route path="/categories/edit" component={EditCategory}/>
+                    <Route path="/categories/create"
+                           component={() => <CreateCategory toggleAvatar={handleToggleAvatar}
+                                                            selectedAvatar={selectedAvatar}
+                                                            selectAvatar={handleSelectedAvatar}
+                           />}
+                    />
+                    <Route path="/categories/edit"
+                           component={() => <EditCategory toggleAvatar={handleToggleAvatar}
+                                                          selectedAvatar={selectedAvatar}
+                                                          selectAvatar={handleSelectedAvatar}
+                           />}
+                    />
                     <Route path="/categories/delete" component={DeleteCategory}/>
                     <Route path="/categories" component={ListCategories}/>
                     <Route path="/leaderboard" component={Leaderboard}/>

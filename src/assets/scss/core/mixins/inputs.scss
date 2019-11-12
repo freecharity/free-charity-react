@@ -17,3 +17,27 @@
   -moz-appearance: none;
   appearance: none;
 }
+
+@mixin image-input {
+  cursor: pointer;
+  margin: 0 auto;
+  position: relative;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background-color: $light-blue-1;
+  border: 1px solid $dark-gray-1;
+  &::before {
+    text-align: center;
+  }
+  &:hover {
+    background-color: $dark-blue-1;
+  }
+
+  span {
+    position: absolute;
+    bottom: 16px;
+    left: 57.5px;
+    color: $dark-gray-1;
+  }
+}
