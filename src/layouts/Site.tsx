@@ -28,6 +28,7 @@ export default function Site() {
     const [sidebarClosed, setSidebarClosed] = useState(true);
     const [selectAvatarClosed, setSelectAvatarClosed] = useState(true);
     const [selectedAvatar, setSelectedAvatar] = useState(-1);
+    const [category, setCategory] = useState("data structures");
 
     const handleToggleSidebar = () => {
         setSidebarClosed(!sidebarClosed);
@@ -41,6 +42,11 @@ export default function Site() {
         console.log('selected avatar: ' + id);
         setSelectedAvatar(id);
         handleToggleAvatar();
+    };
+
+    const handleSelectCategory = (category: string) => {
+        console.log('selected category: ' + category);
+        setCategory(category);
     };
 
     return (
@@ -60,7 +66,9 @@ export default function Site() {
                         <Route path="/home" component={Home}/>
                         <Route path="/game" component={Game}/>
                         <Route path="/donate" component={Donate}/>
-                        <Route path="/category" component={SelectCategory}/>
+                        <Route path="/category"
+                               component={() => <SelectCategory selectCategory={handleSelectCategory}/>}
+                        />
                         <Route path="/leaderboard" component={Leaderboard}/>
                         <Route path="/user/login" component={Login}/>
                         <Route path="/user/register" component={Register}/>

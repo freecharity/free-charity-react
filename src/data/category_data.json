@@ -1,20 +1,26 @@
 [
   {
     "id": "1",
-    "category": "programming syntax",
-    "group": "computer science",
-    "description": "Questions about general programming syntax."
-  },
-  {
-    "id": "2",
     "category": "data structures",
     "group": "computer science",
     "description": "Questions about data structures and algorithms."
   },
   {
-    "id": "3",
-    "category": "software engineering",
+    "id": "2",
+    "category": "programming concepts",
     "group": "computer science",
-    "description": "Questions about principles of software development."
+    "description": "Questions about software development life cycle."
+  },
+  {
+    "id": "3",
+    "category": "algebra",
+    "group": "mathematics",
+    "description": "basic algebra used to solve equations."
+  },
+  {
+    "id": "4",
+    "category": "calculus",
+    "group": "mathematics",
+    "description": "introductory calculus questions like derivations and integrals."
   }
 ]

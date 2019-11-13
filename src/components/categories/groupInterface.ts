@@ -1,6 +1,6 @@
 import Category from "./categoryInterface";
 
 export default interface Group {
-    group: String;
+    group: string;
     categories: Array<Category>;
 }
