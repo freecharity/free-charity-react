@@ -17,6 +17,9 @@ import CreateCategory from "../components/categories/createCategory";
 import EditCategory from "../components/categories/editCategory";
 import DeleteCategory from "../components/categories/deleteCategory";
 import SelectAvatar from "../components/categories/selectAvatar";
+import Home from "../components/home/home";
+import Donate from "../components/donate/donate";
+import SelectCategory from "../components/categories/selectCategory";
 
 export interface ISiteLayout {
 }
@@ -54,6 +57,11 @@ export default function Site() {
             <div className="app-content">
                 <div className="app-container">
                     <Switch>
+                        <Route path="/home" component={Home}/>
+                        <Route path="/game" component={Game}/>
+                        <Route path="/donate" component={Donate}/>
+                        <Route path="/category" component={SelectCategory}/>
+                        <Route path="/leaderboard" component={Leaderboard}/>
                         <Route path="/user/login" component={Login}/>
                         <Route path="/user/register" component={Register}/>
                         <Route path="/questions/create" component={CreateQuestion}/>
@@ -74,8 +82,7 @@ export default function Site() {
                         />
                         <Route path="/categories/delete" component={DeleteCategory}/>
                         <Route path="/categories" component={ListCategories}/>
-                        <Route path="/leaderboard" component={Leaderboard}/>
-                        <Route path="*" component={Game}/>
+                        <Route path="*" component={Home}/>
                     </Switch>
                 </div>
             </div>
