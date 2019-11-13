@@ -1,10 +1,16 @@
 import React, {useState} from "react";
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 import jsonFile from 'data/category_data.json';
 import Group from "./groupInterface";
 
-export default function SelectCategory() {
+interface SelectCategoryProps {
+    selectCategory: any;
+}
+
+export default function SelectCategory(props: SelectCategoryProps) {
+
+    const history = useHistory();
 
     // breaks data into array of groups which contain an array of categories
     // TODO: Add this portion to the server
@@ -22,11 +28,15 @@ export default function SelectCategory() {
                 groups.push(g);
             }
         });
-        console.log(groups);
         return groups;
     };
 
     const [groups] = useState(getGroups());
+
+    const selectCategory = (category: string) => {
+        props.selectCategory(category);
+        history.push('/game');
+    };
 
     return (
         <div className="select-category_container">
@@ -36,8 +46,10 @@ export default function SelectCategory() {
                     return <div className="group" key={i}>
                         <h3 className='text-center'>{g.group}</h3>
                         <div className="categories">
-                            {g.categories.map((c, i) => {
-                                return <div className="category">
+                            {g.categories.map((c, j) => {
+                                return <div className="category"
+                                            key={i + j}
+                                            onClick={() => selectCategory(c.category)}>
                                     <div className="image">
                                         <img src="" alt=""/>
                                     </div>
