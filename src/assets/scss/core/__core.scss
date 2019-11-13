@@ -5,20 +5,17 @@
 @import './mixins/inputs';
 @import './mixins/links';
 @import './mixins/panels';
-
 /* Components */
 @import './navbar/__navbar';
 @import './content/__content';
 @import './footer/__footer';
 @import './animations/__animations';
-
 /* Fonts */
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 body {
   overflow: hidden;
   position: relative;
-  height: 100%;
   height: 100vh;
   margin: 0;
   padding: 0;

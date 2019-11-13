@@ -11,7 +11,7 @@ import CreateQuestion from 'components/questions/createQuestion';
 import EditQuestion from 'components/questions/editQuestion';
 import DeleteQuestion from 'components/questions/deleteQuestion';
 import ListQuestions from 'components/questions/listQuestions';
-import Leaderboard from 'components/Leaderboard/Leaderboard';
+import Leaderboard from 'components/leaderboard/leaderboard';
 import ListCategories from "../components/categories/listCategories";
 import CreateCategory from "../components/categories/createCategory";
 import EditCategory from "../components/categories/editCategory";
