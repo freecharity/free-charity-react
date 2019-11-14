@@ -1,0 +1,80 @@
+@import './homeLeaderboard.scss';
+@import './homeDonators.scss';
+
+div.home_inner {
+  margin: 0 auto;
+  max-width: 1200px;
+  background-color: rgba(0, 0, 0, 0);
+
+  gap: 1.5rem;
+  display: grid;
+  grid-template-areas: "leaderboard grains about" "leaderboard bowls about" "leaderboard meals about" "donators questions about" "donators donated about" "donators users about";
+
+  @media(max-width: 2000px) {
+    grid-template-areas: "leaderboard grains" "leaderboard bowls" "leaderboard meals" "donators questions" "donators donated" "donators users" "about about";
+  }
+
+  @media(max-width: $mobile-width) {
+    grid-template-areas: "leaderboard" "donators" "grains" "bowls" "meals" "questions" "donated" "users" "about";
+    gap: 1rem;
+  }
+
+  h1, p {
+    margin: 0;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  div.leaderboard {
+    @include panel;
+    grid-area: leaderboard;
+  }
+
+  div.donators {
+    @include panel;
+    grid-area: donators;
+  }
+
+  div.grains {
+    @include panel;
+    grid-area: grains;
+  }
+
+  div.bowls {
+    @include panel;
+    grid-area: bowls;
+  }
+
+  div.meals {
+    @include panel;
+    grid-area: meals;
+  }
+
+  div.questions {
+    @include panel;
+    grid-area: questions;
+  }
+
+  div.donated {
+    @include panel;
+    grid-area: donated;
+  }
+
+  div.users {
+    @include panel;
+    grid-area: users;
+  }
+
+  div.about {
+    @include panel;
+    grid-area: about;
+  }
+}
