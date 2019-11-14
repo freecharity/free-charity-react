@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "user": "anonymous",
+    "ipAddress": "192.168.1.1",
+    "correct": true,
+    "question": "what data structure has O(1) lookup?",
+    "answer": "hasmap"
+  },
+  {
+    "id": "2",
+    "user": "anonymous",
+    "ipAddress": "192.168.1.2",
+    "correct": true,
+    "question": "what data structure has O(1) lookup?",
+    "answer": "hasmap"
+  },
+  {
+    "id": "3",
+    "user": "anonymous",
+    "ipAddress": "192.168.1.3",
+    "correct": true,
+    "question": "what data structure has O(1) lookup?",
+    "answer": "hasmap"
+  }
+]

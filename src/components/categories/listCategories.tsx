@@ -26,10 +26,10 @@ export default function ListCategories() {
                 <table>
                     <thead>
                     <tr>
-                        <th>Category</th>
-                        <th>Group</th>
-                        <th>Description</th>
-                        <th>Action</th>
+                        <th>User</th>
+                        <th>IP Address</th>
+                        <th>Correct</th>
+                        <th>Question</th>
                     </tr>
                     </thead>
                     <tbody>

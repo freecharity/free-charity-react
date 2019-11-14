@@ -1,0 +1,30 @@
+div.delete-answers_container {
+  @include backdrop;
+}
+
+div.delete-answers_inner {
+  @include small-panel;
+
+  h1 {
+    max-width: 350px;
+    text-align: center
+  }
+
+  div.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media(max-width: $mobile-width) {
+      grid-template-columns: 1fr;
+    }
+
+    button:first-child {
+      @include large-button-gray;
+    }
+
+    button:last-child {
+      @include large-button;
+    }
+  }
+}

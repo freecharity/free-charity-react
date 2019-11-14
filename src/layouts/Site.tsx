@@ -23,10 +23,13 @@ import SelectCategory from "../components/categories/selectCategory";
 import UserProfile from "../components/User/userProfile";
 import UserProfileEdit from "../components/User/userProfileEdit";
 import DonationSuccessful from "../components/donate/donationResult";
+import ListAnswers from "../components/answers/listAnswers";
+import Answer from "../components/answers/answerInterface";
+import DeleteAnswers from "../components/answers/deleteAnswers";
 
 export default function Site() {
     const [sidebarClosed, setSidebarClosed] = useState(true);
-    const [selectAvatarClosed, setSelectAvatarClosed] = useState(true);
+    const [selectAvatar, setSelectAvatar] = useState(true);
     const [selectedAvatar, setSelectedAvatar] = useState(-1);
     const [category, setCategory] = useState("data structures");
     const [donationResult, setDonationResult] = useState({
@@ -34,38 +37,54 @@ export default function Site() {
         successful: false
     });
 
+    // TODO replace <any> with something typesafe
+    const [deleteAnswers, setDeleteAnswers] = useState<any>({
+        open: false,
+        answers: []
+    });
+
     const handleToggleSidebar = () => {
         setSidebarClosed(!sidebarClosed);
     };
 
     const handleToggleAvatar = () => {
-        setSelectAvatarClosed(!selectAvatarClosed);
+        setSelectAvatar(!selectAvatar);
     };
 
     const handleDonation = (open: boolean, successful: boolean) => {
         setDonationResult({open: open, successful: successful});
-        console.log(donationResult);
+    };
+
+    const handleDeleteAnswers = (open: boolean, answers: Answer[]) => {
+        setDeleteAnswers({open: open, answers: answers});
     };
 
     const handleSelectedAvatar = (id: number) => {
-        console.log('selected avatar: ' + id);
         setSelectedAvatar(id);
         handleToggleAvatar();
     };
 
     const handleSelectCategory = (category: string) => {
-        console.log('selected category: ' + category);
         setCategory(category);
     };
 
     return (
         <div className="site">
-            {selectAvatarClosed ? "" : <div className="app-select_avatar">
+            {selectAvatar ?
+                ""
+                :
                 <SelectAvatar toggleAvatar={handleToggleAvatar} selectAvatar={handleSelectedAvatar}/>
-            </div>}
-            {!donationResult.open ? "" : <div className='app-donation'>
+            }
+            {donationResult.open ?
                 <DonationSuccessful toggleDonation={handleDonation} successful={donationResult.successful}/>
-            </div>}
+                :
+                ""
+            }
+            {deleteAnswers.open ?
+                <DeleteAnswers toggleDeleteAnswers={handleDeleteAnswers} answers={deleteAnswers.answers}/>
+                :
+                ""
+            }
             <div className="app-sidebar">
                 <Sidebar closed={sidebarClosed} toggleSidebar={handleToggleSidebar}/>
             </div>
@@ -111,6 +130,10 @@ export default function Site() {
                         />
                         <Route path="/categories/delete" component={DeleteCategory}/>
                         <Route path="/categories" component={ListCategories}/>
+                        <Route path='/answers'
+                               component={() => <ListAnswers toggleDeleteAnswers={handleDeleteAnswers}
+                               />}
+                        />
                         <Route path="*" component={Home}/>
                     </Switch>
                 </div>

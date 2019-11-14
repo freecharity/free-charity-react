@@ -1,9 +1,5 @@
 div.select_avatar_container {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 500;
-  background-color: $overlay-gray-1;
+  @include backdrop;
 }
 
 div.select_avatar_inner {
