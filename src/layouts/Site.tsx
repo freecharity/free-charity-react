@@ -20,6 +20,8 @@ import SelectAvatar from "../components/categories/selectAvatar";
 import Home from "../components/home/home";
 import Donate from "../components/donate/donate";
 import SelectCategory from "../components/categories/selectCategory";
+import UserProfile from "../components/User/userProfile";
+import UserProfileEdit from "../components/User/userProfileEdit";
 
 export interface ISiteLayout {
 }
@@ -70,6 +72,13 @@ export default function Site() {
                                component={() => <SelectCategory selectCategory={handleSelectCategory}/>}
                         />
                         <Route path="/leaderboard" component={Leaderboard}/>
+                        <Route path="/user/profile/edit"
+                               component={() => <UserProfileEdit toggleAvatar={handleToggleAvatar}
+                                                                 selectedAvatar={selectedAvatar}
+                                                                 selectAvatar={handleSelectedAvatar}
+                               />}
+                        />
+                        <Route path="/user/profile" component={UserProfile}/>
                         <Route path="/user/login" component={Login}/>
                         <Route path="/user/register" component={Register}/>
                         <Route path="/questions/create" component={CreateQuestion}/>

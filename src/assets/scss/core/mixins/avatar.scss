@@ -1,0 +1,28 @@
+@mixin small-avatar {
+  cursor: pointer;
+  position: relative;
+  height: 125px;
+  width: 125px;
+  border-radius: 50%;
+  background-color: $light-blue-1;
+  border: 1px solid $dark-gray-1;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+  span {
+    position: absolute;
+    bottom: 1rem;
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: $dark-blue-1;
+
+    span {
+      text-decoration: underline;
+    }
+  }
+}

@@ -25,7 +25,7 @@ export default function Sidebar(props: SidebarProps) {
                         <FontAwesomeIcon icon={faTimes}/>
                     </div>
                     <NavLink className="profile"
-                             to={'/user/login'}
+                             to={'/user/profile'}
                              onClick={() => props.toggleSidebar()}>
                         <div className="avatar">
                             <img src="" alt=""/>

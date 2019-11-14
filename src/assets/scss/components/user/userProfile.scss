@@ -1,0 +1,26 @@
+div.user-profile_inner {
+  @include large-panel;
+  text-align: center;
+
+  div.avatar {
+    @include small-avatar;
+    margin: 0 auto;
+  }
+
+  div.buttons {
+    margin-top: 5rem;
+
+    a {
+      display: block;
+    }
+
+    a:first-child {
+      @include large-link;
+      margin-bottom: 1rem;
+    }
+
+    a:last-child {
+      @include large-link-gray;
+    }
+  }
+}

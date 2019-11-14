@@ -1,0 +1,65 @@
+div.user-profile-edit_inner {
+  @include large-panel;
+
+  div.avatar {
+    @include small-avatar;
+    margin: 0 auto;
+  }
+
+  form {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-areas: "d1 d1" "d2 d2" "d3 d4" "d5 d5";
+
+    @media(max-width: $mobile-width) {
+      grid-template-areas: "d1" "d2" "d3" "d4" "d5";
+    }
+
+    div.d1 {
+      grid-area: d1;
+    }
+
+    div.d2 {
+      grid-area: d2;
+    }
+
+    div.d3 {
+      grid-area: d3;
+    }
+
+    div.d4 {
+      grid-area: d4;
+    }
+
+    div.d5 {
+      grid-area: d5;
+    }
+
+    div.input-group {
+      @include input-group;
+    }
+
+    div.buttons {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+
+      @media(max-width: $mobile-width) {
+        grid-template-columns: 1fr;
+      }
+
+      a {
+        display: block;
+      }
+
+      a:first-child {
+        @include large-link-gray;
+      }
+
+      button:last-child {
+        @include large-button;
+      }
+    }
+  }
+}

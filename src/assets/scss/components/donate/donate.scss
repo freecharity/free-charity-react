@@ -67,16 +67,7 @@ div.donate_inner {
     }
 
     div.input-group {
-      label {
-        display: block;
-        font-size: 16px;
-        margin-bottom: 0.5rem;
-      }
-
-      input {
-        @include text-input;
-        width: 100%;
-      }
+      @include input-group;
     }
   }
 

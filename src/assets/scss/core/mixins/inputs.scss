@@ -1,3 +1,16 @@
+@mixin input-group {
+  label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    @include text-input;
+    width: 100%;
+  }
+}
+
 @mixin text-input {
   padding: 1rem;
   box-sizing: border-box;
