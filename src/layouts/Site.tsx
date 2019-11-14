@@ -4,9 +4,9 @@ import {Route, Switch} from 'react-router-dom';
 import Sidebar from 'components/sidebar/sidebar';
 import Navbar from 'components/navbar/navbar';
 import Footer from 'components/footer/footer';
-import Game from 'components/Game/Game';
-import Login from 'components/User/Login';
-import Register from 'components/User/Register';
+import Game from 'components/game/Game';
+import UserLogin from 'components/user/userLogin';
+import Register from 'components/user/userRegister';
 import CreateQuestion from 'components/questions/createQuestion';
 import EditQuestion from 'components/questions/editQuestion';
 import DeleteQuestion from 'components/questions/deleteQuestion';
@@ -20,8 +20,8 @@ import SelectAvatar from "../components/categories/selectAvatar";
 import Home from "../components/home/home";
 import Donate from "../components/donate/donate";
 import SelectCategory from "../components/categories/selectCategory";
-import UserProfile from "../components/User/userProfile";
-import UserProfileEdit from "../components/User/userProfileEdit";
+import UserProfile from "../components/user/userProfile";
+import UserProfileEdit from "../components/user/userProfileEdit";
 import DonationSuccessful from "../components/donate/donationResult";
 import ListAnswers from "../components/answers/listAnswers";
 import Answer from "../components/answers/answerInterface";
@@ -110,7 +110,7 @@ export default function Site() {
                                />}
                         />
                         <Route path="/user/profile" component={UserProfile}/>
-                        <Route path="/user/login" component={Login}/>
+                        <Route path="/user/login" component={UserLogin}/>
                         <Route path="/user/register" component={Register}/>
                         <Route path="/questions/create" component={CreateQuestion}/>
                         <Route path="/questions/edit" component={EditQuestion}/>

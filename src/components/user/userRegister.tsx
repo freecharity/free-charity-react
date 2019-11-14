@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './Register.scss';
-
 export default function Login() {
   return (
     <div className="register_container">

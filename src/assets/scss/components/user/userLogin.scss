@@ -1,0 +1,28 @@
+@import '../../_variables';
+
+div.login_inner {
+  @include small-panel;
+
+  text-align: center;
+
+  a {
+    @include large-link;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    @include large-button;
+    margin-bottom: 1rem;
+  }
+
+  a:last-child {
+    @include large-link-gray;
+  }
+  form {
+    display: grid;
+    gap: 1rem;
+    div.input-group {
+      @include input-group;
+    }
+  }
+}

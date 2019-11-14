@@ -14,9 +14,8 @@ export default function Navbar(props: NavbarProps) {
       <div className="logo" onClick={() => props.toggleSidebar()}>
         <FontAwesomeIcon icon={faBars} />
       </div>
-      <div className="brand">Free Charity</div>
+        <Link className="brand" to={'/home'}>Free Charity</Link>
       <Link className="user" to={'/user/login'}>
-        <div className="user_name">Login / Register</div>
         <div className="user_icon">
           <FontAwesomeIcon icon={faUser} />
         </div>

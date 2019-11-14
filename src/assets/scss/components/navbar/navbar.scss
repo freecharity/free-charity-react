@@ -35,10 +35,11 @@ div.logo:hover {
   background-color: rgba(0, 0, 0, 0.33);
 }
 
-div.brand {
+a.brand {
   color: #fff;
   font-size: 24px;
   font-weight: 700;
+  text-decoration: none;
   -moz-user-select: none;
   -webkit-user-select: none;
 }

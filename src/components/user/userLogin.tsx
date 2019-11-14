@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './Login.scss';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-export default function Login() {
+export default function UserLogin() {
   return (
     <div className="login_container">
       <div className="login_inner">

@@ -1,0 +1,40 @@
+@import '../../_variables';
+
+div.register_inner {
+  @include small-panel;
+  text-align: center;
+
+  form {
+    display: grid;
+    gap: 1rem;
+
+    h2 {
+      margin: 0;
+    }
+
+    div.input-group {
+      @include input-group;
+    }
+  }
+
+  p {
+    a {
+      color: $dark-orange-1;
+      display: inline;
+      padding: 0;
+      background-color: #fff;
+      font-size: 16px;
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    @include large-button;
+  }
+
+  div.back-button {
+    a {
+      @include link-button-gray;
+    }
+  }
+}
