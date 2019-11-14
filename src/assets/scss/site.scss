@@ -1,6 +1,5 @@
 /* Import Custom Styles */
 @import './core/_core';
-
 /* Import Components */
 @import 'components/navbar/navbar';
 @import 'components/sidebar/sidebar';
@@ -9,6 +8,7 @@
 @import 'components/categories/categories';
 @import 'components/leaderboard/leaderboard';
 @import 'components/donate/donate';
+@import 'components/donate/donationResult';
 @import 'components/user/user';
 
 .text-center {

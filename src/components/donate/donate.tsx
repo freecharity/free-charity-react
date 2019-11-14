@@ -4,7 +4,11 @@ import Donation from "./donationInterface";
 import jsonFile from 'data/donation_data.json';
 import Amount from "./amountInterface";
 
-export default function Donate() {
+interface Donate {
+    toggleDonation: any;
+}
+
+export default function Donate(props: Donate) {
 
     const amounts = jsonFile;
     const [selectedAmount, setSelectedAmount] = useState(amounts[0]);
@@ -42,6 +46,7 @@ export default function Donate() {
         // TODO Add submit implementation
         console.log('Submitting donation: ');
         console.log(donation);
+        props.toggleDonation(true, true);
     };
 
     return (

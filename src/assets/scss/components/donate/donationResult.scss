@@ -1,0 +1,40 @@
+div.donation-result_container {
+  @include backdrop;
+
+}
+
+div.donation-result_inner {
+  @include small-panel;
+  width: 100%;
+  max-width: 700px;
+
+  div.icon {
+    text-align: center;
+
+    svg {
+      height: 300px;
+      width: 300px;
+    }
+  }
+
+  div.successful {
+    color: $dark-green-1;
+  }
+
+  div.unsuccessful {
+    color: $dark-red-1;
+  }
+
+  p {
+    margin: 0 auto;
+    margin-top: 2rem;
+    max-width: 300px;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  button {
+    margin-top: 2rem;
+    @include large-button;
+  }
+}

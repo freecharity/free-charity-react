@@ -22,15 +22,17 @@ import Donate from "../components/donate/donate";
 import SelectCategory from "../components/categories/selectCategory";
 import UserProfile from "../components/User/userProfile";
 import UserProfileEdit from "../components/User/userProfileEdit";
-
-export interface ISiteLayout {
-}
+import DonationSuccessful from "../components/donate/donationResult";
 
 export default function Site() {
     const [sidebarClosed, setSidebarClosed] = useState(true);
     const [selectAvatarClosed, setSelectAvatarClosed] = useState(true);
     const [selectedAvatar, setSelectedAvatar] = useState(-1);
     const [category, setCategory] = useState("data structures");
+    const [donationResult, setDonationResult] = useState({
+        open: false,
+        successful: false
+    });
 
     const handleToggleSidebar = () => {
         setSidebarClosed(!sidebarClosed);
@@ -38,6 +40,11 @@ export default function Site() {
 
     const handleToggleAvatar = () => {
         setSelectAvatarClosed(!selectAvatarClosed);
+    };
+
+    const handleDonation = (open: boolean, successful: boolean) => {
+        setDonationResult({open: open, successful: successful});
+        console.log(donationResult);
     };
 
     const handleSelectedAvatar = (id: number) => {
@@ -56,6 +63,9 @@ export default function Site() {
             {selectAvatarClosed ? "" : <div className="app-select_avatar">
                 <SelectAvatar toggleAvatar={handleToggleAvatar} selectAvatar={handleSelectedAvatar}/>
             </div>}
+            {!donationResult.open ? "" : <div className='app-donation'>
+                <DonationSuccessful toggleDonation={handleDonation} successful={donationResult.successful}/>
+            </div>}
             <div className="app-sidebar">
                 <Sidebar closed={sidebarClosed} toggleSidebar={handleToggleSidebar}/>
             </div>
@@ -67,7 +77,9 @@ export default function Site() {
                     <Switch>
                         <Route path="/home" component={Home}/>
                         <Route path="/game" component={Game}/>
-                        <Route path="/donate" component={Donate}/>
+                        <Route path="/donate"
+                               component={() => <Donate toggleDonation={handleDonation}/>}
+                        />
                         <Route path="/category"
                                component={() => <SelectCategory selectCategory={handleSelectCategory}/>}
                         />
