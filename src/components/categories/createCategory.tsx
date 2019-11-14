@@ -40,7 +40,7 @@ export default function CreateCategory(props: CreateCategoryProps) {
         event.persist();
         setCategory({
             ...category,
-            [event.target.name]: event.target.value
+            [event.target.name]: [event.target.value]
         });
     };
 

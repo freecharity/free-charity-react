@@ -1,0 +1,102 @@
+div.donate_inner {
+  @include large-panel;
+
+  div.amounts {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    div.amount {
+      cursor: pointer;
+      margin: 0 0.5rem 1rem;
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      background-color: $light-blue-1;
+      border: 1px solid $dark-gray-1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: $dark-gray-1;
+
+      &:hover {
+        background-color: $dark-blue-1;
+      }
+    }
+
+    div.selected {
+      color: #000;
+      background-color: $dark-blue-1;
+    }
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "d1 d2" "d3 d4" "d5 d5" "d6 d6";
+    gap: 1rem;
+
+    @media(max-width: $mobile-width) {
+      grid-template-columns: 1fr;
+      grid-template-areas: "d1""d2""d3""d4""d5""d6";
+    }
+
+    div.d1 {
+      grid-area: d1;
+    }
+
+    div.d2 {
+      grid-area: d2;
+    }
+
+    div.d3 {
+      grid-area: d3;
+    }
+
+    div.d4 {
+      grid-area: d4;
+    }
+
+    div.d5 {
+      grid-area: d5;
+    }
+
+    div.d6 {
+      grid-area: d6;
+    }
+
+    div.input-group {
+      label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 0.5rem;
+      }
+
+      input {
+        @include text-input;
+        width: 100%;
+      }
+    }
+  }
+
+  div.buttons {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media(max-width: $mobile-width) {
+      grid-template-columns: 1fr;
+      direction: rtl;
+    }
+
+    a {
+      @include link-button-gray;
+    }
+
+    button {
+      @include large-button;
+    }
+  }
+}

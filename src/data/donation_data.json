@@ -1,0 +1,26 @@
+[
+  {
+    "amountText": "$1",
+    "amountNumber": 1
+  },
+  {
+    "amountText": "$10",
+    "amountNumber": 10
+  },
+  {
+    "amountText": "$25",
+    "amountNumber": 25
+  },
+  {
+    "amountText": "$50",
+    "amountNumber": 50
+  },
+  {
+    "amountText": "$100",
+    "amountNumber": 100
+  },
+  {
+    "amountText": "$$$",
+    "amountNumber": 250
+  }
+]
