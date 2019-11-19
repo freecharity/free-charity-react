@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTimes, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 interface SidebarProps {
     closed: boolean;
@@ -11,15 +11,17 @@ interface SidebarProps {
 
 export default function Sidebar(props: SidebarProps) {
 
-    const [closed, setClosed] = useState(false);
-
     const closeSidebar = () => {
-        setClosed(true);
+        props.toggleSidebar();
+    };
+
+    const stopPropagation = (e) => {
+        e.stopPropagation();
     };
 
     return (
-        <div className={`sidebar_container ${props.closed ? 'hidden' : ''}`}>
-            <div className={`sidebar_inner ${props.closed ? 'closed' : ''}`}>
+        <div className={`sidebar_container ${props.closed ? 'hidden' : ''}`} onClick={closeSidebar}>
+            <div className={`sidebar_inner ${props.closed ? 'closed' : ''}`} onClick={stopPropagation}>
                 <div className="sidebar_panel">
                     <div className="close" onClick={() => props.toggleSidebar()}>
                         <FontAwesomeIcon icon={faTimes}/>
