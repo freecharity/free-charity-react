@@ -113,7 +113,7 @@ export default function Site() {
                         <Route path="/user/login" component={UserLogin}/>
                         <Route path="/user/register" component={Register}/>
                         <Route path="/questions/create" component={CreateQuestion}/>
-                        <Route path="/questions/edit" component={EditQuestion}/>
+                        <Route path="/questions/edit/" component={EditQuestion}/>
                         <Route path="/questions/delete" component={DeleteQuestion}/>
                         <Route path="/questions" component={ListQuestions}/>
                         <Route path="/categories/create"
@@ -122,13 +122,13 @@ export default function Site() {
                                                                 selectAvatar={handleSelectedAvatar}
                                />}
                         />
-                        <Route path="/categories/edit"
+                        <Route path="/categories/edit/:categoryId"
                                component={() => <EditCategory toggleAvatar={handleToggleAvatar}
                                                               selectedAvatar={selectedAvatar}
                                                               selectAvatar={handleSelectedAvatar}
                                />}
                         />
-                        <Route path="/categories/delete" component={DeleteCategory}/>
+                        <Route path="/categories/delete/:categoryId" component={DeleteCategory}/>
                         <Route path="/categories" component={ListCategories}/>
                         <Route path='/answers'
                                component={() => <ListAnswers toggleDeleteAnswers={handleDeleteAnswers}

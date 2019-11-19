@@ -1,9 +1,8 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-import jsonFile from 'data/category_data.json';
-import Category from "./categoryInterface";
-
+import {useParams} from "react-router";
+import axios from 'axios';
+import {Category} from "models/category";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
@@ -16,7 +15,30 @@ interface EditCategoryProps {
 export default function EditCategory(props: EditCategoryProps) {
     const [processing, setProcessing] = useState(false);
 
-    const [category, setCategory] = useState<Category>(jsonFile[0]);
+    const [category, setCategory] = useState<Category>({
+        category_id: -1,
+        name: "",
+        group: "",
+        description: "",
+        deleted: false,
+        image: ""
+    });
+
+    const {categoryId} = useParams();
+    const endpoint = `http://localhost:3000/categories`;
+
+    const getCategory = () => {
+        axios.get(endpoint + `?categoryId=${categoryId}`).then((res) => {
+            const category: Category = res.data[0];
+            setCategory(category);
+        }).catch((err) => {
+            alert(err);
+        });
+    };
+
+    useEffect(() => {
+        getCategory();
+    }, []);
 
     const selectAvatar = () => {
         props.toggleAvatar();
@@ -41,8 +63,15 @@ export default function EditCategory(props: EditCategoryProps) {
 
     const submitCategoryToServer = () => {
         setProcessing(true);
-        console.log('Adding Category:');
-        console.log(category);
+        axios.put(endpoint, category).then((res) => {
+            console.log(category);
+            console.log(res);
+            alert("Updated category");
+            setProcessing(false);
+        }).catch((error) => {
+            alert(error);
+            setProcessing(false);
+        })
     };
 
     return (
@@ -51,15 +80,15 @@ export default function EditCategory(props: EditCategoryProps) {
                 <div className="back">
                     {!processing ?
                         <Link to={'/categories'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>
                         :
                         <Link to={'#'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>}
                     <h1>Edit Category</h1>
                 </div>
-                <form onSubmit={handleSubmit}>
+                {category.category_id != -1 ? <form onSubmit={handleSubmit}>
                     <div className="input-group-image">
                         <label>Category Image</label>
                         <div className="image-input" onClick={selectAvatar}>
@@ -69,11 +98,11 @@ export default function EditCategory(props: EditCategoryProps) {
                     </div>
                     <div className="input-group">
                         <label>Category</label>
-                        <input id="category"
-                               name="category"
+                        <input id="name"
+                               name="name"
                                type="text"
                                required={true}
-                               value={category.category}
+                               value={category.name}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
@@ -104,7 +133,7 @@ export default function EditCategory(props: EditCategoryProps) {
                             :
                             <button type={"button"}>Loading...</button>}
                     </div>
-                </form>
+                </form> : ''}
             </div>
         </div>
     );

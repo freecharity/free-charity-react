@@ -1,8 +1,7 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-import Category from "./categoryInterface";
-
+import axios from 'axios';
+import {Category} from "models/category";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
@@ -17,10 +16,12 @@ export default function CreateCategory(props: CreateCategoryProps) {
     const [processing, setProcessing] = useState(false);
 
     const [category, setCategory] = useState<Category>({
-        id: "",
-        category: "",
+        category_id: -1,
+        name: "",
         group: "",
-        description: ""
+        description: "",
+        image: "1",
+        deleted: false
     });
 
     const selectAvatar = () => {
@@ -40,14 +41,25 @@ export default function CreateCategory(props: CreateCategoryProps) {
         event.persist();
         setCategory({
             ...category,
-            [event.target.name]: [event.target.value]
+            [event.target.name]: event.target.value
         });
     };
 
-    const submitCategoryToServer = () => {
-        setProcessing(true);
+    const endpoint = `http://localhost:3000/categories`
+
+    const submitCategoryToServer = async () => {
         console.log('Adding Category:');
         console.log(category);
+        setProcessing(true);
+        await axios.post(endpoint, category).then((res) => {
+            console.log(res);
+            alert("Successfully added category.");
+            setProcessing(false);
+            this.props.history.push('/categories');
+        }).catch((error) => {
+            alert(error);
+            setProcessing(false);
+        });
     };
 
     return (
@@ -56,11 +68,11 @@ export default function CreateCategory(props: CreateCategoryProps) {
                 <div className="back">
                     {!processing ?
                         <Link to={'/categories'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>
                         :
                         <Link to={'#'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>}
                     <h1>Create Category</h1>
                 </div>
@@ -74,11 +86,11 @@ export default function CreateCategory(props: CreateCategoryProps) {
                     </div>
                     <div className="input-group">
                         <label>Category</label>
-                        <input id="category"
-                               name="category"
+                        <input id="name"
+                               name="name"
                                type="text"
                                required={true}
-                               value={category.category}
+                               value={category.name}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">

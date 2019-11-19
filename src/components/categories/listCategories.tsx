@@ -1,14 +1,28 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
-
+import axios from 'axios';
 import jsonFile from 'data/category_data.json';
-import Category from './categoryInterface';
-
+import {Category} from 'models/category';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 export default function ListCategories() {
     const [categories, setCategories] = useState<Category[]>(jsonFile);
+
+    const endpoint = `http://localhost:3000/categories`;
+
+    const getCategories = async () => {
+        await axios(endpoint).then((result) => {
+            const categories: Category[] = result.data;
+            setCategories(categories);
+        }).catch((error) => {
+            alert(error);
+        });
+    };
+
+    useEffect(() => {
+        getCategories();
+    }, []);
 
     return (
         <div className="list_categories_container">
@@ -26,22 +40,22 @@ export default function ListCategories() {
                 <table>
                     <thead>
                     <tr>
-                        <th>User</th>
-                        <th>IP Address</th>
-                        <th>Correct</th>
-                        <th>Question</th>
+                        <th>Name</th>
+                        <th>Group</th>
+                        <th>Description</th>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>
-                    {categories.map((c) => {
+                    {categories.map((c: Category) => {
                         return (
-                            <tr key={c.id}>
-                                <td>{c.category}</td>
+                            <tr key={c.category_id}>
+                                <td>{c.name}</td>
                                 <td>{c.group}</td>
                                 <td>{c.description}</td>
                                 <td>
-                                    <Link to={'/categories/edit'}>Edit</Link>
-                                    <Link to={'/categories/delete'}>Delete</Link>
+                                    <Link to={`/categories/edit/${c.category_id}`}>Edit</Link>
+                                    <Link to={`/categories/delete/${c.category_id}`}>Delete</Link>
                                 </td>
                             </tr>
                         );

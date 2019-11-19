@@ -1,16 +1,40 @@
-import React, {FormEvent, useState} from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-import Category from "./categoryInterface";
-import jsonFile from "../../data/category_data.json";
-
+import {useParams} from "react-router";
+import axios from 'axios';
+import {Category} from "models/category";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import set = Reflect.set;
 
 export default function DeleteCategory() {
     const [processing, setProcessing] = useState(false);
 
-    const [category, setCategory] = useState<Category>(jsonFile[0]);
+    const [category, setCategory] = useState<Category>({
+        category_id: -1,
+        name: "",
+        group: "",
+        description: "",
+        deleted: false,
+        image: ""
+    });
+
+    const endpoint = `http://localhost:3000/categories`;
+    const {categoryId} = useParams();
+    const getCategory = () => {
+        axios.get(endpoint + `?categoryId=${categoryId}`).then((res) => {
+            if (res.data.length > 0) {
+                const category: Category = res.data[0];
+                setCategory(category);
+            }
+        }).catch((err) => {
+            alert(err);
+        });
+    };
+
+    useEffect(() => {
+        getCategory();
+    }, []);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         if (event) {
@@ -21,8 +45,13 @@ export default function DeleteCategory() {
 
     const submitCategoryToServer = () => {
         setProcessing(true);
-        console.log('Deleting Category');
-        console.log(category);
+        axios.delete(endpoint + `?categoryId=${categoryId}`).then((res) => {
+            alert('Deleted category');
+        }).catch((err) => {
+            alert(err)
+        }).finally(() => {
+            setProcessing(false)
+        });
     };
 
     return (
@@ -31,25 +60,25 @@ export default function DeleteCategory() {
                 <div className="back">
                     {!processing ?
                         <Link to={'/categories'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>
                         :
                         <Link to={'#'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>}
                     <h1>Delete Category</h1>
                 </div>
                 <h2 className="text-center">
                     Are you sure you want to delete this category?
                 </h2>
-                <form onSubmit={handleSubmit}>
+                {category.category_id != -1 ? <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label>Category</label>
-                        <input id="category"
-                               name="category"
+                        <input id="name"
+                               name="name"
                                type="text"
                                required={true}
-                               value={category.category}
+                               value={category.name}
                                disabled={true}/>
                     </div>
                     <div className="input-group">
@@ -80,7 +109,7 @@ export default function DeleteCategory() {
                             :
                             <button type={"button"}>Loading...</button>}
                     </div>
-                </form>
+                </form> : ''}
             </div>
         </div>
     );
