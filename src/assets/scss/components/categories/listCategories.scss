@@ -92,40 +92,4 @@ div.list_categories_inner {
       }
     }
   }
-
-  div.pagination {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    @media(max-width: $mobile-width) {
-      display: block;
-      text-align: center;
-    }
-
-    div.buttons {
-      button {
-        @include small-button;
-        width: 45px;
-        height: 45px;
-        padding: 0;
-      }
-
-      button:not(:last-child) {
-        margin-right: 0.25rem;
-      }
-
-      button.selected {
-        @include small-button-gray;
-        padding: 0;
-      }
-    }
-
-    div.results {
-      color: $dark-gray-1;
-      @media(max-width: $mobile-width) {
-        margin-top: 2rem;
-      }
-    }
-  }
 }
