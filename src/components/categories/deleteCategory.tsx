@@ -1,30 +1,35 @@
 import React, {FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {useParams} from "react-router";
+import {useParams, useHistory} from "react-router";
 import axios from 'axios';
 import {Category} from "models/category";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import set = Reflect.set;
+
+const initialState = {
+    category_id: -1,
+    name: "",
+    group: "",
+    description: "",
+    deleted: false,
+    image: ""
+};
 
 export default function DeleteCategory() {
     const [processing, setProcessing] = useState(false);
-
-    const [category, setCategory] = useState<Category>({
-        category_id: -1,
-        name: "",
-        group: "",
-        description: "",
-        deleted: false,
-        image: ""
-    });
-
+    const [category, setCategory] = useState<Category>(initialState);
     const endpoint = `http://localhost:3000/categories`;
     const {categoryId} = useParams();
+    const history = useHistory();
+
+    useEffect(() => {
+        getCategory();
+    }, []);
+
     const getCategory = () => {
         axios.get(endpoint + `?categoryId=${categoryId}`).then((res) => {
-            if (res.data.length > 0) {
-                const category: Category = res.data[0];
+            if (res.data.results.length > 0) {
+                const category: Category = res.data.results[0];
                 setCategory(category);
             }
         }).catch((err) => {
@@ -32,26 +37,26 @@ export default function DeleteCategory() {
         });
     };
 
-    useEffect(() => {
-        getCategory();
-    }, []);
+    const deleteCategory = () => {
+        setProcessing(true);
+        axios.delete(endpoint + `?categoryId=${categoryId}`).then((res) => {
+            navigateBack();
+        }).catch((err) => {
+            alert(err);
+        }).finally(() => {
+            setProcessing(false);
+        });
+    };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         if (event) {
             event.preventDefault();
         }
-        submitCategoryToServer();
+        deleteCategory();
     };
 
-    const submitCategoryToServer = () => {
-        setProcessing(true);
-        axios.delete(endpoint + `?categoryId=${categoryId}`).then((res) => {
-            alert('Deleted category');
-        }).catch((err) => {
-            alert(err)
-        }).finally(() => {
-            setProcessing(false)
-        });
+    const navigateBack = () => {
+        history.goBack();
     };
 
     return (
@@ -59,8 +64,8 @@ export default function DeleteCategory() {
             <div className="delete_category_inner">
                 <div className="back">
                     {!processing ?
-                        <Link to={'/categories'}>
-                            <FontAwesomeIcon icon={faArrowLeft}/>
+                        <Link to={'#'}>
+                            <FontAwesomeIcon onClick={navigateBack} icon={faArrowLeft}/>
                         </Link>
                         :
                         <Link to={'#'}>

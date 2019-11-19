@@ -1,5 +1,6 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
+import {useHistory} from 'react-router';
 import axios from 'axios';
 import {Category} from "models/category";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -11,28 +12,30 @@ interface CreateCategoryProps {
     selectedAvatar: number;
 }
 
+const initialState = {
+    category_id: -1,
+    name: "",
+    group: "",
+    description: "",
+    image: "1",
+    deleted: false
+};
+
 export default function CreateCategory(props: CreateCategoryProps) {
-
     const [processing, setProcessing] = useState(false);
+    const [category, setCategory] = useState<Category>(initialState);
+    const endpoint = `http://localhost:3000/categories`;
+    const history = useHistory();
 
-    const [category, setCategory] = useState<Category>({
-        category_id: -1,
-        name: "",
-        group: "",
-        description: "",
-        image: "1",
-        deleted: false
-    });
-
-    const selectAvatar = () => {
-        props.toggleAvatar();
-    };
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        if (event) {
-            event.preventDefault();
-        }
-        submitCategoryToServer();
+    const postCategory = async () => {
+        setProcessing(true);
+        await axios.post(endpoint, category).then((res) => {
+            setProcessing(false);
+            navigateBack();
+        }).catch((error) => {
+            alert(error);
+            setProcessing(false);
+        });
     };
 
     const handleInputChange = (
@@ -45,21 +48,19 @@ export default function CreateCategory(props: CreateCategoryProps) {
         });
     };
 
-    const endpoint = `http://localhost:3000/categories`
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        if (event) {
+            event.preventDefault();
+        }
+        postCategory();
+    };
 
-    const submitCategoryToServer = async () => {
-        console.log('Adding Category:');
-        console.log(category);
-        setProcessing(true);
-        await axios.post(endpoint, category).then((res) => {
-            console.log(res);
-            alert("Successfully added category.");
-            setProcessing(false);
-            this.props.history.push('/categories');
-        }).catch((error) => {
-            alert(error);
-            setProcessing(false);
-        });
+    const selectAvatar = () => {
+        props.toggleAvatar();
+    };
+
+    const navigateBack = () => {
+        history.goBack();
     };
 
     return (

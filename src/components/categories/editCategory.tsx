@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {useParams} from "react-router";
+import {useParams, useHistory} from "react-router";
 import axios from 'axios';
 import {Category} from "models/category";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -12,43 +12,52 @@ interface EditCategoryProps {
     selectedAvatar: number;
 }
 
+const initialState = {
+    category_id: -1,
+    name: "",
+    group: "",
+    description: "",
+    deleted: false,
+    image: ""
+};
+
 export default function EditCategory(props: EditCategoryProps) {
     const [processing, setProcessing] = useState(false);
-
-    const [category, setCategory] = useState<Category>({
-        category_id: -1,
-        name: "",
-        group: "",
-        description: "",
-        deleted: false,
-        image: ""
-    });
-
+    const [category, setCategory] = useState<Category>(initialState);
     const {categoryId} = useParams();
     const endpoint = `http://localhost:3000/categories`;
-
-    const getCategory = () => {
-        axios.get(endpoint + `?categoryId=${categoryId}`).then((res) => {
-            const category: Category = res.data[0];
-            setCategory(category);
-        }).catch((err) => {
-            alert(err);
-        });
-    };
+    const history = useHistory();
 
     useEffect(() => {
         getCategory();
     }, []);
 
-    const selectAvatar = () => {
-        props.toggleAvatar();
+    const getCategory = () => {
+        axios.get(endpoint + `?categoryId=${categoryId}`).then((res) => {
+            if (res.data.results.length > 0) {
+                const category: Category = res.data.results[0];
+                setCategory(category);
+            }
+        }).catch((err) => {
+            alert(err);
+        });
     };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        if (event) {
-            event.preventDefault();
-        }
-        submitCategoryToServer();
+    const putCategory = () => {
+        setProcessing(true);
+        axios.put(endpoint, category).then((res) => {
+            console.log(category);
+            console.log(res);
+            setProcessing(false);
+            navigateBack();
+        }).catch((error) => {
+            alert(error);
+            setProcessing(false);
+        })
+    };
+
+    const selectAvatar = () => {
+        props.toggleAvatar();
     };
 
     const handleInputChange = (
@@ -61,17 +70,15 @@ export default function EditCategory(props: EditCategoryProps) {
         });
     };
 
-    const submitCategoryToServer = () => {
-        setProcessing(true);
-        axios.put(endpoint, category).then((res) => {
-            console.log(category);
-            console.log(res);
-            alert("Updated category");
-            setProcessing(false);
-        }).catch((error) => {
-            alert(error);
-            setProcessing(false);
-        })
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        if (event) {
+            event.preventDefault();
+        }
+        putCategory();
+    };
+
+    const navigateBack = () => {
+        history.goBack();
     };
 
     return (

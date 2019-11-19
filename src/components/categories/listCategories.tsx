@@ -1,20 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import jsonFile from 'data/category_data.json';
 import {Category} from 'models/category';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 export default function ListCategories() {
-    const [categories, setCategories] = useState<Category[]>(jsonFile);
-
-    const endpoint = `http://localhost:3000/categories`;
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const endpoint = `http://localhost:3000/categories?page=${page}`;
 
     const getCategories = async () => {
         await axios(endpoint).then((result) => {
-            const categories: Category[] = result.data;
+            const categories: Category[] = result.data.results;
             setCategories(categories);
+            setTotal(result.data.total);
         }).catch((error) => {
             alert(error);
         });
@@ -22,7 +23,7 @@ export default function ListCategories() {
 
     useEffect(() => {
         getCategories();
-    }, []);
+    }, [page]);
 
     return (
         <div className="list_categories_container">
@@ -65,13 +66,15 @@ export default function ListCategories() {
                 <div className="pagination">
                     <div className="buttons">
                         <button><FontAwesomeIcon icon={faArrowLeft}/></button>
-                        <button className="selected">1</button>
-                        <button>2</button>
-                        <button>3</button>
+                        {page - 2 > 0 ? <button onClick={() => setPage(page - 2)}>{page - 2}</button> : ''}
+                        {page - 1 > 0 ? <button onClick={() => setPage(page - 1)}>{page - 1}</button> : ''}
+                        <button className="selected">{page}</button>
+                        {total > (page * 10) ? <button onClick={() => setPage(page + 1)}>{page + 1}</button> : ''}
+                        {total > ((page + 1) * 10) ? <button onClick={() => setPage(page + 2)}>{page + 2}</button> : ''}
                         <button><FontAwesomeIcon icon={faArrowRight}/></button>
                     </div>
                     <div className="results">
-                        Showing 3 of 3 results
+                        Showing {((page - 1) * 10) + categories.length} of {total} results
                     </div>
                 </div>
             </div>

@@ -1,22 +1,37 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useHistory} from 'react-router-dom';
 
-import jsonFile from 'data/category_data.json';
 import Group from "./groupInterface";
+import {Category} from "models/category";
+import axios from "axios";
 
 interface SelectCategoryProps {
     selectCategory: any;
 }
 
 export default function SelectCategory(props: SelectCategoryProps) {
-
+    const [groups, setGroups] = useState<Group[]>([]);
+    const endpoint = `http://localhost:3000/categories?page=1`;
     const history = useHistory();
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    const getCategories = async () => {
+        await axios(endpoint).then((result) => {
+            const categories: Category[] = result.data.results;
+            getGroups(categories);
+        }).catch((error) => {
+            alert(error);
+        });
+    };
 
     // breaks data into array of groups which contain an array of categories
     // TODO: Add this portion to the server
-    const getGroups = () => {
+    const getGroups = (categories: Category[]) => {
         let groups: Array<Group> = [];
-        jsonFile.forEach(c => {
+        categories.forEach((c: Category) => {
             let group = groups.find(g => g.group === c.group);
             if (group != undefined) {
                 group.categories.push(c);
@@ -28,10 +43,8 @@ export default function SelectCategory(props: SelectCategoryProps) {
                 groups.push(g);
             }
         });
-        return groups;
+        setGroups(groups);
     };
-
-    const [groups] = useState(getGroups());
 
     const selectCategory = (category: string) => {
         props.selectCategory(category);
@@ -49,12 +62,12 @@ export default function SelectCategory(props: SelectCategoryProps) {
                             {g.categories.map((c, j) => {
                                 return <div className="category"
                                             key={i + j}
-                                            onClick={() => selectCategory(c.category)}>
+                                            onClick={() => selectCategory(c.name)}>
                                     <div className="image">
                                         <img src="" alt=""/>
                                     </div>
                                     <div className="name">
-                                        {c.category}
+                                        {c.name}
                                     </div>
                                 </div>
                             })}

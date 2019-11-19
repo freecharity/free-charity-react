@@ -1,4 +1,4 @@
-import Category from "./categoryInterface";
+import {Category} from "models/category";
 
 export default interface Group {
     group: string;
