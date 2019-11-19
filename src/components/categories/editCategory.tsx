@@ -17,7 +17,7 @@ const initialState = {
     name: "",
     group: "",
     description: "",
-    deleted: false,
+    deleted: 0,
     image: ""
 };
 
@@ -46,8 +46,6 @@ export default function EditCategory(props: EditCategoryProps) {
     const putCategory = () => {
         setProcessing(true);
         axios.put(endpoint, category).then((res) => {
-            console.log(category);
-            console.log(res);
             setProcessing(false);
             navigateBack();
         }).catch((error) => {
@@ -129,6 +127,17 @@ export default function EditCategory(props: EditCategoryProps) {
                                required={true}
                                value={category.description}
                                onChange={handleInputChange}/>
+                    </div>
+                    <div className="input-group">
+                        <label>Deleted</label>
+                        <select name="deleted"
+                                id="deleted"
+                                required={true}
+                                value={category.deleted}
+                                onChange={handleInputChange}>
+                            <option value={1}>True</option>
+                            <option value={0}>False</option>
+                        </select>
                     </div>
                     <div className="buttons">
                         {!processing ?

@@ -18,7 +18,7 @@ const initialState = {
     group: "",
     description: "",
     image: "1",
-    deleted: false
+    deleted: 0
 };
 
 export default function CreateCategory(props: CreateCategoryProps) {

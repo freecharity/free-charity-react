@@ -8,7 +8,8 @@ export default function ListCategories() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
-    const endpoint = `http://localhost:3000/categories?page=${page}`;
+    const [showDeleted, setShowDeleted] = useState(false);
+    const endpoint = `http://localhost:3000/categories?page=${page}&showDeleted=${showDeleted}`;
 
     const getCategories = async () => {
         await axios(endpoint).then((result) => {
@@ -21,8 +22,9 @@ export default function ListCategories() {
     };
 
     useEffect(() => {
+        console.log('updating data');
         getCategories();
-    }, [page]);
+    }, [page, showDeleted]);
 
     return (
         <div className="list_categories_container">
@@ -36,6 +38,12 @@ export default function ListCategories() {
                     <div className="create_button">
                         <Link to={'/categories/create'}>Create Category</Link>
                     </div>
+                </div>
+                <div className="show_deleted">
+                    <div className={`checkbox ${showDeleted ? 'checked' : ''}`}
+                         onClick={() => setShowDeleted(!showDeleted)}
+                    />
+                    Show Deleted
                 </div>
                 <table>
                     <thead>
@@ -55,7 +63,10 @@ export default function ListCategories() {
                                 <td>{c.description}</td>
                                 <td>
                                     <Link to={`/categories/edit/${c.category_id}`}>Edit</Link>
-                                    <Link to={`/categories/delete/${c.category_id}`}>Delete</Link>
+                                    {!c.deleted ?
+                                        <Link to={`/categories/delete/${c.category_id}`}>Delete</Link> :
+                                        <Link className="inactive" to={`#`}>Delete</Link>
+                                    }
                                 </td>
                             </tr>
                         );

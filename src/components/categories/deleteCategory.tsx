@@ -11,7 +11,7 @@ const initialState = {
     name: "",
     group: "",
     description: "",
-    deleted: false,
+    deleted: 0,
     image: ""
 };
 

@@ -53,6 +53,28 @@ div.list_categories_inner {
     }
   }
 
+  div.show_deleted {
+    display: flex;
+    align-items: center;
+
+    div.checkbox {
+      cursor: pointer;
+      margin-right: 1rem;
+      height: 25px;
+      width: 25px;
+      background-color: #fff;
+      border: 1px solid $dark-orange-1;
+
+      &.checked {
+        background-color: $dark-orange-1;
+      }
+
+      &:hover {
+        background-color: $light-orange-1;
+      }
+    }
+  }
+
   table {
     width: 100%;
 
@@ -77,6 +99,12 @@ div.list_categories_inner {
     tbody {
       td {
         padding: 1.1rem 0;
+
+        a {
+          &.inactive {
+            @include inactive-link;
+          }
+        }
       }
 
       td:last-child {
