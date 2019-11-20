@@ -1,28 +1,50 @@
-import React, {FormEvent, useState} from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-import Question from "./questionInterface";
-import jsonFile from "../../data/question_data.json";
-
+import {useHistory, useParams} from 'react-router';
+import axios from 'axios';
+import {initialState, Question} from 'models/question';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 export default function DeleteQuestion() {
     const [processing, setProcessing] = useState(false);
+    const [question, setQuestion] = useState<Question>(initialState);
+    const endpoint = 'http://localhost:3000/questions';
+    const {questionId} = useParams();
+    const history = useHistory();
 
-    const [question, setQuestion] = useState<Question>(jsonFile[0]);
+    useEffect(() => {
+        getQuestions();
+    }, []);
+
+    const getQuestions = () => {
+        axios.get(endpoint + `?page=1&deleted=true&id=${questionId}`).then((res) => {
+            if (res.data.results.length > 0) {
+                const question: Question = res.data.results[0];
+                setQuestion(question);
+                console.log(question);
+            }
+        }).catch((err) => {
+            alert(err);
+        });
+    };
+
+    const deleteQuestion = () => {
+        setProcessing(true);
+        axios.delete(endpoint + `?id=${questionId}`).then((res) => {
+            history.goBack();
+        }).catch((err) => {
+            alert(err);
+        }).finally(() => {
+            setProcessing(false);
+        });
+    };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         if (event) {
             event.preventDefault();
         }
-        submitQuestionToServer();
-    };
-
-    const submitQuestionToServer = () => {
-        setProcessing(true);
-        console.log('Deleting Question');
-        console.log(question);
+        deleteQuestion();
     };
 
     return (
@@ -31,11 +53,11 @@ export default function DeleteQuestion() {
                 <div className="back">
                     {!processing ?
                         <Link to={'/questions'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>
                         :
                         <Link to={'#'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>}
                     <h1>Delete Question</h1>
                 </div>
@@ -54,64 +76,48 @@ export default function DeleteQuestion() {
                     </div>
                     <div className="input-group">
                         <label>Answer</label>
-                        <input id="correctAnswer"
-                               name="correctAnswer"
+                        <input id="answer"
+                               name="answer"
                                type="text"
                                required={true}
-                               value={question.correctAnswer}
+                               value={question.answer}
                                disabled={true}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #1</label>
-                        <input id="incorrectAnswer1"
-                               name="incorrectAnswer1"
+                        <input id="incorrect_1"
+                               name="incorrect_1"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer1}
+                               value={question.incorrect_1}
                                disabled={true}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #2</label>
-                        <input id="incorrectAnswer2"
-                               name="incorrectAnswer2"
+                        <input id="incorrect_2"
+                               name="incorrect_2"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer2}
+                               value={question.incorrect_2}
                                disabled={true}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #3</label>
-                        <input id="incorrectAnswer3"
-                               name="incorrectAnswer3"
+                        <input id="incorrect_3"
+                               name="incorrect_3"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer3}
+                               value={question.incorrect_3}
                                disabled={true}/>
                     </div>
                     <div className="input-group">
-                        <label>Difficulty</label>
-                        <select name="difficulty"
-                                id="difficulty"
-                                required={true}
-                                value={question.difficulty}
-                                disabled={true}>
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
-                            <option value="expert">Expert</option>
-                        </select>
-                    </div>
-                    <div className="input-group">
                         <label>Category</label>
-                        <select name="category"
-                                id="category"
-                                required={true}
-                                value={question.category}
-                                disabled={true}>
-                            <option value="easy">Syntax</option>
-                            <option value="data structures">Data Structures</option>
-                            <option value="logic">Logic</option>
-                        </select>
+                        <input name="category_name"
+                               id="category_name"
+                               required={true}
+                               value={question.category_name}
+                               disabled={true}>
+                        </input>
                     </div>
                     <div className="buttons">
                         {!processing ?

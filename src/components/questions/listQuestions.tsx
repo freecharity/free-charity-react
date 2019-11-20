@@ -1,14 +1,29 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-import jsonFile from 'data/questions.json';
-import Question from './questionInterface';
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import {Question} from 'models/question';
+import Pagination from '../pagination/pagination';
 
 export default function ListQuestions() {
-    const [questions, setQuestions] = useState<Question[]>(jsonFile.questions);
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const [showDeleted, setShowDeleted] = useState(false);
+    const endpoint = `http://localhost:3000/questions`;
+
+    useEffect(() => {
+        getQuestions();
+    }, [page, showDeleted]);
+
+    const getQuestions = () => {
+        axios.get(endpoint + `?page=${page}&deleted=${showDeleted}`,).then((res) => {
+            const questions: Question[] = res.data.results;
+            setQuestions(questions);
+            setTotal(res.data.total);
+        }).catch((err) => {
+            alert(err);
+        });
+    };
 
     return (
         <div className="list_questions_container">
@@ -23,45 +38,41 @@ export default function ListQuestions() {
                         <Link to={'/questions/create'}>Create Question</Link>
                     </div>
                 </div>
+                <div className="show_deleted">
+                    <div className={`checkbox ${showDeleted ? 'checked' : ''}`}
+                         onClick={() => setShowDeleted(!showDeleted)}
+                    />
+                    Show Deleted
+                </div>
                 <table>
                     <thead>
                     <tr>
-                        <th>Difficulty</th>
                         <th>Category</th>
                         <th>Question</th>
                         <th>Answer</th>
-                        <th>Action</th>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>
-                    {questions.map((q) => {
+                    {questions.map((q: Question) => {
                         return (
-                            <tr key={q.id}>
-                                <td>{q.difficulty}</td>
-                                <td>{q.category}</td>
+                            <tr key={q.question_id}>
+                                <td>{q.category_name}</td>
                                 <td>{q.question}</td>
-                                <td>{q.correctAnswer}</td>
+                                <td>{q.answer}</td>
                                 <td>
-                                    <Link to={'/questions/edit'}>Edit</Link>
-                                    <Link to={'/questions/delete'}>Delete</Link>
+                                    <Link to={`/questions/edit/${q.question_id}`}>Edit</Link>
+                                    {!q.deleted ?
+                                        <Link to={`/questions/delete/${q.question_id}`}>Delete</Link> :
+                                        <Link className="inactive" to={`#`}>Delete</Link>
+                                    }
                                 </td>
                             </tr>
                         );
                     })}
                     </tbody>
                 </table>
-                <div className="pagination">
-                    <div className="buttons">
-                        <button><FontAwesomeIcon icon={faArrowLeft}/></button>
-                        <button className="selected">1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <button><FontAwesomeIcon icon={faArrowRight}/></button>
-                    </div>
-                    <div className="results">
-                        Showing 3 of 3 results
-                    </div>
-                </div>
+                <Pagination results={questions} page={page} setPage={setPage} total={total}/>
             </div>
         </div>
     );

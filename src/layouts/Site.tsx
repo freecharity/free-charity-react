@@ -113,8 +113,8 @@ export default function Site() {
                         <Route path="/user/login" component={UserLogin}/>
                         <Route path="/user/register" component={Register}/>
                         <Route path="/questions/create" component={CreateQuestion}/>
-                        <Route path="/questions/edit/" component={EditQuestion}/>
-                        <Route path="/questions/delete" component={DeleteQuestion}/>
+                        <Route path="/questions/edit/:questionId" component={EditQuestion}/>
+                        <Route path="/questions/delete/:questionId" component={DeleteQuestion}/>
                         <Route path="/questions" component={ListQuestions}/>
                         <Route path="/categories/create"
                                component={() => <CreateCategory toggleAvatar={handleToggleAvatar}

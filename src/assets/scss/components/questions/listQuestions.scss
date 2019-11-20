@@ -14,8 +14,7 @@ div.list_questions_inner {
   }
 
   h1 {
-    margin: 0;
-    margin-bottom: 2rem;
+    margin: 0 0 2rem;
   }
 
   div.menu {
@@ -53,6 +52,15 @@ div.list_questions_inner {
     }
   }
 
+  div.show_deleted {
+    display: flex;
+    align-items: center;
+
+    div.checkbox {
+      @include checkbox;
+    }
+  }
+
   table {
     width: 100%;
 
@@ -81,6 +89,12 @@ div.list_questions_inner {
 
       td:last-child {
         text-align: right;
+
+        a {
+          &.inactive {
+            @include inactive-link;
+          }
+        }
       }
 
       @media(max-width: $mobile-width) {

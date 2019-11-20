@@ -1,31 +1,42 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-import Question from './questionInterface';
-
+import {useHistory} from 'react-router';
+import axios from 'axios';
+import {initialState, Question} from 'models/question';
+import {Category} from 'models/category';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 export default function CreateQuestion() {
-
     const [processing, setProcessing] = useState(false);
+    const [question, setQuestion] = useState<Question>(initialState);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const history = useHistory();
+    const endpoint = `http://localhost:3000/questions`;
 
-    const [question, setQuestion] = useState<Question>({
-        id: "",
-        question: "",
-        correctAnswer: "",
-        incorrectAnswer1: "",
-        incorrectAnswer2: "",
-        incorrectAnswer3: "",
-        difficulty: "",
-        category: ""
-    });
+    useEffect(() => {
+        getCategories();
+    }, []);
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        if (event) {
-            event.preventDefault();
-        }
-        submitQuestionToServer();
+    const createQuestion = () => {
+        setProcessing(true);
+        axios.post(endpoint, question).then((res) => {
+            history.goBack();
+        }).catch((err) => {
+            alert(err);
+        }).finally(() => {
+            setProcessing(false);
+        });
+    };
+
+    const getCategories = () => {
+        axios(`http://localhost:3000/categories`).then((res) => {
+            console.log(res);
+            const categories: Category[] = res.data.results;
+            setCategories(categories);
+        }).catch((error) => {
+            alert(error);
+        });
     };
 
     const handleInputChange = (
@@ -38,10 +49,11 @@ export default function CreateQuestion() {
         });
     };
 
-    const submitQuestionToServer = () => {
-        setProcessing(true);
-        console.log('Adding Question:');
-        console.log(question);
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        if (event) {
+            event.preventDefault();
+        }
+        createQuestion();
     };
 
     return (
@@ -50,11 +62,11 @@ export default function CreateQuestion() {
                 <div className="back">
                     {!processing ?
                         <Link to={'/questions'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>
                         :
                         <Link to={'#'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>}
                     <h1>Create Question</h1>
                 </div>
@@ -70,73 +82,50 @@ export default function CreateQuestion() {
                     </div>
                     <div className="input-group">
                         <label>Answer</label>
-                        <input id="correctAnswer"
-                               name="correctAnswer"
+                        <input id="answer"
+                               name="answer"
                                type="text"
                                required={true}
-                               value={question.correctAnswer}
+                               value={question.answer}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #1</label>
-                        <input id="incorrectAnswer1"
-                               name="incorrectAnswer1"
+                        <input id="incorrect_1"
+                               name="incorrect_1"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer1}
+                               value={question.incorrect_1}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #2</label>
-                        <input id="incorrectAnswer2"
-                               name="incorrectAnswer2"
+                        <input id="incorrect_2"
+                               name="incorrect_2"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer2}
+                               value={question.incorrect_2}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #3</label>
-                        <input id="incorrectAnswer3"
-                               name="incorrectAnswer3"
+                        <input id="incorrect_3"
+                               name="incorrect_3"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer3}
+                               value={question.incorrect_3}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
-                        <label>Difficulty</label>
-                        <select name="difficulty"
-                                id="difficulty"
-                                required={true}
-                                value={question.difficulty}
-                                onChange={handleInputChange}>
-                            <option value=""
-                                    defaultValue=""
-                                    disabled={true}
-                                    hidden={true}>Select a difficulty
-                            </option>
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
-                            <option value="expert">Expert</option>
-                        </select>
-                    </div>
-                    <div className="input-group">
                         <label>Category</label>
-                        <select name="category"
-                                id="category"
+                        <select name="category_id"
+                                id="category_id"
                                 required={true}
-                                value={question.category}
+                                value={question.category_id}
                                 onChange={handleInputChange}>
-                            <option value=""
-                                    defaultValue=""
-                                    disabled={true}
-                                    hidden={true}>Select a category
-                            </option>
-                            <option value="easy">Syntax</option>
-                            <option value="data structures">Data Structures</option>
-                            <option value="logic">Logic</option>
+                            {categories.map((c: Category) => {
+                                return <option key={c.category_id} value={c.category_id}>{c.name}</option>;
+                            })}
                         </select>
                     </div>
                     <div className="buttons">

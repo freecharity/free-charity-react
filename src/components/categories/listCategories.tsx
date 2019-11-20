@@ -11,20 +11,20 @@ export default function ListCategories() {
     const [showDeleted, setShowDeleted] = useState(false);
     const endpoint = `http://localhost:3000/categories?page=${page}&showDeleted=${showDeleted}`;
 
-    const getCategories = async () => {
-        await axios(endpoint).then((result) => {
-            const categories: Category[] = result.data.results;
+    useEffect(() => {
+        getCategories();
+    }, [page, showDeleted]);
+
+    const getCategories = () => {
+        axios(endpoint).then((res) => {
+            console.log(res);
+            const categories: Category[] = res.data.results;
             setCategories(categories);
-            setTotal(result.data.total);
+            setTotal(res.data.total);
         }).catch((error) => {
             alert(error);
         });
     };
-
-    useEffect(() => {
-        console.log('updating data');
-        getCategories();
-    }, [page, showDeleted]);
 
     return (
         <div className="list_categories_container">

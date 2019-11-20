@@ -1,22 +1,54 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-import jsonFile from 'data/question_data.json';
-import Question from './questionInterface';
-
+import {useHistory, useParams} from 'react-router';
+import axios from 'axios';
+import {initialState, Question} from 'models/question';
+import {Category} from 'models/category';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 export default function EditQuestion() {
     const [processing, setProcessing] = useState(false);
+    const [question, setQuestion] = useState<Question>(initialState);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const {questionId} = useParams();
+    const history = useHistory();
+    const endpoint = "http://localhost:3000/questions";
 
-    const [question, setQuestion] = useState<Question>(jsonFile[0]);
+    useEffect(() => {
+        getQuestion();
+        getCategories();
+    }, []);
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        if (event) {
-            event.preventDefault();
-        }
-        submitQuestionToServer();
+    const getQuestion = () => {
+        axios.get(endpoint + `?page=1&deleted=true&id=${questionId}`).then((res) => {
+            if (res.data.results.length > 0) {
+                const question: Question = res.data.results[0];
+                setQuestion(question);
+            }
+        }).catch((err) => {
+            alert(err);
+        });
+    };
+
+    const getCategories = () => {
+        axios(`http://localhost:3000/categories`).then((res) => {
+            const categories: Category[] = res.data.results;
+            setCategories(categories);
+        }).catch((error) => {
+            alert(error);
+        });
+    };
+
+    const putQuestion = () => {
+        setProcessing(true);
+        axios.put(endpoint, question).then((res) => {
+            history.goBack();
+        }).catch((err) => {
+            alert(err);
+        }).finally(() => {
+            setProcessing(false);
+        });
     };
 
     const handleInputChange = (
@@ -29,10 +61,11 @@ export default function EditQuestion() {
         });
     };
 
-    const submitQuestionToServer = () => {
-        setProcessing(true);
-        console.log('Adding Question:');
-        console.log(question);
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        if (event) {
+            event.preventDefault();
+        }
+        putQuestion();
     };
 
     return (
@@ -41,15 +74,15 @@ export default function EditQuestion() {
                 <div className="back">
                     {!processing ?
                         <Link to={'/questions'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>
                         :
                         <Link to={'#'}>
-                            <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+                            <FontAwesomeIcon icon={faArrowLeft}/>
                         </Link>}
                     <h1>Edit Question</h1>
                 </div>
-                <form onSubmit={handleSubmit}>
+                {questionId != -1 ? <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label>Question</label>
                         <input id="question"
@@ -61,63 +94,61 @@ export default function EditQuestion() {
                     </div>
                     <div className="input-group">
                         <label>Answer</label>
-                        <input id="correctAnswer"
-                               name="correctAnswer"
+                        <input id="answer"
+                               name="answer"
                                type="text"
                                required={true}
-                               value={question.correctAnswer}
+                               value={question.answer}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #1</label>
-                        <input id="incorrectAnswer1"
-                               name="incorrectAnswer1"
+                        <input id="incorrect_1"
+                               name="incorrect_1"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer1}
+                               value={question.incorrect_1}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #2</label>
-                        <input id="incorrectAnswer2"
-                               name="incorrectAnswer2"
+                        <input id="incorrect_2"
+                               name="incorrect_2"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer2}
+                               value={question.incorrect_2}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
                         <label>Incorrect Answer #3</label>
-                        <input id="incorrectAnswer3"
-                               name="incorrectAnswer3"
+                        <input id="incorrect_3"
+                               name="incorrect_3"
                                type="text"
                                required={true}
-                               value={question.incorrectAnswer3}
+                               value={question.incorrect_3}
                                onChange={handleInputChange}/>
                     </div>
                     <div className="input-group">
-                        <label>Difficulty</label>
-                        <select name="difficulty"
-                                id="difficulty"
+                        <label>Category</label>
+                        <select name="category_id"
+                                id="category_id"
                                 required={true}
-                                value={question.difficulty}
+                                value={question.category_id}
                                 onChange={handleInputChange}>
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
-                            <option value="expert">Expert</option>
+                            {categories.map((c: Category) => {
+                                return <option key={c.category_id} value={c.category_id}>{c.name}</option>;
+                            })}
                         </select>
                     </div>
                     <div className="input-group">
-                        <label>Category</label>
-                        <select name="category"
-                                id="category"
+                        <label>Deleted</label>
+                        <select name="deleted"
+                                id="deleted"
                                 required={true}
-                                value={question.category}
+                                value={question.deleted}
                                 onChange={handleInputChange}>
-                            <option value="easy">Syntax</option>
-                            <option value="data structures">Data Structures</option>
-                            <option value="logic">Logic</option>
+                            <option value={1}>True</option>
+                            <option value={0}>False</option>
                         </select>
                     </div>
                     <div className="buttons">
@@ -130,7 +161,7 @@ export default function EditQuestion() {
                             :
                             <button type={"button"}>Loading...</button>}
                     </div>
-                </form>
+                </form> : ''}
             </div>
         </div>
     );
