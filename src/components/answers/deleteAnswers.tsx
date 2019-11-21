@@ -1,16 +1,14 @@
 import React from 'react';
-import Answer from "./answerInterface";
+import {useDispatch, useSelector} from 'react-redux';
+import {openDeleteAnswers} from '../../store/actions';
 
-interface DeleteAnswers {
-    toggleDeleteAnswers: any;
-    answers: Answer[];
-}
-
-// TODO Implement backend functionality
-export default function DeleteAnswers(props: DeleteAnswers) {
+export default function DeleteAnswers() {
+    const {open, answers} = useSelector(state => state.deleteAnswers);
+    console.log({open, answers});
+    const dispatch = useDispatch();
 
     const closeWindow = () => {
-        props.toggleDeleteAnswers(false, props.answers);
+        dispatch(openDeleteAnswers(false, []));
     };
 
     const stopPropagation = (e) => {
@@ -23,20 +21,24 @@ export default function DeleteAnswers(props: DeleteAnswers) {
 
     const submitRequestToServer = () => {
         // TODO add delete query here
-        console.log('Deleted the following answers: ');
-        console.log(props.answers);
-        props.toggleDeleteAnswers(false, []);
+        console.log('Deleted the following answers.ts: ');
+        console.log(answers);
+        closeWindow();
     };
 
-    return (
-        <div className="delete-answers_container" onClick={closeWindow}>
-            <div className="delete-answers_inner" onClick={stopPropagation}>
-                <h1>Are you sure you want to delete {props.answers.length} item(s)?</h1>
-                <div className="buttons">
-                    <button onClick={closeWindow}>Cancel</button>
-                    <button onClick={deleteAnswers}>Delete</button>
+    if (open) {
+        return (
+            <div className="delete-answers_container" onClick={closeWindow}>
+                <div className="delete-answers_inner" onClick={stopPropagation}>
+                    <h1>Are you sure you want to delete {answers.length} item(s)?</h1>
+                    <div className="buttons">
+                        <button onClick={closeWindow}>Cancel</button>
+                        <button onClick={deleteAnswers}>Delete</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        );
+    } else {
+        return <div/>;
+    }
 }

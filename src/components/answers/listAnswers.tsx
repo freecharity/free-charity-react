@@ -1,21 +1,20 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import axios from 'axios';
-import {Answer} from "models/answer";
-import Pagination from "../pagination/pagination";
-import Checkbox from "../checkbox/checkbox";
+import {Answer} from 'models/answer';
+import Pagination from '../pagination/pagination';
+import Checkbox from '../checkbox/checkbox';
+import {openDeleteAnswers} from '../../store/actions';
 
-interface ListAnswersProps {
-    toggleDeleteAnswers: any;
-}
-
-export default function ListAnswers(props: ListAnswersProps) {
+export default function ListAnswers() {
+    const dispatch = useDispatch();
     const [answers, setAnswers] = useState<Answer[]>([]);
     const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>([]);
-    const endpoint = 'http://localhost:3000/answers';
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [showDeleted, setShowDeleted] = useState(false);
     const [showCorrect, setShowCorrect] = useState(false);
+    const endpoint = 'http://localhost:3000/answers';
 
     useEffect(() => {
         getAnswers();
@@ -30,7 +29,7 @@ export default function ListAnswers(props: ListAnswersProps) {
             }
         }).catch((err) => {
             alert(err);
-        })
+        });
     };
 
     const selectAnswer = (answer: Answer, checked: boolean) => {
@@ -42,11 +41,11 @@ export default function ListAnswers(props: ListAnswersProps) {
             arr.splice(index, 1);
         }
         setSelectedAnswers(arr);
-        console.log(selectedAnswers);
     };
 
     const deleteAnswers = () => {
-        props.toggleDeleteAnswers(true, selectedAnswers);
+        // TODO: fix selectedAnswers not being passed to openDeleteAnswers
+        dispatch(openDeleteAnswers(true, selectedAnswers));
     };
 
     return (
@@ -93,5 +92,5 @@ export default function ListAnswers(props: ListAnswersProps) {
                 <Pagination results={answers} page={page} setPage={setPage} total={total}/>
             </div>
         </div>
-    )
+    );
 }

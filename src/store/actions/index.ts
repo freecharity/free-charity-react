@@ -10,3 +10,8 @@ export const toggleDonate = (closed, success) => ({
 export const openAvatar = (open) => ({
     type: open ? 'OPEN_SELECT_AVATAR' : 'CLOSE_SELECT_AVATAR'
 });
+
+export const openDeleteAnswers = (open, answers) => ({
+    type: open ? 'OPEN_DELETE_ANSWERS' : 'CLOSE_DELETE_ANSWERS',
+    answers: answers
+});

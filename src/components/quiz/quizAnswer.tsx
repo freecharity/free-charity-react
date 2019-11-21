@@ -20,7 +20,7 @@ export default function QuizAnswer(props: AnswerProps) {
 
     const selectAnswer = () => {
         if (!props.locked) {
-            // lock other answers
+            // lock other answers.ts
             props.setLocked(true);
             // highlight green or red if answer is correct or incorrect
             if (props.correct) {

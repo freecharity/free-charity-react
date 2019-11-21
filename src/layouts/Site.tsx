@@ -25,20 +25,9 @@ import UserProfileEdit from '../components/user/userProfileEdit';
 import DonationResult from '../components/donate/donationResult';
 import ListAnswers from '../components/answers/listAnswers';
 import DeleteAnswers from '../components/answers/deleteAnswers';
-import Answer from '../components/answers/answerInterface';
 
 export default function Site() {
     const [category, setCategory] = useState('data structures');
-
-    // TODO replace <any> with something typesafe
-    const [deleteAnswers, setDeleteAnswers] = useState<any>({
-        open: false,
-        answers: []
-    });
-
-    const handleDeleteAnswers = (open: boolean, answers: Answer[]) => {
-        setDeleteAnswers({open: open, answers: answers});
-    };
 
     const handleSelectCategory = (category: string) => {
         setCategory(category);
@@ -48,11 +37,7 @@ export default function Site() {
         <div className="site">
             <SelectAvatar/>
             <DonationResult/>
-            {deleteAnswers.open ?
-                <DeleteAnswers toggleDeleteAnswers={handleDeleteAnswers} answers={deleteAnswers.answers}/>
-                :
-                ''
-            }
+            <DeleteAnswers/>
             <div className="app-sidebar">
                 <Sidebar/>
             </div>
@@ -65,7 +50,6 @@ export default function Site() {
                         <Route path="/home" component={Home}/>
                         <Route path="/game" component={Quiz}/>
                         <Route path="/donate" component={Donate}/>
-                        />
                         <Route path="/category"
                                component={() => <SelectCategory selectCategory={handleSelectCategory}/>}
                         />
@@ -82,10 +66,7 @@ export default function Site() {
                         <Route path="/categories/edit/:categoryId" component={EditCategory}/>
                         <Route path="/categories/delete/:categoryId" component={DeleteCategory}/>
                         <Route path="/categories" component={ListCategories}/>
-                        <Route path='/answers'
-                               component={() => <ListAnswers toggleDeleteAnswers={handleDeleteAnswers}
-                               />}
-                        />
+                        <Route path='/answers' component={ListAnswers}/>
                         <Route path="*" component={Home}/>
                     </Switch>
                 </div>
