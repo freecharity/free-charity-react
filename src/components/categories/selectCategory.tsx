@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import axios from 'axios';
+import Group from './groupInterface';
+import {Category} from 'models/category';
+import {setCategory} from '../../store/actions';
 
-import Group from "./groupInterface";
-import {Category} from "models/category";
-import axios from "axios";
-
-interface SelectCategoryProps {
-    selectCategory: any;
-}
-
-export default function SelectCategory(props: SelectCategoryProps) {
+export default function SelectCategory() {
+    const dispatch = useDispatch();
     const [groups, setGroups] = useState<Group[]>([]);
     const endpoint = `http://localhost:3000/categories?page=1`;
     const history = useHistory();
@@ -46,9 +44,9 @@ export default function SelectCategory(props: SelectCategoryProps) {
         setGroups(groups);
     };
 
-    const selectCategory = (category: string) => {
-        props.selectCategory(category);
-        history.push('/quiz');
+    const selectCategory = (name: string) => {
+        dispatch(setCategory(name));
+        history.push('/game');
     };
 
     return (
@@ -69,15 +67,15 @@ export default function SelectCategory(props: SelectCategoryProps) {
                                     <div className="name">
                                         {c.name}
                                     </div>
-                                </div>
+                                </div>;
                             })}
                         </div>
-                    </div>
+                    </div>;
                 })}
                 <Link to='/game'>
                     Back to game
                 </Link>
             </div>
         </div>
-    )
+    );
 }

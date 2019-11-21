@@ -15,3 +15,8 @@ export const openDeleteAnswers = (open, answers) => ({
     type: open ? 'OPEN_DELETE_ANSWERS' : 'CLOSE_DELETE_ANSWERS',
     answers: answers
 });
+
+export const setCategory = (name) => ({
+    type: 'SET_CATEGORY',
+    name: name
+});

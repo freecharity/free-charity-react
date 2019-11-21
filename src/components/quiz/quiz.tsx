@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
 import axios from 'axios';
 import QuizQuestion from './quizQuestion';
-import QuizScore from "./quizScore";
-import {Question} from "models/question";
-import {Answer} from "models/answer";
+import QuizScore from './quizScore';
+import {Question} from 'models/question';
+import {Answer} from 'models/answer';
 
 export default function Quiz() {
-    const [category, setCategory] = useState<string>('calculus');
+    const category = useSelector(state => state.category.name);
+    console.log(category);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [score, setScore] = useState<number>(0);
     const endpoint = `http://localhost:3000`;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import Sidebar from 'components/sidebar/sidebar';
@@ -27,12 +27,6 @@ import ListAnswers from '../components/answers/listAnswers';
 import DeleteAnswers from '../components/answers/deleteAnswers';
 
 export default function Site() {
-    const [category, setCategory] = useState('data structures');
-
-    const handleSelectCategory = (category: string) => {
-        setCategory(category);
-    };
-
     return (
         <div className="site">
             <SelectAvatar/>
@@ -50,9 +44,7 @@ export default function Site() {
                         <Route path="/home" component={Home}/>
                         <Route path="/game" component={Quiz}/>
                         <Route path="/donate" component={Donate}/>
-                        <Route path="/category"
-                               component={() => <SelectCategory selectCategory={handleSelectCategory}/>}
-                        />
+                        <Route path="/category" component={SelectCategory}/>
                         <Route path="/leaderboard" component={Leaderboard}/>
                         <Route path="/user/profile/edit" component={UserProfileEdit}/>
                         <Route path="/user/profile" component={UserProfile}/>
