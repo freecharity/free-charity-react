@@ -48,7 +48,7 @@ export default function SelectCategory(props: SelectCategoryProps) {
 
     const selectCategory = (category: string) => {
         props.selectCategory(category);
-        history.push('/game');
+        history.push('/quiz');
     };
 
     return (

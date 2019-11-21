@@ -4,7 +4,7 @@ import {Route, Switch} from 'react-router-dom';
 import Sidebar from 'components/sidebar/sidebar';
 import Navbar from 'components/navbar/navbar';
 import Footer from 'components/footer/footer';
-import Game from 'components/game/Game';
+import Quiz from 'components/quiz/quiz';
 import UserLogin from 'components/user/userLogin';
 import Register from 'components/user/userRegister';
 import CreateQuestion from 'components/questions/createQuestion';
@@ -95,7 +95,7 @@ export default function Site() {
                 <div className="app-container">
                     <Switch>
                         <Route path="/home" component={Home}/>
-                        <Route path="/game" component={Game}/>
+                        <Route path="/game" component={Quiz}/>
                         <Route path="/donate"
                                component={() => <Donate toggleDonation={handleDonation}/>}
                         />

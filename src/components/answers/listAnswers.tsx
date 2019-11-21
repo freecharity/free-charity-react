@@ -1,30 +1,48 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import {Answer} from "models/answer";
+import Pagination from "../pagination/pagination";
+import Checkbox from "../checkbox/checkbox";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import Answer from "./answerInterface";
-import jsonFile from "data/answers_data.json";
-
-interface ListAnswers {
+interface ListAnswersProps {
     toggleDeleteAnswers: any;
 }
 
-export default function ListAnswers(props: ListAnswers) {
-    // TODO figure out why I need to suppress this error
-    // @ts-ignore
-    const [answers, setAnswers] = useState<Answer[]>(jsonFile);
+export default function ListAnswers(props: ListAnswersProps) {
+    const [answers, setAnswers] = useState<Answer[]>([]);
     const [selectedAnswers, setSelectedAnswers] = useState<Answer[]>([]);
+    const endpoint = 'http://localhost:3000/answers';
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const [showDeleted, setShowDeleted] = useState(false);
+    const [showCorrect, setShowCorrect] = useState(false);
 
-    const selectAnswer = (answer: Answer, e: ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
+        getAnswers();
+    }, [page]);
+
+    const getAnswers = () => {
+        axios.get(endpoint + `?page=${page}&deleted=${showDeleted}&correct=${showCorrect}`).then((res) => {
+            if (res.data.results.length > 0) {
+                const answers: Answer[] = res.data.results;
+                setAnswers(answers);
+                setTotal(res.data.total);
+            }
+        }).catch((err) => {
+            alert(err);
+        })
+    };
+
+    const selectAnswer = (answer: Answer, checked: boolean) => {
         const arr: Answer[] = selectedAnswers;
-        // if input has been checked
-        if (e.target.checked) {
+        if (checked) {
             arr.push(answer);
         } else {
-            const index: number = arr.findIndex(a => a.id === answer.id);
+            const index: number = arr.findIndex(a => a.answer_id === answer.answer_id);
             arr.splice(index, 1);
         }
         setSelectedAnswers(arr);
+        console.log(selectedAnswers);
     };
 
     const deleteAnswers = () => {
@@ -56,36 +74,23 @@ export default function ListAnswers(props: ListAnswers) {
                     </tr>
                     </thead>
                     <tbody>
-                    {answers.map((a) => {
+                    {answers.map((a: Answer) => {
                         return (
-                            <tr key={a.id}>
-                                <td>{a.user}</td>
-                                <td>{a.ipAddress}</td>
-                                <td>{a.correct.toString()}</td>
-                                <td>{a.question}</td>
+                            <tr key={a.answer_id}>
+                                <td>{a.user_id}</td>
+                                <td>{a.ip}</td>
+                                <td>{a.correct == 1 ? 'true' : false}</td>
+                                <td>{a.question_id}</td>
                                 <td>{a.answer}</td>
                                 <td>
-                                    <div className="checkbox">
-                                        <input type="checkbox" onChange={(e) => selectAnswer(a, e)}/>
-                                    </div>
+                                    <Checkbox item={a} onChecked={selectAnswer}/>
                                 </td>
                             </tr>
                         );
                     })}
                     </tbody>
                 </table>
-                <div className="pagination">
-                    <div className="buttons">
-                        <button><FontAwesomeIcon icon={faArrowLeft}/></button>
-                        <button className="selected">1</button>
-                        <button>2</button>
-                        <button>3</button>
-                        <button><FontAwesomeIcon icon={faArrowRight}/></button>
-                    </div>
-                    <div className="results">
-                        Showing 3 of 3 results
-                    </div>
-                </div>
+                <Pagination results={answers} page={page} setPage={setPage} total={total}/>
             </div>
         </div>
     )

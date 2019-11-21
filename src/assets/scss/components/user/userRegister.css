@@ -1,0 +1,84 @@
+/**
+* This file holds all variables that scss tracks for this application. It is designed
+* to be lightweight to decrease time it takes to import this file in other components.
+*/
+/* Colors */
+/* Media sizes */
+div.register_container {
+    margin-top: 4rem;
+}
+
+div.register_inner {
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 637px;
+    background-color: #fefefe;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.25) 5px 5px 5px;
+}
+
+div.register_inner h1,
+div.register_inner h2,
+div.register_inner p {
+    margin: 0;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    text-align: center;
+}
+
+div.register_inner h1 {
+    font-size: 48px;
+}
+
+div.register_inner h2 {
+    font-size: 24px;
+}
+
+div.register_inner a,
+div.register_inner button {
+    display: block;
+    color: #fff;
+    background-color: #ed9143;
+    padding: 1rem;
+    font-size: 24px;
+    border-radius: 15px;
+    width: 100%;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    text-align: center;
+}
+
+div.register_inner form div.input-group {
+    margin-bottom: 1rem;
+}
+
+div.register_inner form div.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+}
+
+div.register_inner form div.input-group input {
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid #888;
+    font-size: 24px;
+}
+
+div.register_inner p a {
+    color: #ed9143;
+    display: inline;
+    padding: 0;
+    background-color: #fff;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+div.register_inner div.back-button a {
+    background-color: #888;
+}
+
+/*# sourceMappingURL=userRegister.css.map */

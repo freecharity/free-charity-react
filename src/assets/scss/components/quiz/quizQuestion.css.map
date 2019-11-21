@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "sourceRoot": "",
+  "sources": [
+    "currentQuestion.scss"
+  ],
+  "names": [],
+  "mappings": "AAKE;EACE",
+  "file": "currentQuestion.css"
+}

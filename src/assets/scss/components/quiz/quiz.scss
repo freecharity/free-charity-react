@@ -1,0 +1,7 @@
+@import 'quizQuestion';
+@import 'quizScore';
+
+div.quiz_inner {
+  @include small-panel;
+  overflow: hidden;
+}

@@ -1,0 +1,30 @@
+div.current-question_inner {
+  div.answers {
+    div:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+
+    div.green {
+      background-color: $green-correct;
+      transition: 0.75s ease;
+    }
+
+    div.red {
+      background-color: $red-incorrect;
+      transition: 0.75s ease;
+    }
+  }
+
+  div.answer {
+    cursor: pointer;
+    border: 1px solid $light-gray-1;
+    padding: 1rem;
+    box-sizing: border-box;
+    animation-delay: 5s !important;
+
+    &:hover {
+      background-color: rgba(112, 112, 112, 0.25);
+      transition: 0.5s ease;
+    }
+  }
+}

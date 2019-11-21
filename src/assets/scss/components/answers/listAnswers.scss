@@ -80,99 +80,12 @@ div.answers_inner {
       }
 
       td:last-child {
-        text-align: right;
+        div {
+          margin: 0 auto;
+        }
       }
-
       div.checkbox {
-        display: block;
-        position: relative;
-        padding-left: 35px;
-        margin-bottom: 12px;
-        cursor: pointer;
-        font-size: 22px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-
-        input {
-          position: absolute;
-          opacity: 0;
-          cursor: pointer;
-          height: 0;
-          width: 0;
-        }
-
-        span.checkmark {
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 25px;
-          width: 25px;
-          background-color: #eee;
-        }
-
-        &:hover input ~ .checkmark {
-          background-color: $light-gray-1;
-        }
-
-        span.checkmark:after {
-          content: "";
-          position: absolute;
-          display: none;
-        }
-
-        input:checked ~ .checkmark:after {
-          display: block;
-        }
-
-        span.checkmark:after {
-          left: 9px;
-          top: 5px;
-          width: 5px;
-          height: 10px;
-          border: solid white;
-          border-width: 0 3px 3px 0;
-          -webkit-transform: rotate(45deg);
-          -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
-        }
-      }
-    }
-  }
-
-  div.pagination {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    @media(max-width: $mobile-width) {
-      display: block;
-      text-align: center;
-    }
-
-    div.buttons {
-      button {
-        @include small-button;
-        width: 45px;
-        height: 45px;
-        padding: 0;
-      }
-
-      button:not(:last-child) {
-        margin-right: 0.25rem;
-      }
-
-      button.selected {
-        @include small-button-gray;
-        padding: 0;
-      }
-    }
-
-    div.results {
-      color: $dark-gray-1;
-      @media(max-width: $mobile-width) {
-        margin-top: 2rem;
+        @include checkbox;
       }
     }
   }

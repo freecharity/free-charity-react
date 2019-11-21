@@ -6,6 +6,7 @@ interface DeleteAnswers {
     answers: Answer[];
 }
 
+// TODO Implement backend functionality
 export default function DeleteAnswers(props: DeleteAnswers) {
 
     const closeWindow = () => {
