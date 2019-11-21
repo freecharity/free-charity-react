@@ -24,13 +24,11 @@ import UserProfile from '../components/user/userProfile';
 import UserProfileEdit from '../components/user/userProfileEdit';
 import DonationResult from '../components/donate/donationResult';
 import ListAnswers from '../components/answers/listAnswers';
-import Answer from '../components/answers/answerInterface';
 import DeleteAnswers from '../components/answers/deleteAnswers';
+import Answer from '../components/answers/answerInterface';
 
 export default function Site() {
-    const [selectAvatar, setSelectAvatar] = useState(true);
-    const [selectedAvatar, setSelectedAvatar] = useState(-1);
-    const [category, setCategory] = useState("data structures");
+    const [category, setCategory] = useState('data structures');
 
     // TODO replace <any> with something typesafe
     const [deleteAnswers, setDeleteAnswers] = useState<any>({
@@ -38,17 +36,8 @@ export default function Site() {
         answers: []
     });
 
-    const handleToggleAvatar = () => {
-        setSelectAvatar(!selectAvatar);
-    };
-
     const handleDeleteAnswers = (open: boolean, answers: Answer[]) => {
         setDeleteAnswers({open: open, answers: answers});
-    };
-
-    const handleSelectedAvatar = (id: number) => {
-        setSelectedAvatar(id);
-        handleToggleAvatar();
     };
 
     const handleSelectCategory = (category: string) => {
@@ -57,16 +46,12 @@ export default function Site() {
 
     return (
         <div className="site">
-            {selectAvatar ?
-                ""
-                :
-                <SelectAvatar toggleAvatar={handleToggleAvatar} selectAvatar={handleSelectedAvatar}/>
-            }
+            <SelectAvatar/>
             <DonationResult/>
             {deleteAnswers.open ?
                 <DeleteAnswers toggleDeleteAnswers={handleDeleteAnswers} answers={deleteAnswers.answers}/>
                 :
-                ""
+                ''
             }
             <div className="app-sidebar">
                 <Sidebar/>
@@ -85,12 +70,7 @@ export default function Site() {
                                component={() => <SelectCategory selectCategory={handleSelectCategory}/>}
                         />
                         <Route path="/leaderboard" component={Leaderboard}/>
-                        <Route path="/user/profile/edit"
-                               component={() => <UserProfileEdit toggleAvatar={handleToggleAvatar}
-                                                                 selectedAvatar={selectedAvatar}
-                                                                 selectAvatar={handleSelectedAvatar}
-                               />}
-                        />
+                        <Route path="/user/profile/edit" component={UserProfileEdit}/>
                         <Route path="/user/profile" component={UserProfile}/>
                         <Route path="/user/login" component={UserLogin}/>
                         <Route path="/user/register" component={Register}/>
@@ -98,18 +78,8 @@ export default function Site() {
                         <Route path="/questions/edit/:questionId" component={EditQuestion}/>
                         <Route path="/questions/delete/:questionId" component={DeleteQuestion}/>
                         <Route path="/questions" component={ListQuestions}/>
-                        <Route path="/categories/create"
-                               component={() => <CreateCategory toggleAvatar={handleToggleAvatar}
-                                                                selectedAvatar={selectedAvatar}
-                                                                selectAvatar={handleSelectedAvatar}
-                               />}
-                        />
-                        <Route path="/categories/edit/:categoryId"
-                               component={() => <EditCategory toggleAvatar={handleToggleAvatar}
-                                                              selectedAvatar={selectedAvatar}
-                                                              selectAvatar={handleSelectedAvatar}
-                               />}
-                        />
+                        <Route path="/categories/create" component={CreateCategory}/>
+                        <Route path="/categories/edit/:categoryId" component={EditCategory}/>
                         <Route path="/categories/delete/:categoryId" component={DeleteCategory}/>
                         <Route path="/categories" component={ListCategories}/>
                         <Route path='/answers'

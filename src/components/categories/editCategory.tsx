@@ -1,32 +1,20 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
-import {useParams, useHistory} from "react-router";
 import axios from 'axios';
-import {Category} from "models/category";
+import {Link} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router';
+import {useDispatch} from 'react-redux';
+import {openAvatar} from 'store/actions';
+import {Category, initialState} from 'models/category';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
-interface EditCategoryProps {
-    toggleAvatar: any;
-    selectAvatar: any;
-    selectedAvatar: number;
-}
-
-const initialState = {
-    category_id: -1,
-    name: "",
-    group: "",
-    description: "",
-    deleted: 0,
-    image: ""
-};
-
-export default function EditCategory(props: EditCategoryProps) {
+export default function EditCategory() {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [processing, setProcessing] = useState(false);
     const [category, setCategory] = useState<Category>(initialState);
     const {categoryId} = useParams();
     const endpoint = `http://localhost:3000/categories`;
-    const history = useHistory();
 
     useEffect(() => {
         getCategory();
@@ -52,10 +40,6 @@ export default function EditCategory(props: EditCategoryProps) {
             alert(error);
             setProcessing(false);
         })
-    };
-
-    const selectAvatar = () => {
-        props.toggleAvatar();
     };
 
     const handleInputChange = (
@@ -96,7 +80,7 @@ export default function EditCategory(props: EditCategoryProps) {
                 {category.category_id != -1 ? <form onSubmit={handleSubmit}>
                     <div className="input-group-image">
                         <label>Category Image</label>
-                        <div className="image-input" onClick={selectAvatar}>
+                        <div className="image-input" onClick={() => dispatch(openAvatar(true))}>
                             <img src="" alt=""/>
                             <span>Edit</span>
                         </div>

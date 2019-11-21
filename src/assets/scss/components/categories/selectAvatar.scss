@@ -15,6 +15,7 @@ div.select_avatar_inner {
     gap: 1rem;
 
     div.avatar {
+      cursor: pointer;
       height: 100px;
       width: 100px;
       background-color: $light-blue-1;
@@ -25,21 +26,18 @@ div.select_avatar_inner {
         height: 100%;
         width: 100%;
       }
+
+      &:hover {
+        background-color: $dark-blue-1;
+      }
     }
   }
 
   div.buttons {
     margin-top: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
 
-    button:first-child {
+    button {
       @include large-button-gray;
-    }
-
-    button:last-child {
-      @include large-button;
     }
   }
 }

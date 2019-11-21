@@ -1,37 +1,25 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useHistory} from 'react-router';
+import {useDispatch} from 'react-redux';
 import axios from 'axios';
-import {Category} from "models/category";
+import {Category, initialState} from 'models/category';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {openAvatar} from '../../store/actions';
 
-interface CreateCategoryProps {
-    toggleAvatar: any;
-    selectAvatar: any;
-    selectedAvatar: number;
-}
-
-const initialState = {
-    category_id: -1,
-    name: "",
-    group: "",
-    description: "",
-    image: "1",
-    deleted: 0
-};
-
-export default function CreateCategory(props: CreateCategoryProps) {
+export default function CreateCategory() {
+    const dispatch = useDispatch();
     const [processing, setProcessing] = useState(false);
     const [category, setCategory] = useState<Category>(initialState);
     const endpoint = `http://localhost:3000/categories`;
     const history = useHistory();
 
-    const postCategory = async () => {
+    const postCategory = () => {
         setProcessing(true);
-        await axios.post(endpoint, category).then((res) => {
+        axios.post(endpoint, category).then((res) => {
             setProcessing(false);
-            navigateBack();
+            history.goBack();
         }).catch((error) => {
             alert(error);
             setProcessing(false);
@@ -55,14 +43,6 @@ export default function CreateCategory(props: CreateCategoryProps) {
         postCategory();
     };
 
-    const selectAvatar = () => {
-        props.toggleAvatar();
-    };
-
-    const navigateBack = () => {
-        history.goBack();
-    };
-
     return (
         <div className="create_category_container">
             <div className="create_category_inner">
@@ -80,7 +60,7 @@ export default function CreateCategory(props: CreateCategoryProps) {
                 <form onSubmit={handleSubmit}>
                     <div className="input-group-image">
                         <label>Category Image</label>
-                        <div className="image-input" onClick={selectAvatar}>
+                        <div className="image-input" onClick={() => dispatch(openAvatar(true))}>
                             <img src="" alt=""/>
                             <span>Edit</span>
                         </div>
@@ -114,13 +94,13 @@ export default function CreateCategory(props: CreateCategoryProps) {
                     </div>
                     <div className="buttons">
                         {!processing ?
-                            <Link className={"cancel"} to={"/categories"}>Cancel</Link>
+                            <Link className={'cancel'} to={'/categories'}>Cancel</Link>
                             :
-                            <a className={"cancel"}>Cancel</a>}
+                            <a className={'cancel'}>Cancel</a>}
                         {!processing ?
                             <button>Create Category</button>
                             :
-                            <button type={"button"}>Loading...</button>}
+                            <button type={'button'}>Loading...</button>}
                     </div>
                 </form>
             </div>

@@ -6,3 +6,12 @@ export interface Category {
     image: string;
     deleted: number;
 }
+
+export const initialState = {
+    category_id: -1,
+    name: '',
+    group: '',
+    description: '',
+    deleted: 0,
+    image: ''
+};

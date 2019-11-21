@@ -1,22 +1,19 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
-import UserProfile from "../../assets/scss/components/user/userProfileInterface";
+import {useDispatch} from 'react-redux';
+import {openAvatar} from 'store/actions';
+import UserProfile from 'assets/scss/components/user/userProfileInterface';
 import jsonFile from 'data/userProfile_data.json';
 
-interface UserProfileEdit {
-    toggleAvatar: any;
-    selectedAvatar: any;
-    selectAvatar: any;
-}
-
-export default function UserProfileEdit(props: UserProfileEdit) {
+export default function UserProfileEdit() {
+    const dispatch = useDispatch();
 
     const [userProfile, setUserProfile] = useState<UserProfile>({
         id: jsonFile.id,
         username: jsonFile.username,
         email: jsonFile.email,
-        password: "",
-        confirmPassword: ""
+        password: '',
+        confirmPassword: ''
     });
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +33,7 @@ export default function UserProfileEdit(props: UserProfileEdit) {
         if (userProfile.password === userProfile.confirmPassword) {
             submitUserProfileToServer();
         } else {
-            alert("Passwords do not match!");
+            alert('Passwords do not match!');
         }
 
     };
@@ -49,7 +46,7 @@ export default function UserProfileEdit(props: UserProfileEdit) {
     return (
         <div className="user-profile-edit_container">
             <div className="user-profile-edit_inner">
-                <div className="avatar" onClick={props.selectAvatar}>
+                <div className="avatar" onClick={() => dispatch(openAvatar(true))}>
                     <img src="" alt=""/>
                     <span>Edit</span>
                 </div>
@@ -101,5 +98,5 @@ export default function UserProfileEdit(props: UserProfileEdit) {
                 </form>
             </div>
         </div>
-    )
+    );
 }

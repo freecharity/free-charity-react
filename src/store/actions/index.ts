@@ -6,3 +6,7 @@ export const toggleDonate = (closed, success) => ({
     type: closed ? 'OPEN_DONATION' : 'CLOSE_DONATION',
     success: success
 });
+
+export const openAvatar = (open) => ({
+    type: open ? 'OPEN_SELECT_AVATAR' : 'CLOSE_SELECT_AVATAR'
+});

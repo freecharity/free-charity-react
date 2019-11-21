@@ -6,7 +6,6 @@ import {toggleDonate} from '../../store/actions';
 
 export default function DonationResult() {
     const {closed, success} = useSelector(state => state.donate);
-    console.log({closed, success});
     const dispatch = useDispatch();
 
     const closeWindow = () => {
