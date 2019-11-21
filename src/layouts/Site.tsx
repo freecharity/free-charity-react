@@ -12,30 +12,25 @@ import EditQuestion from 'components/questions/editQuestion';
 import DeleteQuestion from 'components/questions/deleteQuestion';
 import ListQuestions from 'components/questions/listQuestions';
 import Leaderboard from 'components/leaderboard/leaderboard';
-import ListCategories from "../components/categories/listCategories";
-import CreateCategory from "../components/categories/createCategory";
-import EditCategory from "../components/categories/editCategory";
-import DeleteCategory from "../components/categories/deleteCategory";
-import SelectAvatar from "../components/categories/selectAvatar";
-import Home from "../components/home/home";
-import Donate from "../components/donate/donate";
-import SelectCategory from "../components/categories/selectCategory";
-import UserProfile from "../components/user/userProfile";
-import UserProfileEdit from "../components/user/userProfileEdit";
-import DonationSuccessful from "../components/donate/donationResult";
-import ListAnswers from "../components/answers/listAnswers";
-import Answer from "../components/answers/answerInterface";
-import DeleteAnswers from "../components/answers/deleteAnswers";
+import ListCategories from '../components/categories/listCategories';
+import CreateCategory from '../components/categories/createCategory';
+import EditCategory from '../components/categories/editCategory';
+import DeleteCategory from '../components/categories/deleteCategory';
+import SelectAvatar from '../components/categories/selectAvatar';
+import Home from '../components/home/home';
+import Donate from '../components/donate/donate';
+import SelectCategory from '../components/categories/selectCategory';
+import UserProfile from '../components/user/userProfile';
+import UserProfileEdit from '../components/user/userProfileEdit';
+import DonationResult from '../components/donate/donationResult';
+import ListAnswers from '../components/answers/listAnswers';
+import Answer from '../components/answers/answerInterface';
+import DeleteAnswers from '../components/answers/deleteAnswers';
 
 export default function Site() {
-    const [sidebarClosed, setSidebarClosed] = useState(true);
     const [selectAvatar, setSelectAvatar] = useState(true);
     const [selectedAvatar, setSelectedAvatar] = useState(-1);
     const [category, setCategory] = useState("data structures");
-    const [donationResult, setDonationResult] = useState({
-        open: false,
-        successful: false
-    });
 
     // TODO replace <any> with something typesafe
     const [deleteAnswers, setDeleteAnswers] = useState<any>({
@@ -43,16 +38,8 @@ export default function Site() {
         answers: []
     });
 
-    const handleToggleSidebar = () => {
-        setSidebarClosed(!sidebarClosed);
-    };
-
     const handleToggleAvatar = () => {
         setSelectAvatar(!selectAvatar);
-    };
-
-    const handleDonation = (open: boolean, successful: boolean) => {
-        setDonationResult({open: open, successful: successful});
     };
 
     const handleDeleteAnswers = (open: boolean, answers: Answer[]) => {
@@ -75,29 +62,24 @@ export default function Site() {
                 :
                 <SelectAvatar toggleAvatar={handleToggleAvatar} selectAvatar={handleSelectedAvatar}/>
             }
-            {donationResult.open ?
-                <DonationSuccessful toggleDonation={handleDonation} successful={donationResult.successful}/>
-                :
-                ""
-            }
+            <DonationResult/>
             {deleteAnswers.open ?
                 <DeleteAnswers toggleDeleteAnswers={handleDeleteAnswers} answers={deleteAnswers.answers}/>
                 :
                 ""
             }
             <div className="app-sidebar">
-                <Sidebar closed={sidebarClosed} toggleSidebar={handleToggleSidebar}/>
+                <Sidebar/>
             </div>
             <div className="app-navbar">
-                <Navbar toggleSidebar={handleToggleSidebar}/>
+                <Navbar/>
             </div>
             <div className="app-content">
                 <div className="app-container">
                     <Switch>
                         <Route path="/home" component={Home}/>
                         <Route path="/game" component={Quiz}/>
-                        <Route path="/donate"
-                               component={() => <Donate toggleDonation={handleDonation}/>}
+                        <Route path="/donate" component={Donate}/>
                         />
                         <Route path="/category"
                                component={() => <SelectCategory selectCategory={handleSelectCategory}/>}

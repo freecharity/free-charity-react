@@ -1,53 +1,57 @@
 import React from 'react';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheckCircle, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+import {useDispatch, useSelector} from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import {toggleDonate} from '../../store/actions';
 
-interface DonationResult {
-    successful: boolean;
-    toggleDonation: any;
-}
-
-export default function DonationSuccessful(props: DonationResult) {
+export default function DonationResult() {
+    const {closed, success} = useSelector(state => state.donate);
+    console.log({closed, success});
+    const dispatch = useDispatch();
 
     const closeWindow = () => {
-        props.toggleDonation(false, false);
+        dispatch(toggleDonate(true, success));
     };
 
     const stopPropagation = (e) => {
         e.stopPropagation();
     };
 
-    return <div className="donation-result_container" onClick={closeWindow}>
-        <div className="donation-result_inner" onClick={stopPropagation}>
-            <h1 className='text-center'>
-                {props.successful ?
-                    "Thank You!"
+    if (!closed) {
+        return <div className="donation-result_container" onClick={closeWindow}>
+            <div className="donation-result_inner" onClick={stopPropagation}>
+                <h1 className='text-center'>
+                    {success ?
+                        'Thank You!'
+                        :
+                        'Oh no!'
+                    }
+                </h1>
+                {success ?
+                    <div className="icon successful">
+                        <FontAwesomeIcon icon={faCheckCircle}/>
+                    </div>
                     :
-                    "Oh no!"
+                    <div className="icon unsuccessful">
+                        <FontAwesomeIcon icon={faTimesCircle}/>
+                    </div>
                 }
-            </h1>
-            {props.successful ?
-                <div className="icon successful">
-                    <FontAwesomeIcon icon={faCheckCircle}/>
-                </div>
-                :
-                <div className="icon unsuccessful">
-                    <FontAwesomeIcon icon={faTimesCircle}/>
-                </div>
-            }
-            <p>
-                {props.successful ?
-                    "Your donation has been received and is greatly appreciated!"
+                <p>
+                    {success ?
+                        'Your donation has been received and is greatly appreciated!'
+                        :
+                        'There was an issue when processing your payment'
+                    }
+                </p>
+                {success ?
+
+                    <button onClick={closeWindow}>Close</button>
                     :
-                    "There was an issue when processing your payment"
-                }
-            </p>
-            {props.successful ?
 
-                <button onClick={closeWindow}>Close</button>
-                :
-
-                <button onClick={closeWindow}>Try again</button>}
-        </div>
-    </div>
+                    <button onClick={closeWindow}>Try again</button>}
+            </div>
+        </div>;
+    } else {
+        return <div/>;
+    }
 }

@@ -1,14 +1,13 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
-import Donation from "./donationInterface";
+import {useDispatch} from 'react-redux';
+import Donation from './donationInterface';
+import Amount from './amountInterface';
 import jsonFile from 'data/donation_data.json';
-import Amount from "./amountInterface";
+import {toggleDonate} from '../../store/actions';
 
-interface Donate {
-    toggleDonation: any;
-}
-
-export default function Donate(props: Donate) {
+export default function Donate() {
+    const dispatch = useDispatch();
 
     const amounts = jsonFile;
     const [selectedAmount, setSelectedAmount] = useState(amounts[0]);
@@ -46,7 +45,7 @@ export default function Donate(props: Donate) {
         // TODO Add submit implementation
         console.log('Submitting donation: ');
         console.log(donation);
-        props.toggleDonation(true, true);
+        dispatch(toggleDonate(false, true));
     };
 
     return (
