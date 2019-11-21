@@ -2,7 +2,7 @@ import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {openAvatar} from 'store/actions';
-import UserProfile from 'assets/scss/components/user/userProfileInterface';
+import UserProfile from 'components/user/userProfileInterface';
 import jsonFile from 'data/userProfile_data.json';
 
 export default function UserProfileEdit() {
