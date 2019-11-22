@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader/root';
+import axios from 'axios';
 
 import SelectAvatar from './categories/selectAvatar';
 import DonationResult from './donate/donationResult';
@@ -28,9 +30,34 @@ import ListAnswers from './answers/listAnswers';
 import Footer from './footer/footer';
 
 import 'assets/scss/site.scss';
+import {UserSession} from '../models/session';
+import {loginUser} from '../store/actions';
+import {User} from '../models/user';
 
-const App = () => (
-    <BrowserRouter>
+const App = () => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.auth.user);
+    useEffect(() => {
+        validateSessionId();
+    }, []);
+
+    const validateSessionId = () => {
+        console.log('Validating session id');
+        const session = sessionStorage.getItem('userSession');
+        if (session != undefined) {
+            const userSession: UserSession = JSON.parse(session);
+            if (userSession != undefined) {
+                axios.post('http://localhost:3000/auth/validate', userSession).then((res) => {
+                    const user: User = res.data.user;
+                    dispatch(loginUser(user));
+                }).catch((err) => {
+                    sessionStorage.removeItem('userSession');
+                });
+            }
+        }
+    };
+
+    return (<BrowserRouter>
         <div className="site">
             <SelectAvatar/>
             <DonationResult/>
@@ -70,7 +97,7 @@ const App = () => (
                 <Footer/>
             </div>
         </div>
-    </BrowserRouter>
-);
+    </BrowserRouter>)
+};
 
 export default hot(App);

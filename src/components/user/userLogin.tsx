@@ -4,6 +4,7 @@ import axios from 'axios';
 import {initialState, User} from 'models/user';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import {UserSession} from '../../models/session';
 
 export default function UserLogin() {
     const [user, setUser] = useState<User>(initialState);
@@ -12,7 +13,11 @@ export default function UserLogin() {
     const postLogin = () => {
         console.log(user);
         axios.post(endpoint + '/login', user).then((res) => {
-            sessionStorage.setItem('sessionId', res.data.sessionId);
+            const userSession: UserSession = {
+                username: user.username,
+                sessionId: res.data.sessionId
+            };
+            sessionStorage.setItem('userSession', JSON.stringify(userSession));
         }).catch((err) => {
             alert(err);
         });

@@ -4,7 +4,6 @@ import {openDeleteAnswers} from '../../store/actions';
 
 export default function DeleteAnswers() {
     const {open, answers} = useSelector(state => state.deleteAnswers);
-    console.log({open, answers});
     const dispatch = useDispatch();
 
     const closeWindow = () => {

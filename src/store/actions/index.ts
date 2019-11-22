@@ -1,3 +1,5 @@
+import {User} from '../../models/user';
+
 export const toggleSidebar = closed => ({
     type: closed ? 'OPEN_SIDEBAR' : 'CLOSE_SIDEBAR'
 });
@@ -19,4 +21,13 @@ export const openDeleteAnswers = (open, answers) => ({
 export const setCategory = (name) => ({
     type: 'SET_CATEGORY',
     name: name
+});
+
+export const loginUser = (user: User) => ({
+    type: 'LOGIN_USER',
+    user: user
+});
+
+export const logoutUser = () => ({
+    type: 'LOGOUT_USER'
 });
