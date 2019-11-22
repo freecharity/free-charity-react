@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader/root';
 import axios from 'axios';
@@ -29,20 +29,20 @@ import ListCategories from './categories/listCategories';
 import ListAnswers from './answers/listAnswers';
 import Footer from './footer/footer';
 
+import {UserSession} from 'models/session';
+import {loginUser, logoutUser} from 'store/actions';
+import {User} from 'models/user';
+
 import 'assets/scss/site.scss';
-import {UserSession} from '../models/session';
-import {loginUser} from '../store/actions';
-import {User} from '../models/user';
 
 const App = () => {
     const dispatch = useDispatch();
-    const user = useSelector(state => state.auth.user);
+
     useEffect(() => {
         validateSessionId();
     }, []);
 
     const validateSessionId = () => {
-        console.log('Validating session id');
         const session = sessionStorage.getItem('userSession');
         if (session != undefined) {
             const userSession: UserSession = JSON.parse(session);
@@ -52,6 +52,7 @@ const App = () => {
                     dispatch(loginUser(user));
                 }).catch((err) => {
                     sessionStorage.removeItem('userSession');
+                    dispatch(logoutUser);
                 });
             }
         }

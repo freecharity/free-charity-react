@@ -10,17 +10,19 @@ div.user-profile_inner {
   div.buttons {
     margin-top: 5rem;
 
-    a {
-      display: block;
-    }
+    button {
 
-    a:first-child {
-      @include large-link;
-      margin-bottom: 1rem;
-    }
+      &.orange {
+        @include large-button;
+      }
 
-    a:last-child {
-      @include large-link-gray;
+      &.gray {
+        @include large-button-gray;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
     }
   }
 }
