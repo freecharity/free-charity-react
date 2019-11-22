@@ -2,8 +2,8 @@ import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {useHistory} from 'react-router';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import auth from 'util/auth';
 import {initialState, User} from 'models/user';
-import {UserSession} from 'models/session';
 
 export default function Login() {
     const history = useHistory();
@@ -13,12 +13,11 @@ export default function Login() {
     const postLogin = () => {
         if (user.password === (user).confirmPassword) {
             axios.post(endpoint + '/register', user).then((res) => {
-                const userSession: UserSession = {
-                    username: user.username,
-                    sessionId: res.data.sessionId
-                };
-                sessionStorage.setItem('userSession', JSON.stringify(userSession));
-                history.push('/user/profile');
+                auth.login(user, res.data.sessionId).then((authenticated) => {
+                    if (authenticated) {
+                        history.push('/user/profile');
+                    }
+                });
             }).catch((err) => {
                 alert(err);
             });

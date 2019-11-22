@@ -1,10 +1,8 @@
 import React from 'react';
 import {useHistory} from 'react-router';
-import {useDispatch} from 'react-redux';
-import {logoutUser} from '../../store/actions';
+import auth from 'util/auth';
 
 export default function UserProfile() {
-    const dispatch = useDispatch();
     const history = useHistory();
 
     const navigate = (url: string) => {
@@ -12,9 +10,11 @@ export default function UserProfile() {
     };
 
     const logout = () => {
-        dispatch(logoutUser());
-        navigate('/user/login');
-        sessionStorage.removeItem('userSession');
+        auth.logout().then((authenticated) => {
+            if (!authenticated) {
+                navigate('/user/login');
+            }
+        });
     };
 
     return (

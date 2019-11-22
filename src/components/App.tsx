@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader/root';
-import axios from 'axios';
 
 import SelectAvatar from './categories/selectAvatar';
 import DonationResult from './donate/donationResult';
@@ -29,37 +27,21 @@ import ListCategories from './categories/listCategories';
 import ListAnswers from './answers/listAnswers';
 import Footer from './footer/footer';
 
-import {UserSession} from 'models/session';
-import {loginUser, logoutUser} from 'store/actions';
-import {User} from 'models/user';
+import auth from 'util/auth';
+import {ProtectedRoute} from 'util/protectedRoute';
 
 import 'assets/scss/site.scss';
 
 const App = () => {
-    const dispatch = useDispatch();
-
+    const [complete, setComplete] = useState(false);
     useEffect(() => {
-        validateSessionId();
+        auth.validateSession().then((complete) => {
+            setComplete(complete);
+        });
     }, []);
 
-    const validateSessionId = () => {
-        const session = sessionStorage.getItem('userSession');
-        if (session != undefined) {
-            const userSession: UserSession = JSON.parse(session);
-            if (userSession != undefined) {
-                axios.post('http://localhost:3000/auth/validate', userSession).then((res) => {
-                    const user: User = res.data.user;
-                    dispatch(loginUser(user));
-                }).catch((err) => {
-                    sessionStorage.removeItem('userSession');
-                    dispatch(logoutUser);
-                });
-            }
-        }
-    };
-
     return (<BrowserRouter>
-        <div className="site">
+        {complete ? <div className="site">
             <SelectAvatar/>
             <DonationResult/>
             <DeleteAnswers/>
@@ -77,28 +59,28 @@ const App = () => {
                         <Route path="/donate" component={Donate}/>
                         <Route path="/category" component={SelectCategory}/>
                         <Route path="/leaderboard" component={Leaderboard}/>
-                        <Route path="/user/profile/edit" component={UserProfileEdit}/>
-                        <Route path="/user/profile" component={UserProfile}/>
-                        <Route path="/user/login" component={UserLogin}/>
-                        <Route path="/user/register" component={Register}/>
-                        <Route path="/questions/create" component={CreateQuestion}/>
-                        <Route path="/questions/edit/:questionId" component={EditQuestion}/>
-                        <Route path="/questions/delete/:questionId" component={DeleteQuestion}/>
-                        <Route path="/questions" component={ListQuestions}/>
-                        <Route path="/categories/create" component={CreateCategory}/>
-                        <Route path="/categories/edit/:categoryId" component={EditCategory}/>
-                        <Route path="/categories/delete/:categoryId" component={DeleteCategory}/>
-                        <Route path="/categories" component={ListCategories}/>
-                        <Route path='/answers' component={ListAnswers}/>
-                        <Route path="*" component={Home}/>
+                        <ProtectedRoute path="/user/profile/edit" component={UserProfileEdit} level={1}/>
+                        <ProtectedRoute path="/user/profile" component={UserProfile} level={1}/>
+                        <ProtectedRoute path="/user/login" component={UserLogin} level={0}/>
+                        <ProtectedRoute path="/user/register" component={Register} level={0}/>
+                        <ProtectedRoute path="/questions/create" component={CreateQuestion} level={2}/>
+                        <ProtectedRoute path="/questions/edit/:questionId" component={EditQuestion} level={2}/>
+                        <ProtectedRoute path="/questions/delete/:questionId" component={DeleteQuestion} level={2}/>
+                        <ProtectedRoute path="/questions" component={ListQuestions} level={2}/>
+                        <ProtectedRoute path="/categories/create" component={CreateCategory} level={2}/>
+                        <ProtectedRoute path="/categories/edit/:categoryId" component={EditCategory} level={2}/>
+                        <ProtectedRoute path="/categories/delete/:categoryId" component={DeleteCategory} level={2}/>
+                        <ProtectedRoute path="/categories" component={ListCategories} level={2}/>
+                        <ProtectedRoute path='/answers' component={ListAnswers} level={2}/>
+                        <Redirect to={'/home'}/>
                     </Switch>
                 </div>
             </div>
             <div className="app-footer">
                 <Footer/>
             </div>
-        </div>
-    </BrowserRouter>)
+        </div> : ''}
+    </BrowserRouter>);
 };
 
 export default hot(App);

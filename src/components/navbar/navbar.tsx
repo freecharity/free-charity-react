@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import auth from 'util/auth';
+import {useDispatch} from 'react-redux';
 import {toggleSidebar} from 'store/actions';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faBars, faUser} from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {
-    const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch();
 
     return (
@@ -15,7 +15,7 @@ export default function Navbar() {
                 <FontAwesomeIcon icon={faBars}/>
             </div>
             <Link className="brand" to={'/home'}>Free Charity</Link>
-            {user === undefined ?
+            {auth.isAuthenticated() ?
                 <Link className="user" to={'/user/login'}>
                     <div className="user_icon">
                         <FontAwesomeIcon icon={faUser}/>

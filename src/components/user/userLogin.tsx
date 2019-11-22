@@ -1,29 +1,24 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
-import {useHistory} from 'react-router';
-import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {initialState, User} from 'models/user';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
-import {UserSession} from '../../models/session';
-import {loginUser} from '../../store/actions';
+import {useHistory} from 'react-router';
+import Auth from 'util/auth';
 
 export default function UserLogin() {
-    const history = useHistory();
-    const dispatch = useDispatch();
     const [user, setUser] = useState<User>(initialState);
     const endpoint = 'http://localhost:3000/auth';
+    const history = useHistory();
 
     const postLogin = () => {
         axios.post(endpoint + '/login', user).then((res) => {
-            const userSession: UserSession = {
-                username: user.username,
-                sessionId: res.data.sessionId
-            };
-            dispatch(loginUser(user));
-            sessionStorage.setItem('userSession', JSON.stringify(userSession));
-            history.push('/user/profile');
+            Auth.login(user, res.data.sessionId).then((authenticated) => {
+                if (authenticated) {
+                    history.push('/user/profile');
+                }
+            });
         }).catch((err) => {
             alert(err);
         });
