@@ -1,23 +1,29 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
+import {useHistory} from 'react-router';
+import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {initialState, User} from 'models/user';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {UserSession} from '../../models/session';
+import {loginUser} from '../../store/actions';
 
 export default function UserLogin() {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [user, setUser] = useState<User>(initialState);
     const endpoint = 'http://localhost:3000/auth';
 
     const postLogin = () => {
-        console.log(user);
         axios.post(endpoint + '/login', user).then((res) => {
             const userSession: UserSession = {
                 username: user.username,
                 sessionId: res.data.sessionId
             };
+            dispatch(loginUser(user));
             sessionStorage.setItem('userSession', JSON.stringify(userSession));
+            history.push('/user/profile');
         }).catch((err) => {
             alert(err);
         });
@@ -47,7 +53,7 @@ export default function UserLogin() {
                 <p>Track your progress, win badges and share with your friends</p>
                 <h2>Sign Up</h2>
                 <Link to={'/user/register'}>
-                    <FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon> Create new
+                    <FontAwesomeIcon icon={faEnvelope}/> Create new
                     account
                 </Link>
                 <form onSubmit={handleSubmit}>
@@ -64,7 +70,7 @@ export default function UserLogin() {
                         <input id="password"
                                name="password"
                                onChange={handleInputChange}
-                               type="text"
+                               type="password"
                                required={true}/>
                     </div>
                     <button>Login</button>

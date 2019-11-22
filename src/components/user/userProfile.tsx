@@ -1,7 +1,22 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {useHistory} from 'react-router';
+import {useDispatch} from 'react-redux';
+import {logoutUser} from '../../store/actions';
 
 export default function UserProfile() {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const navigate = (url: string) => {
+        history.push(url);
+    };
+
+    const logout = () => {
+        dispatch(logoutUser());
+        navigate('/user/login');
+        sessionStorage.removeItem('userSession');
+    };
+
     return (
         <div className="user-profile_container">
             <div className="user-profile_inner">
@@ -14,10 +29,22 @@ export default function UserProfile() {
                 <p>Your best streak was <b>52 correct answers in a row.</b></p>
                 <p>Your best subject is Computer Science.</p>
                 <div className="buttons">
-                    <Link to={'/user/profile/edit'}>Edit profile</Link>
-                    <Link to={'/game'}>Back to game</Link>
+                    <button
+                        className='orange'
+                        onClick={() => navigate('/user/profile/edit')}>
+                        Edit profile
+                    </button>
+                    <button
+                        className='orange'
+                        onClick={() => navigate('/game')}>
+                        Back to game
+                    </button>
+                    <button
+                        className='gray'
+                        onClick={logout}>Log out
+                    </button>
                 </div>
             </div>
         </div>
-    )
+    );
 }
