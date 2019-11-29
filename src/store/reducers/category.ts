@@ -1,5 +1,5 @@
 const initialState = {
-    name: 'calculus'
+    name: 'programming'
 };
 
 const category = (state = initialState, action) => {

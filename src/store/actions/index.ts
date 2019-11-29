@@ -18,6 +18,11 @@ export const openDeleteAnswers = (open, answers) => ({
     answers: answers
 });
 
+export const setAnswersUpdated = (updated) => ({
+    type: 'SET_UPDATED',
+    updated: updated
+});
+
 export const setCategory = (name) => ({
     type: 'SET_CATEGORY',
     name: name

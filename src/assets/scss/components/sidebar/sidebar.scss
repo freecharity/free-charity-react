@@ -51,6 +51,8 @@ div.sidebar_panel {
   margin: 0 0 0 auto;
   padding: 2rem;
   box-sizing: border-box;
+  overflow-y: auto;
+  height: 600px;
 
   div.close {
     cursor: pointer;

@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import {Answer} from 'models/answer';
 import Pagination from '../pagination/pagination';
 import Checkbox from '../checkbox/checkbox';
-import {openDeleteAnswers} from '../../store/actions';
+import {openDeleteAnswers, setAnswersUpdated} from '../../store/actions';
 
 export default function ListAnswers() {
     const dispatch = useDispatch();
@@ -15,10 +15,12 @@ export default function ListAnswers() {
     const [showDeleted, setShowDeleted] = useState(false);
     const [showCorrect, setShowCorrect] = useState(false);
     const endpoint = 'http://localhost:3000/answers';
+    const updated = useSelector(state => state.deleteAnswers.updated);
 
     useEffect(() => {
+        console.log('Getting answers');
         getAnswers();
-    }, [page]);
+    }, [page, updated]);
 
     const getAnswers = () => {
         axios.get(endpoint + `?page=${page}&deleted=${showDeleted}&correct=${showCorrect}`).then((res) => {
@@ -26,6 +28,8 @@ export default function ListAnswers() {
                 const answers: Answer[] = res.data.results;
                 setAnswers(answers);
                 setTotal(res.data.total);
+                setSelectedAnswers([]);
+                dispatch(setAnswersUpdated(false));
             }
         }).catch((err) => {
             alert(err);
@@ -44,7 +48,6 @@ export default function ListAnswers() {
     };
 
     const deleteAnswers = () => {
-        // TODO: fix selectedAnswers not being passed to openDeleteAnswers
         dispatch(openDeleteAnswers(true, selectedAnswers));
     };
 

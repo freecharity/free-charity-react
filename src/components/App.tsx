@@ -25,7 +25,6 @@ import EditCategory from './categories/editCategory';
 import DeleteCategory from './categories/deleteCategory';
 import ListCategories from './categories/listCategories';
 import ListAnswers from './answers/listAnswers';
-import Footer from './footer/footer';
 
 import auth from 'util/auth';
 import {ProtectedRoute} from 'util/protectedRoute';
@@ -75,9 +74,6 @@ const App = () => {
                         <Redirect to={'/home'}/>
                     </Switch>
                 </div>
-            </div>
-            <div className="app-footer">
-                <Footer/>
             </div>
         </div> : ''}
     </BrowserRouter>);

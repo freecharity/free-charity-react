@@ -2,8 +2,7 @@
   overflow-y: scroll;
   position: relative;
   padding-top: 88px;
-  padding-bottom: 56px;
-  height: calc(100vh - 88px - 56px);
+  height: calc(100vh - 88px);
   min-height: calc(100vh);
   background-image: url('/src/assets/img/forest.png');
   background-size: 100% 100%;

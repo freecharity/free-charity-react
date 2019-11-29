@@ -1,13 +1,17 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {openDeleteAnswers} from '../../store/actions';
+import {openDeleteAnswers, setAnswersUpdated} from '../../store/actions';
+import qs from 'qs';
+import axios from 'axios';
 
 export default function DeleteAnswers() {
     const {open, answers} = useSelector(state => state.deleteAnswers);
     const dispatch = useDispatch();
+    const endpoint = 'http://localhost:3000/answers/multiple';
 
     const closeWindow = () => {
         dispatch(openDeleteAnswers(false, []));
+        dispatch(setAnswersUpdated(true));
     };
 
     const stopPropagation = (e) => {
@@ -19,10 +23,19 @@ export default function DeleteAnswers() {
     };
 
     const submitRequestToServer = () => {
-        // TODO add delete query here
-        console.log('Deleted the following answers.ts: ');
-        console.log(answers);
-        closeWindow();
+        const answerIds = answers.map(a => a.answer_id);
+        axios.delete(endpoint, {
+            params: {
+                answerIds
+            },
+            paramsSerializer: params => {
+                return qs.stringify(params);
+            }
+        }).then(() => {
+            closeWindow();
+        }).catch((err) => {
+            console.log(err);
+        });
     };
 
     if (open) {

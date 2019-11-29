@@ -8,12 +8,11 @@ export default function ListCategories() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
-    const [showDeleted, setShowDeleted] = useState(false);
-    const endpoint = `http://localhost:3000/categories?page=${page}&showDeleted=${showDeleted}`;
+    const endpoint = `http://localhost:3000/categories?page=${page}`;
 
     useEffect(() => {
         getCategories();
-    }, [page, showDeleted]);
+    }, [page]);
 
     const getCategories = () => {
         axios(endpoint).then((res) => {
@@ -39,12 +38,6 @@ export default function ListCategories() {
                         <Link to={'/categories/create'}>Create Category</Link>
                     </div>
                 </div>
-                <div className="show_deleted">
-                    <div className={`checkbox ${showDeleted ? 'checked' : ''}`}
-                         onClick={() => setShowDeleted(!showDeleted)}
-                    />
-                    Show Deleted
-                </div>
                 <table>
                     <thead>
                     <tr>
@@ -63,10 +56,7 @@ export default function ListCategories() {
                                 <td>{c.description}</td>
                                 <td>
                                     <Link to={`/categories/edit/${c.category_id}`}>Edit</Link>
-                                    {!c.deleted ?
-                                        <Link to={`/categories/delete/${c.category_id}`}>Delete</Link> :
-                                        <Link className="inactive" to={`#`}>Delete</Link>
-                                    }
+                                    <Link to={`/categories/delete/${c.category_id}`}>Delete</Link>
                                 </td>
                             </tr>
                         );
@@ -76,5 +66,5 @@ export default function ListCategories() {
                 <Pagination results={categories} page={page} setPage={setPage} total={total}/>
             </div>
         </div>
-    )
+    );
 }

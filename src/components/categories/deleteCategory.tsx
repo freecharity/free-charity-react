@@ -1,33 +1,24 @@
 import React, {FormEvent, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {useParams, useHistory} from "react-router";
+import {useHistory, useParams} from 'react-router';
 import axios from 'axios';
-import {Category} from "models/category";
+import {Category, initialState} from 'models/category';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-
-const initialState = {
-    category_id: -1,
-    name: "",
-    group: "",
-    description: "",
-    deleted: 0,
-    image: ""
-};
 
 export default function DeleteCategory() {
     const [processing, setProcessing] = useState(false);
     const [category, setCategory] = useState<Category>(initialState);
-    const endpoint = `http://localhost:3000/categories`;
     const {categoryId} = useParams();
     const history = useHistory();
+    const endpoint = `http://localhost:3000/categories`;
 
     useEffect(() => {
         getCategory();
     }, []);
 
     const getCategory = () => {
-        axios.get(endpoint + `?categoryId=${categoryId}`).then((res) => {
+        axios.get(endpoint + `?id=${categoryId}`).then((res) => {
             if (res.data.results.length > 0) {
                 const category: Category = res.data.results[0];
                 setCategory(category);
@@ -39,7 +30,7 @@ export default function DeleteCategory() {
 
     const deleteCategory = () => {
         setProcessing(true);
-        axios.delete(endpoint + `?categoryId=${categoryId}`).then((res) => {
+        axios.delete(endpoint + `?id=${categoryId}`).then(() => {
             navigateBack();
         }).catch((err) => {
             alert(err);
