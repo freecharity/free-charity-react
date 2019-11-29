@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 import QuizQuestion from './quizQuestion';
 import QuizScore from './quizScore';
+import {shuffleArray} from '../../util/common';
 import {Question} from 'models/question';
 import {Answer} from 'models/answer';
 
@@ -10,8 +11,8 @@ export default function Quiz() {
     const category = useSelector(state => state.category.name);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [score, setScore] = useState<number>(0);
-    const endpoint = `http://localhost:3000`;
     const [username, setUsername] = useState<string>('');
+    const endpoint = `http://localhost:3000`;
 
     useEffect(() => {
         getQuiz();
@@ -21,9 +22,9 @@ export default function Quiz() {
     const getQuiz = () => {
         axios.get(endpoint + `/quiz?categoryName=${category}`).then((res) => {
             const questions: Question[] = res.data;
-            setQuestions(questions);
+            setQuestions(shuffleArray(questions));
         }).catch((err) => {
-            alert(err);
+            console.log(err);
         });
     };
 
@@ -44,9 +45,7 @@ export default function Quiz() {
             setScore(score + 1);
         }
         axios.post<Answer>(endpoint + `/answers/`, answer).then((res) => {
-            // console.log(res);
         }).catch((err) => {
-            // console.log(err);
         });
     };
 
@@ -59,7 +58,7 @@ export default function Quiz() {
 
     return (
         <div className="quiz_container">
-            <div className="quiz_inner">
+            <div className="quiz_inner animated zoomIn">
                 {questions != undefined && questions.length > 0
                     ?
                     <QuizQuestion questions={questions} postAnswer={postAnswer}/>

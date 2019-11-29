@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Question} from "models/question";
-import QuizAnswer from "./quizAnswer";
+import {Question} from 'models/question';
+import QuizAnswers from './quizAnswers';
+import {shuffleArray, sleep} from 'util/common';
 
 interface CurrentQuestionProps {
     questions: Question[];
@@ -10,6 +11,7 @@ interface CurrentQuestionProps {
 export default function QuizQuestion(props: CurrentQuestionProps) {
     const [questions, setQuestions] = useState<Question[]>(props.questions);
     const [answers, setAnswers] = useState<string[]>([]);
+    const [correct, setCorrect] = useState<string>('');
     const [locked, setLocked] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -20,31 +22,17 @@ export default function QuizQuestion(props: CurrentQuestionProps) {
     }, [questions]);
 
     const loadQuestion = () => {
-        setAnswers(shuffleAnswers(compileAnswers(questions[0])));
+        // load the correct quizAnswer
+        setCorrect(questions[0].answer);
+        // load and shuffle the answers
+        setAnswers(shuffleArray(compileAnswers(questions[0])));
+        // allow the user to select a question
         setLocked(false);
     };
 
-    const compileAnswers = (question: Question) => {
-        return [question.answer, question.incorrect_1, question.incorrect_2, question.incorrect_3];
-    };
-
-    const shuffleAnswers = (answers: string[]) => {
-        let j, x, i;
-        for (i = answers.length - 1; i > 0; i--) {
-            j = Math.floor(Math.random() * (i + 1));
-            x = answers[i];
-            answers[i] = answers[j];
-            answers[j] = x;
-        }
-        return answers;
-    };
-
-    const answerIsCorrect = (answer: string) => {
-        return questions[0].answer === answer;
-    };
-
-    const postAnswer = (answer: string) => {
+    const postAnswer = async (answer: string) => {
         props.postAnswer(answer, questions[0]);
+        await sleep(1000);
         selectNextQuestion();
     };
 
@@ -55,26 +43,29 @@ export default function QuizQuestion(props: CurrentQuestionProps) {
         setLocked(false);
     };
 
+    const compileAnswers = (question: Question) => {
+        return [question.answer, question.incorrect_1, question.incorrect_2, question.incorrect_3];
+    };
+
     return (
         <div className="current-question_container">
             <div className="current-question_inner">
                 {questions[0] != undefined ? <div className="question">
-                    <h1 className="text-center">{questions[0].question}</h1>
+                    <h1 className={`text-center animated ${loading ? 'fadeOut' : 'fadeIn'}`}>
+                        {questions[0].question}
+                    </h1>
                     <div className="answers">
-                        {answers.map((a, i) => {
-                            return <QuizAnswer key={i}
-                                               id={i}
-                                               answer={a}
-                                               correct={answerIsCorrect(a)}
-                                               locked={locked}
-                                               loading={loading}
-                                               setLocked={setLocked}
-                                               submitAnswer={postAnswer}
-                            />
-                        })}
+                        <QuizAnswers answers={answers}
+                                     loading={loading}
+                                     setLoading={setLoading}
+                                     locked={locked}
+                                     setLocked={setLocked}
+                                     correctAnswer={correct}
+                                     postAnswer={postAnswer}
+                        />
                     </div>
-                </div> : ''}
+                </div> : 'Loading question...'}
             </div>
         </div>
-    )
+    );
 }

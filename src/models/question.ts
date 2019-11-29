@@ -25,7 +25,7 @@ export const initialState = {
 export const testQuestion: Question = {
     question_id: 1,
     question: "This is a test question?",
-    answer: "The answer",
+    answer: 'The quizAnswer',
     incorrect_1: "Incorrect 1",
     incorrect_2: "Incorrect 2",
     incorrect_3: "Incorrect 3",
@@ -37,7 +37,7 @@ export const testQuestion: Question = {
 export const testQuestion2: Question = {
     question_id: 2,
     question: "This is a second test question?",
-    answer: "The answer part 2",
+    answer: 'The quizAnswer part 2',
     incorrect_1: "Incorrect 1",
     incorrect_2: "Incorrect 2",
     incorrect_3: "Incorrect 3",
