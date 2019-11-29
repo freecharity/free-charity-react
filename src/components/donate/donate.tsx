@@ -50,7 +50,7 @@ export default function Donate() {
 
     return (
         <div className="donate_container">
-            <div className="donate_inner">
+            <div className="donate_inner animated zoomIn">
                 <h1 className='text-center'>Donate</h1>
                 <h3 className='text-center'>Select an amount</h3>
                 <div className="amounts">

@@ -45,7 +45,7 @@ export default function Login() {
 
     return (
         <div className="register_container">
-            <div className="register_inner">
+            <div className="register_inner animated fadeIn">
                 <h1>Create Profile</h1>
                 <p>Track your progress, win badges and share with your friends</p>
                 <form onSubmit={handleSubmit}>

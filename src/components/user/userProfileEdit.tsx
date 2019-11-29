@@ -45,7 +45,7 @@ export default function UserProfileEdit() {
 
     return (
         <div className="user-profile-edit_container">
-            <div className="user-profile-edit_inner">
+            <div className="user-profile-edit_inner animated fadeIn">
                 <div className="avatar" onClick={() => dispatch(openAvatar(true))}>
                     <img src="" alt=""/>
                     <span>Edit</span>

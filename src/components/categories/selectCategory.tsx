@@ -51,7 +51,7 @@ export default function SelectCategory() {
 
     return (
         <div className="select-category_container">
-            <div className="select-category_inner">
+            <div className="select-category_inner animated zoomIn">
                 <h1 className='text-center'>Categories</h1>
                 {groups.map((g, i) => {
                     return <div className="group" key={i}>

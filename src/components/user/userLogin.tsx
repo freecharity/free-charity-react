@@ -43,7 +43,7 @@ export default function UserLogin() {
 
     return (
         <div className="login_container">
-            <div className="login_inner">
+            <div className="login_inner animated fadeIn">
                 <h1>User Profile</h1>
                 <p>Track your progress, win badges and share with your friends</p>
                 <h2>Sign Up</h2>

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {Category} from 'models/category';
-import Pagination from "../pagination/pagination";
+import Pagination from '../pagination/pagination';
 
 export default function ListCategories() {
     const [categories, setCategories] = useState<Category[]>([]);

@@ -8,7 +8,7 @@ const players = ['Jason', 'Peter', 'Dan', 'David', 'Filipe'];
 export default function Leaderboard() {
   return (
     <div className="leaderboard_container">
-      <div className="leaderboard_inner">
+        <div className="leaderboard_inner animated zoomIn">
           <h1 className='text-center'>Leaderboard</h1>
           <h3 className='text-center'>Top Rice Earners</h3>
           <div className="players">

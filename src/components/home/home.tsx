@@ -34,7 +34,7 @@ export default function Home() {
 
     return (
         <div className="home_container">
-            <div className="home_inner">
+            <div className="home_inner animated zoomIn">
                 <div className="leaderboard">
                     <HomeLeaderboard/>
                 </div>

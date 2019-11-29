@@ -37,7 +37,7 @@ export default function UserProfile() {
 
     return (
         <div className="user-profile_container">
-            <div className="user-profile_inner">
+            <div className="user-profile_inner animated fadeIn">
                 <div className="avatar">
                     <img src="" alt=""/>
                 </div>
