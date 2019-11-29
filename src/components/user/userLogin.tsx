@@ -14,7 +14,7 @@ export default function UserLogin() {
 
     const postLogin = () => {
         axios.post(endpoint + '/login', user).then((res) => {
-            Auth.login(user, res.data.sessionId).then((authenticated) => {
+            Auth.login(res.data.user, res.data.user).then((authenticated) => {
                 if (authenticated) {
                     history.push('/user/profile');
                 }

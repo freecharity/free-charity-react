@@ -12,9 +12,10 @@ class Auth {
     };
 
     public login = async (user: User, sessionId: string) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.authenticated = true;
-            this.level = 1;
+            this.level = user.administrator == 1 ? 2 : 1;
+            console.log(user);
             const userSession: UserSession = {
                 username: user.username,
                 sessionId: sessionId
@@ -25,7 +26,7 @@ class Auth {
     };
 
     public logout = async () => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.authenticated = false;
             this.level = 0;
             sessionStorage.removeItem('userSession');
@@ -34,19 +35,19 @@ class Auth {
     };
 
     public validateSession = async () => {
-        return new Promise<boolean>((resolve, reject) => {
+        return new Promise<boolean>((resolve) => {
             const session = sessionStorage.getItem('userSession');
             if (session != undefined) {
                 const userSession: UserSession = JSON.parse(session);
                 if (userSession != undefined) {
                     axios.post('http://localhost:3000/auth/validate', userSession).then((res) => {
                         const user: User = res.data.user;
+                        console.log(user);
                         this.login(user, userSession.sessionId).then(r => {
                         });
                     }).catch(() => {
                         sessionStorage.removeItem('userSession');
-                        this.logout().then(r => {
-                        });
+                        this.logout();
                     }).finally(() => {
                         resolve(true);
                     });

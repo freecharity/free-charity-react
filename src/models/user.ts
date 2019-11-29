@@ -6,6 +6,7 @@ export interface User {
     confirmPassword?: string;
     deleted: string;
     avatar: string;
+    administrator: number;
     date_registered: string;
 }
 
@@ -16,5 +17,6 @@ export const initialState: User = {
     password: '',
     deleted: '',
     avatar: '',
+    administrator: 0,
     date_registered: ''
 };
