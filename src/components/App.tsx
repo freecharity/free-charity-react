@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import {hot} from 'react-hot-loader/root';
 
@@ -26,16 +27,21 @@ import DeleteCategory from './categories/deleteCategory';
 import ListCategories from './categories/listCategories';
 import ListAnswers from './answers/listAnswers';
 
-import auth from 'util/auth';
+import {validateSession} from 'util/auth';
 import {ProtectedRoute} from 'util/protectedRoute';
 
 import 'assets/scss/site.scss';
+import {saveLogin} from '../store/actions/authActions';
+import {Login} from '../models/auth';
 
 const App = () => {
+    const dispatch = useDispatch();
     const [complete, setComplete] = useState(false);
     useEffect(() => {
-        auth.validateSession().then((complete) => {
-            setComplete(complete);
+        validateSession().then((login: Login) => {
+            dispatch(saveLogin(login));
+        }).finally(() => {
+            setComplete(true);
         });
     }, []);
 

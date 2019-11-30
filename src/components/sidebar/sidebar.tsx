@@ -4,10 +4,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleSidebar} from '../../store/actions/';
-import auth from 'util/auth';
 
 export default function Sidebar() {
     const closed = useSelector(state => state.sidebar.closed);
+    const userLevel = useSelector(state => state.auth.userLevel);
     const dispatch = useDispatch();
 
     const closeSidebar = () => {
@@ -71,7 +71,7 @@ export default function Sidebar() {
                                  onClick={closeSidebar}>
                             Leaderboard
                         </NavLink>
-                        {auth.getUserLevel() == 2 ?
+                        {userLevel == 2 ?
                             <div>
                                 <NavLink className="link"
                                          to={'/categories'}

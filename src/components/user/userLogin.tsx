@@ -1,26 +1,36 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
-import {initialState, User} from 'models/user';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {useHistory} from 'react-router';
-import Auth from 'util/auth';
+import {loginUser} from '../../util/auth';
+import {AxiosError} from 'axios';
+import {saveLogin} from '../../store/actions/authActions';
+import {Login} from '../../models/auth';
+
+interface UserLogin {
+    username: string;
+    password: string;
+}
 
 export default function UserLogin() {
-    const [user, setUser] = useState<User>(initialState);
-    const endpoint = 'http://localhost:3000/auth';
+    const dispatch = useDispatch();
+    const [login, setLogin] = useState<UserLogin>({
+        username: '',
+        password: ''
+    });
     const history = useHistory();
 
     const postLogin = () => {
-        axios.post(endpoint + '/login', user).then((res) => {
-            Auth.login(res.data.user, res.data.user).then((authenticated) => {
-                if (authenticated) {
-                    history.push('/user/profile');
-                }
-            });
-        }).catch((err) => {
-            alert(err);
+        loginUser(login.username, login.password).then((login: Login) => {
+            dispatch(saveLogin(login));
+            history.push('/user/profile');
+        }).catch((error: AxiosError) => {
+            const message = error.response ? error.response.data.message : '';
+            if (message != '') {
+                alert(message);
+            }
         });
     };
 
@@ -28,8 +38,8 @@ export default function UserLogin() {
         event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
         event.persist();
-        setUser({
-            ...user,
+        setLogin({
+            ...login,
             [event.target.name]: event.target.value
         });
     };

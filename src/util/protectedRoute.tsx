@@ -1,11 +1,10 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {Redirect, Route} from 'react-router-dom';
-
-import auth from './auth';
 
 export const ProtectedRoute = ({component: Component, level, ...rest}) => {
     const routeLevel = level;
-    const userLevel = auth.getUserLevel();
+    const userLevel = useSelector(state => state.auth.userLevel);
 
     return <Route
         {...rest}

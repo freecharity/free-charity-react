@@ -5,7 +5,7 @@ import {shuffleArray, sleep} from 'util/common';
 
 interface CurrentQuestionProps {
     questions: Question[];
-    postAnswer: any;
+    submitAnswer: any;
 }
 
 export default function QuizQuestion(props: CurrentQuestionProps) {
@@ -30,8 +30,8 @@ export default function QuizQuestion(props: CurrentQuestionProps) {
         setLocked(false);
     };
 
-    const postAnswer = async (answer: string) => {
-        props.postAnswer(answer, questions[0]);
+    const postAnswer = async (selectedAnswer: string) => {
+        props.submitAnswer(questions[0], selectedAnswer);
         await sleep(1000);
         selectNextQuestion();
     };

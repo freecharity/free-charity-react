@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
-import auth from 'util/auth';
+import {logoutUser} from 'util/auth';
 import axios from 'axios';
+import {User} from '../../models/user';
+import {deleteLogin} from '../../store/actions/authActions';
 
 export default function UserProfile() {
     const history = useHistory();
+    const dispatch = useDispatch();
+    const user: User = useSelector(state => state.auth.user);
+    const [correctAnswers, setCorrectAnswers] = useState(0);
     const session: any = sessionStorage.getItem('userSession');
     const username = session ? JSON.parse(session).username : undefined;
-    const [correctAnswers, setCorrectAnswers] = useState(0);
 
     useEffect(() => {
         getCorrectAnswers();
-        console.log(session);
     }, []);
 
     const getCorrectAnswers = () => {
@@ -23,15 +27,10 @@ export default function UserProfile() {
         });
     };
 
-    const navigate = (url: string) => {
-        history.push(url);
-    };
-
-    const logout = () => {
-        auth.logout().then((authenticated) => {
-            if (!authenticated) {
-                navigate('/user/login');
-            }
+    const logout = async () => {
+        logoutUser(user).finally(() => {
+            history.push('/user/login/');
+            dispatch(deleteLogin());
         });
     };
 
@@ -48,12 +47,12 @@ export default function UserProfile() {
                 <div className="buttons">
                     <button
                         className='orange'
-                        onClick={() => navigate('/user/profile/edit')}>
+                        onClick={() => history.push('/user/profile/edit')}>
                         Edit profile
                     </button>
                     <button
                         className='orange'
-                        onClick={() => navigate('/game')}>
+                        onClick={() => history.push('/game')}>
                         Back to game
                     </button>
                     <button

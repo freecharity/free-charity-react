@@ -1,28 +1,49 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {useHistory} from 'react-router';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
-import auth from 'util/auth';
-import {initialState, User} from 'models/user';
+import {registerUser} from '../../util/auth';
+import {saveLogin} from '../../store/actions/authActions';
+import {useDispatch} from 'react-redux';
+import {Login} from '../../models/auth';
+import {AxiosError} from 'axios';
+
+interface RegisterForm {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
 
 export default function Login() {
+    const dispatch = useDispatch();
     const history = useHistory();
-    const [user, setUser] = useState<User>(initialState);
-    const endpoint = 'http://localhost:3000/auth';
+    const [form, setForm] = useState<RegisterForm>({
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
 
-    const postLogin = () => {
-        if (user.password === (user).confirmPassword) {
-            axios.post(endpoint + '/register', user).then((res) => {
-                auth.login(user, res.data.sessionId).then((authenticated) => {
-                    if (authenticated) {
-                        history.push('/user/profile');
+    const postRegister = () => {
+        if (form.password === form.confirmPassword) {
+            registerUser(form.username, form.password, form.email).then((login: Login) => {
+                dispatch(saveLogin(login));
+                history.push('/user/profile');
+            }).catch((error: AxiosError) => {
+                const response = error.response;
+                if (response != null) {
+                    const sqlMessage = response.data.sqlMessage;
+                    if (sqlMessage) {
+                        alert(sqlMessage);
+                    } else {
+                        alert('An error has occurred!');
                     }
-                });
-            }).catch((err) => {
-                alert(err);
+                } else {
+                    alert('An error has occurred!');
+                }
             });
         } else {
-            alert('Password must match!');
+            alert('Passwords do not match!');
         }
     };
 
@@ -30,17 +51,18 @@ export default function Login() {
         event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
         event.persist();
-        setUser({
-            ...user,
+        setForm({
+            ...form,
             [event.target.name]: event.target.value
         });
+        console.log(form);
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         if (event) {
             event.preventDefault();
         }
-        postLogin();
+        postRegister();
     };
 
     return (

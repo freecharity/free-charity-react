@@ -1,72 +1,57 @@
-import {UserSession} from '../models/session';
 import {User} from '../models/user';
-import axios from 'axios';
+import {AxiosError} from 'axios';
+import {Login, Message} from '../models/auth';
+import {login, logout, register, validate} from '../api/auth';
 
-class Auth {
-    private authenticated: boolean;
-    private level: number;
-
-    constructor() {
-        this.authenticated = false;
-        this.level = 0;
-    };
-
-    public login = async (user: User, sessionId: string) => {
-        return new Promise((resolve) => {
-            this.authenticated = true;
-            this.level = user.administrator == 1 ? 2 : 1;
-            console.log(user);
-            const userSession: UserSession = {
-                username: user.username,
-                sessionId: sessionId
-            };
-            sessionStorage.setItem('userSession', JSON.stringify(userSession));
-            resolve(this.authenticated);
+export const loginUser = (username: string, password: string): Promise<Login> => {
+    return new Promise<Login>((resolve, reject) => {
+        login(username, password).then((login: Login) => {
+            resolve(login);
+        }).catch((error: AxiosError) => {
+            reject(error);
         });
-    };
+    });
+};
 
-    public logout = async () => {
-        return new Promise((resolve) => {
-            this.authenticated = false;
-            this.level = 0;
-            sessionStorage.removeItem('userSession');
-            resolve(this.authenticated);
+export const registerUser = (username: string, password: string, email: string): Promise<Login> => {
+    return new Promise<Login>((resolve, reject) => {
+        register(username, password, email).then((user: User) => {
+            login(user.username, user.password).then((login: Login) => {
+                resolve(login);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            });
+        }).catch((error: AxiosError) => {
+            reject(error);
         });
-    };
+    });
+};
 
-    public validateSession = async () => {
-        return new Promise<boolean>((resolve) => {
-            const session = sessionStorage.getItem('userSession');
-            if (session != undefined) {
-                const userSession: UserSession = JSON.parse(session);
-                if (userSession != undefined) {
-                    axios.post('http://localhost:3000/auth/validate', userSession).then((res) => {
-                        const user: User = res.data.user;
-                        console.log(user);
-                        this.login(user, userSession.sessionId).then(r => {
-                        });
-                    }).catch(() => {
-                        sessionStorage.removeItem('userSession');
-                        this.logout();
-                    }).finally(() => {
-                        resolve(true);
-                    });
-                } else {
-                    resolve(true);
-                }
-            } else {
-                resolve(true);
-            }
+export const validateSession = (): Promise<Login> => {
+    return new Promise<Login>((resolve, reject) => {
+        const userSession = localStorage.getItem('userSession');
+        if (userSession != null) {
+            const {username, sessionId} = JSON.parse(userSession);
+            validate(username, sessionId).then((user: User) => {
+                resolve({
+                    user: user,
+                    sessionId: sessionId
+                } as Login);
+            }).catch((error: AxiosError) => {
+                reject(error);
+            });
+        } else {
+            reject({message: 'userSession not saved in localstorage'});
+        }
+    });
+};
+
+export const logoutUser = (user: User): Promise<any> => {
+    return new Promise<any>((resolve, reject) => {
+        logout(user).then((message: Message) => {
+            resolve(message);
+        }).catch((error) => {
+            reject(error);
         });
-    };
-
-    public isAuthenticated = () => {
-        return this.authenticated;
-    };
-
-    public getUserLevel = () => {
-        return this.level;
-    };
-}
-
-export default new Auth();
+    });
+};
