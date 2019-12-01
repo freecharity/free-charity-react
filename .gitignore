@@ -4,3 +4,6 @@ package-lock.json
 .idea/
 
 src/assets/scss/*.css
+src/assets/scss/*.map
+
+/dist
