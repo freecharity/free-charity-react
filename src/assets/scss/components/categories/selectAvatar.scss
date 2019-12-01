@@ -29,6 +29,10 @@ div.select_avatar_inner {
 
       &:hover {
         background-color: $dark-blue-1;
+
+        img {
+          opacity: 0.75;
+        }
       }
     }
   }

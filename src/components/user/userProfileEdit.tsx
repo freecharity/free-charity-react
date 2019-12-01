@@ -1,17 +1,23 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
-import {Link} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {openAvatar} from 'store/actions';
+import {Link, useHistory} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {openSelectAvatar} from 'store/actions/selectAvatarActions';
 import UserProfile from 'components/user/userProfileInterface';
-import jsonFile from 'data/userProfile_data.json';
+import {getAvatar} from '../../util/avatars';
+import {User} from '../../models/user';
+import {putUser} from '../../api/user';
+import {AxiosError} from 'axios';
 
 export default function UserProfileEdit() {
+    const history = useHistory();
     const dispatch = useDispatch();
+    const selectedAvatar = useSelector(state => state.selectAvatar.selectedAvatar);
+    const user: User = useSelector(state => state.auth.user);
 
     const [userProfile, setUserProfile] = useState<UserProfile>({
-        id: jsonFile.id,
-        username: jsonFile.username,
-        email: jsonFile.email,
+        id: user.user_id.toString(),
+        username: user.username,
+        email: user.email,
         password: '',
         confirmPassword: ''
     });
@@ -28,26 +34,27 @@ export default function UserProfileEdit() {
         if (event) {
             event.preventDefault();
         }
-
-        // make sure password === confirmPassword
         if (userProfile.password === userProfile.confirmPassword) {
-            submitUserProfileToServer();
+            user.avatar = selectedAvatar;
+            user.username = userProfile.username;
+            user.email = userProfile.email;
+            user.password = userProfile.password;
+            putUser(user).then((user: User) => {
+                // dispatch(updateUser(user));
+                history.push('/user/profile');
+            }).catch((error: AxiosError) => {
+                console.log(error);
+            });
         } else {
             alert('Passwords do not match!');
         }
-
-    };
-
-    const submitUserProfileToServer = () => {
-        console.log('Submitting user profile to server');
-        console.log(userProfile);
     };
 
     return (
         <div className="user-profile-edit_container">
             <div className="user-profile-edit_inner animated fadeIn">
-                <div className="avatar" onClick={() => dispatch(openAvatar(true))}>
-                    <img src="" alt=""/>
+                <div className="avatar" onClick={() => dispatch(openSelectAvatar())}>
+                    <img src={getAvatar(selectedAvatar)} alt=""/>
                     <span>Edit</span>
                 </div>
                 <form onSubmit={handleFormSubmit}>

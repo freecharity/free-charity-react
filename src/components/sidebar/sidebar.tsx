@@ -4,11 +4,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {toggleSidebar} from '../../store/actions/';
+import {User} from '../../models/user';
+import {getAvatar} from '../../util/avatars';
 
 export default function Sidebar() {
+    const dispatch = useDispatch();
     const closed = useSelector(state => state.sidebar.closed);
     const userLevel = useSelector(state => state.auth.userLevel);
-    const dispatch = useDispatch();
+    const user: User = useSelector(state => state.auth.user);
 
     const closeSidebar = () => {
         dispatch(toggleSidebar(closed));
@@ -29,10 +32,10 @@ export default function Sidebar() {
                              to={'/user/profile'}
                              onClick={closeSidebar}>
                         <div className="avatar">
-                            <img src="" alt=""/>
+                            {user ? <img src={getAvatar(user.avatar)} alt=""/> : <img src='' alt=""/>}
                         </div>
                         <div className="username">
-                            Jason
+                            {user ? user.username : 'Login / Register'}
                         </div>
                     </NavLink>
                     <div className="links">

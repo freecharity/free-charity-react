@@ -1,12 +1,13 @@
 div.leaderboard_inner {
   @include small-panel;
 
-  div.players {
-    div.player {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  table.players {
+    margin: 0 auto;
 
+    tr.player {
+      td {
+        padding: 0.5rem 0;
+      }
       div.avatar {
         margin: 0 1rem;
         height: 60px;

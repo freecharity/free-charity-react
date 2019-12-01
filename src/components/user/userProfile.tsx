@@ -2,30 +2,22 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
 import {logoutUser} from 'util/auth';
-import axios from 'axios';
 import {User} from '../../models/user';
 import {deleteLogin} from '../../store/actions/authActions';
+import {getAnswerCountByUsername} from '../../api/answer';
+import {getAvatar} from '../../util/avatars';
 
 export default function UserProfile() {
+    const [correctAnswers, setCorrectAnswers] = useState(0);
     const history = useHistory();
     const dispatch = useDispatch();
     const user: User = useSelector(state => state.auth.user);
-    const [correctAnswers, setCorrectAnswers] = useState(0);
-    const session: any = sessionStorage.getItem('userSession');
-    const username = session ? JSON.parse(session).username : undefined;
 
     useEffect(() => {
-        getCorrectAnswers();
-    }, []);
-
-    const getCorrectAnswers = () => {
-        axios.get(`http://localhost:3000/answers?page=1&deleted=0&correct=0&username=${username}`).then((response) => {
-            const total = response.data.total;
-            if (total) {
-                setCorrectAnswers(total);
-            }
+        getAnswerCountByUsername(true, user.username).then((count: number) => {
+            setCorrectAnswers(count);
         });
-    };
+    }, []);
 
     const logout = async () => {
         logoutUser(user).finally(() => {
@@ -38,9 +30,9 @@ export default function UserProfile() {
         <div className="user-profile_container">
             <div className="user-profile_inner animated fadeIn">
                 <div className="avatar">
-                    <img src="" alt=""/>
+                    <img src={getAvatar(user.avatar)} alt=""/>
                 </div>
-                <h3 className='text-center'>{username ? username : ''}</h3>
+                <h3 className='text-center'>{user.username}</h3>
                 <p>You have donated <b>{correctAnswers * 10}</b> grains of rice.</p>
                 <p>You have answered <b>{correctAnswers}</b> questions correctly.</p>
                 <p>Your best subject is Computer Science.</p>

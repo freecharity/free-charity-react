@@ -4,6 +4,12 @@ div.user-profile-edit_inner {
   div.avatar {
     @include small-avatar;
     margin: 0 auto;
+
+    &:hover {
+      img {
+        opacity: 0.75;
+      }
+    }
   }
 
   form {

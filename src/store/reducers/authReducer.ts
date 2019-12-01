@@ -5,9 +5,11 @@ const initialState = {
 };
 
 const auth = (state = initialState, action) => {
+    console.log(action.type);
+    console.log(state);
+    console.log(action);
     switch (action.type) {
         case 'SAVE_LOGIN':
-            console.log('SAVE_LOGIN');
             localStorage.setItem('userSession', JSON.stringify({
                 username: action.login.user.username,
                 sessionId: action.login.sessionId
@@ -15,9 +17,10 @@ const auth = (state = initialState, action) => {
             const userLevel = action.login.user.administrator == 1 ? 2 : 1;
             return {user: action.login.user, sessionId: action.login.sessionId, userLevel: userLevel};
         case 'DELETE_LOGIN':
-            console.log('DELETE_USER');
             localStorage.removeItem('userSession');
             return {user: undefined, sessionId: undefined, userLevel: 0};
+        case 'UPDATE_USER':
+            return {user: action.user};
         default:
             return state;
     }

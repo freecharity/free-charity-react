@@ -1,12 +1,11 @@
 import axios, {AxiosError, AxiosResponse} from 'axios';
-import {endpoint} from './__api';
-import {Leaderboard} from '../models/leaderboard';
+import {baseUrl} from './__api';
 import {Donation} from '../models/donation';
 
 export const getCorrectAnswersCount = (correctOnly: boolean): Promise<number> => {
     const correct: number = correctOnly ? 1 : 0;
     return new Promise<number>((resolve, reject) => {
-        axios.get(endpoint + `/answers/count?correct=${correct}`).then((response: AxiosResponse) => {
+        axios.get(baseUrl + `/answers/count?correct=${correct}`).then((response: AxiosResponse) => {
             const count = response.data.answerCount;
             resolve(count);
         }).catch((error: AxiosError) => {
@@ -17,7 +16,7 @@ export const getCorrectAnswersCount = (correctOnly: boolean): Promise<number> =>
 
 export const getUserCount = (): Promise<number> => {
     return new Promise<number>((resolve, reject) => {
-        axios.get(endpoint + '/users/count').then((response: AxiosResponse) => {
+        axios.get(baseUrl + '/users/count').then((response: AxiosResponse) => {
             const count = response.data.userCount;
             resolve(count);
         }).catch((error: AxiosError) => {
@@ -28,7 +27,7 @@ export const getUserCount = (): Promise<number> => {
 
 export const getTotalDonated = (): Promise<number> => {
     return new Promise<number>((resolve, reject) => {
-        axios.get(endpoint + '/donation/total').then((response: AxiosResponse) => {
+        axios.get(baseUrl + '/donation/total').then((response: AxiosResponse) => {
             const total = response.data.totalDonated;
             resolve(total);
         }).catch((error: AxiosError) => {
@@ -40,21 +39,9 @@ export const getTotalDonated = (): Promise<number> => {
 export const getDonations = (): Promise<Donation[]> => {
     return new Promise<Donation[]>((resolve, reject) => {
         const count: number = 3;
-        axios.get(endpoint + `/donation?count=${count}`).then((response: AxiosResponse) => {
+        axios.get(baseUrl + `/donation?count=${count}`).then((response: AxiosResponse) => {
             const donations: Donation[] = response.data;
             resolve(donations);
-        }).catch((error: AxiosError) => {
-            reject(error);
-        });
-    });
-};
-
-export const getLeaderboard = (): Promise<Leaderboard> => {
-    return new Promise<Leaderboard>((resolve, reject) => {
-        const count: number = 3;
-        axios.get(endpoint + `/leaderboard?count=${count}`).then((response: AxiosResponse) => {
-            const leaderboard: Leaderboard = response.data;
-            resolve(leaderboard);
         }).catch((error: AxiosError) => {
             reject(error);
         });

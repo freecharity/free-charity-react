@@ -1,4 +1,12 @@
+div.home-donators_container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 div.home-donators_inner {
+  width: 100%;
   text-align: center;
 
   h1 {
@@ -15,14 +23,11 @@ div.home-donators_inner {
       margin: 0 auto;
       max-width: 122px;
 
-      div.avatar {
+      div.avatar, div.badge {
         margin: 0 auto;
         margin-bottom: 1rem;
         height: 80px;
         width: 80px;
-        background-color: $light-blue-1;
-        border: 1px solid $dark-gray-1;
-        border-radius: 50%;
 
         @media(max-width: $mobile-width) {
           height: 60px;
@@ -33,6 +38,12 @@ div.home-donators_inner {
           height: 100%;
           width: 100%;
         }
+      }
+
+      div.avatar {
+        background-color: $light-blue-1;
+        border: 1px solid $dark-gray-1;
+        border-radius: 50%;
       }
 
       div.place {

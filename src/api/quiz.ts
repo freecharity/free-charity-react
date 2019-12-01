@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {endpoint} from './__api';
+import {baseUrl} from './__api';
 import {Question} from '../models/question';
 import {Answer} from '../models/answer';
 import {User} from '../models/user';
@@ -7,7 +7,7 @@ import {getUserByUsername} from './user';
 
 export const getQuestions = (categoryName: string): Promise<Question[]> => {
     return new Promise<Question[]>((resolve, reject) => {
-        axios.get(endpoint + `/quiz?categoryName=${categoryName}`).then((response) => {
+        axios.get(baseUrl + `/quiz?categoryName=${categoryName}`).then((response) => {
             const questions: Question[] = response.data;
             resolve(questions);
         }).catch((error) => {
@@ -36,7 +36,7 @@ export const postAnswer = (question: Question, selectedAnswer: string, user: Use
             question_id: question.question_id,
             user_id: userId,
         };
-        axios.post(endpoint + `/quiz/`, {
+        axios.post(baseUrl + `/quiz/`, {
             question: question,
             answer: answer
         }).then((response) => {

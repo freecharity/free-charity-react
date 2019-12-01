@@ -1,40 +1,54 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
-const avatar = require('assets/img/avatars/boy.svg');
-
-const players = ['Jason', 'Peter', 'Dan', 'David', 'Filipe'];
+import {getLeaderboard} from '../../api/leaderboard';
+import {Leaderboard} from '../../models/leaderboard';
+import {getAvatar} from 'util/avatars';
 
 export default function Leaderboard() {
-  return (
-    <div className="leaderboard_container">
-        <div className="leaderboard_inner animated zoomIn">
-          <h1 className='text-center'>Leaderboard</h1>
-          <h3 className='text-center'>Top Rice Earners</h3>
-          <div className="players">
-              {players.map((p, i) => {
-                  return <div className="player" key={i}>
-                      <div className="rank">
-                          {i + 1}
-                      </div>
-                      <div className="avatar">
-                          <img src="" alt=""/>
-                      </div>
-                      <div className="details">
-                          <div className="username">
-                              {p}
-                          </div>
-                          <div className="score">
-                              15,089,460
-                          </div>
-                      </div>
-                  </div>
-              })}
-          </div>
-          <Link to='/game'>
-              Back to game
-          </Link>
-      </div>
-    </div>
-  );
+    const [leaderboard, setLeaderboard] = useState<Leaderboard | undefined>(undefined);
+
+    useEffect(() => {
+        getLeaderboard(10).then((leaderboard) => {
+            setLeaderboard(leaderboard);
+        });
+    });
+
+    return (
+        <div className="leaderboard_container">
+            <div className="leaderboard_inner animated zoomIn">
+                <h1 className='text-center'>Leaderboard</h1>
+                <h3 className='text-center'>Top Rice Earners</h3>
+                {leaderboard ?
+                    <table className="players">
+                        {leaderboard.members.map((m, i) => {
+                            return <tr className="player">
+                                <td>
+                                    <div className="rank">
+                                        {i + 1}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="avatar">
+                                        <img src={getAvatar(m.avatar)} alt=""/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="details">
+                                        <div className="username">
+                                            {m.username}
+                                        </div>
+                                        <div className="score">
+                                            {m.score}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>;
+                        })}
+                    </table> : 'Loading leaderboard...'}
+                <Link to='/game'>
+                    Back to game
+                </Link>
+            </div>
+        </div>
+    );
 }

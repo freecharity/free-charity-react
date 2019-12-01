@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import HomeLeaderboard from './homeLeaderboard';
 import HomeDonations from './homeDonations';
 import HomeAbout from './homeAbout';
-import {getCorrectAnswersCount, getDonations, getLeaderboard, getTotalDonated, getUserCount} from '../../api/home';
+import {getCorrectAnswersCount, getDonations, getTotalDonated, getUserCount} from '../../api/home';
+import {getLeaderboard} from '../../api/leaderboard';
 import {Leaderboard} from '../../models/leaderboard';
 import {Donation} from '../../models/donation';
 
@@ -20,7 +21,7 @@ export default function Home() {
         getUserCount().then((count) => {
             setUserCount(count);
         });
-        getLeaderboard().then((leaderboard) => {
+        getLeaderboard(3).then((leaderboard) => {
             setLeaderboard(leaderboard);
         });
         getDonations().then((donations: Donation[]) => {
