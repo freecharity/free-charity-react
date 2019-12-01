@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import HomeLeaderboard from './homeLeaderboard';
 import HomeDonations from './homeDonations';
-import HomeAbout from './homeAbout';
 import {getCorrectAnswersCount, getDonations, getTotalDonated, getUserCount} from '../../api/home';
 import {getLeaderboard} from '../../api/leaderboard';
 import {Leaderboard} from '../../models/leaderboard';
@@ -65,9 +64,9 @@ export default function Home() {
                     <h1>{userCount}</h1>
                     <p>users signed up</p>
                 </div>
-                <div className="about">
-                    <HomeAbout/>
-                </div>
+                {/*<div className="about">*/}
+                {/*    <HomeAbout/>*/}
+                {/*</div>*/}
             </div>
         </div>
     );

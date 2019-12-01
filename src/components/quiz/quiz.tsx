@@ -29,13 +29,13 @@ export default function Quiz() {
         <div className="quiz_container">
             {questions != undefined && questions.length > 0
                 ?
-                <div className="quiz_inner animated zoomIn">
+                <div className="quiz_inner animated fadeInDown">
                     <QuizQuestion questions={questions} submitAnswer={submitAnswer}/>
                     <QuizScore score={score} category={category}/>
                 </div>
                 :
-                <div className="quiz_inner">
-                    <h1>Loading your gaming now...</h1>
+                <div className="quiz_inner animated fadeIn">
+                    Loading Quiz...
                 </div>}
         </div>
     );

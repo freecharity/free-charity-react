@@ -50,10 +50,12 @@ export default function QuizQuestion(props: CurrentQuestionProps) {
     return (
         <div className="current-question_container">
             <div className="current-question_inner">
-                {questions[0] != undefined ? <div className="question">
-                    <h1 className={`text-center animated ${loading ? 'fadeOut' : 'fadeIn'}`}>
-                        {questions[0].question}
-                    </h1>
+                {questions[0] != undefined ? <div className="question-answer">
+                    <div className="question">
+                        <h2 className={`text-center animated ${loading ? 'fadeOut' : 'fadeIn'}`}>
+                            {questions[0].question}
+                        </h2>
+                    </div>
                     <div className="answers">
                         <QuizAnswers answers={answers}
                                      loading={loading}
