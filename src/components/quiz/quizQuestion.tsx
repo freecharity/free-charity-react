@@ -6,6 +6,8 @@ import {shuffleArray, sleep} from 'util/common';
 interface CurrentQuestionProps {
     questions: Question[];
     submitAnswer: any;
+    loading: boolean;
+    setLoading: any;
 }
 
 export default function QuizQuestion(props: CurrentQuestionProps) {
@@ -13,7 +15,6 @@ export default function QuizQuestion(props: CurrentQuestionProps) {
     const [answers, setAnswers] = useState<string[]>([]);
     const [correct, setCorrect] = useState<string>('');
     const [locked, setLocked] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (questions.length > 0) {
@@ -52,14 +53,14 @@ export default function QuizQuestion(props: CurrentQuestionProps) {
             <div className="current-question_inner">
                 {questions[0] != undefined ? <div className="question-answer">
                     <div className="question">
-                        <h2 className={`text-center animated ${loading ? 'fadeOut' : 'fadeIn'}`}>
+                        <h2 className={`text-center animated ${props.loading ? 'fadeOut' : 'fadeIn'}`}>
                             {questions[0].question}
                         </h2>
                     </div>
                     <div className="answers">
                         <QuizAnswers answers={answers}
-                                     loading={loading}
-                                     setLoading={setLoading}
+                                     loading={props.loading}
+                                     setLoading={props.setLoading}
                                      locked={locked}
                                      setLocked={setLocked}
                                      correctAnswer={correct}

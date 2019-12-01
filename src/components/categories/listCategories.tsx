@@ -1,29 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import {Category} from 'models/category';
 import Pagination from '../pagination/pagination';
+import {getCategories} from '../../api/categories';
 
 export default function ListCategories() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
-    const endpoint = `http://localhost:3000/categories?page=${page}`;
 
     useEffect(() => {
-        getCategories();
-    }, [page]);
-
-    const getCategories = () => {
-        axios(endpoint).then((res) => {
-            console.log(res);
-            const categories: Category[] = res.data.results;
-            setCategories(categories);
-            setTotal(res.data.total);
-        }).catch((error) => {
-            alert(error);
+        getCategories(page).then((categories: any) => {
+            setTotal(categories.total);
+            setCategories(categories.results);
         });
-    };
+    }, [page]);
 
     return (
         <div className="list_categories_container">

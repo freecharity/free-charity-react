@@ -69,3 +69,26 @@ export const getBadge = (badge: string) => {
             return badges[3];
     }
 };
+
+const category_1 = require('assets/img/categories/032-pc.svg');
+const category_2 = require('assets/img/categories/019-tetris.svg');
+const category_3 = require('assets/img/categories/044-stationery.svg');
+
+export const categories = [
+    category_1,
+    category_2,
+    category_3
+];
+
+export const getCategory = (category: string) => {
+    switch (category) {
+        case 'category_1':
+            return categories[0];
+        case 'category_2':
+            return categories[1];
+        case 'category_3':
+            return categories[2];
+        default:
+            return categories[0];
+    }
+};

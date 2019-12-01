@@ -6,13 +6,14 @@ import {Question} from 'models/question';
 import {getQuestions, postAnswer} from '../../api/quiz';
 
 export default function Quiz() {
-    const category = useSelector(state => state.category.name);
+    const category = useSelector(state => state.category);
     const user = useSelector(state => state.auth.user);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [score, setScore] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        getQuestions('Programming').then((questions) => {
+        getQuestions(category.name).then((questions) => {
             setQuestions(questions);
         });
     }, []);
@@ -29,9 +30,14 @@ export default function Quiz() {
         <div className="quiz_container">
             {questions != undefined && questions.length > 0
                 ?
-                <div className="quiz_inner animated fadeInDown">
-                    <QuizQuestion questions={questions} submitAnswer={submitAnswer}/>
-                    <QuizScore score={score} category={category}/>
+                <div className={`quiz_inner animated ${loading ? 'pulse' : ''}`}>
+                    <QuizQuestion questions={questions}
+                                  submitAnswer={submitAnswer}
+                                  loading={loading}
+                                  setLoading={setLoading}/>
+                    <QuizScore score={score}
+                               category={category}
+                               loading={loading}/>
                 </div>
                 :
                 <div className="quiz_inner animated fadeIn">

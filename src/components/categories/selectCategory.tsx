@@ -1,32 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-import axios from 'axios';
 import Group from './groupInterface';
 import {Category} from 'models/category';
 import {setCategory} from '../../store/actions';
+import {getCategories} from '../../api/categories';
+import {getCategory} from '../../util/avatars';
 
 export default function SelectCategory() {
     const dispatch = useDispatch();
     const [groups, setGroups] = useState<Group[]>([]);
-    const endpoint = `http://localhost:3000/categories?page=1`;
     const history = useHistory();
 
     useEffect(() => {
-        getCategories();
+        getCategories(1).then((categories: any) => {
+            getGroups(categories.results);
+        });
     }, []);
 
-    const getCategories = async () => {
-        await axios(endpoint).then((result) => {
-            const categories: Category[] = result.data.results;
-            getGroups(categories);
-        }).catch((error) => {
-            alert(error);
-        });
-    };
-
-    // breaks data into array of groups which contain an array of categories
-    // TODO: Add this portion to the server
     const getGroups = (categories: Category[]) => {
         let groups: Array<Group> = [];
         categories.forEach((c: Category) => {
@@ -62,7 +53,7 @@ export default function SelectCategory() {
                                             key={i + j}
                                             onClick={() => selectCategory(c.name)}>
                                     <div className="image">
-                                        <img src="" alt=""/>
+                                        <img src={getCategory(c.image)} alt=""/>
                                     </div>
                                     <div className="name">
                                         {c.name}
