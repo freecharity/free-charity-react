@@ -7,6 +7,7 @@ import {getQuestions, postAnswer} from '../../api/quiz';
 
 export default function Quiz() {
     const category = useSelector(state => state.category.name);
+    const user = useSelector(state => state.auth.user);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [score, setScore] = useState<number>(0);
 
@@ -17,7 +18,7 @@ export default function Quiz() {
     }, []);
 
     const submitAnswer = (question: Question, selectedAnswer: string) => {
-        postAnswer(question, selectedAnswer).then((answer) => {
+        postAnswer(question, selectedAnswer, user).then((answer) => {
             if (answer.correct === 1) {
                 setScore(score + 1);
             }
@@ -26,13 +27,16 @@ export default function Quiz() {
 
     return (
         <div className="quiz_container">
-            <div className="quiz_inner animated zoomIn">
-                {questions != undefined && questions.length > 0
-                    ?
+            {questions != undefined && questions.length > 0
+                ?
+                <div className="quiz_inner animated zoomIn">
                     <QuizQuestion questions={questions} submitAnswer={submitAnswer}/>
-                    : ''}
-                <QuizScore score={score} category={category}/>
-            </div>
+                    <QuizScore score={score} category={category}/>
+                </div>
+                :
+                <div className="quiz_inner">
+                    <h1>Loading your gaming now...</h1>
+                </div>}
         </div>
     );
 }

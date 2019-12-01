@@ -1,64 +1,63 @@
 import React, {useEffect, useState} from 'react';
 import HomeLeaderboard from './homeLeaderboard';
-import HomeDonators from './homeDonators';
+import HomeDonations from './homeDonations';
 import HomeAbout from './homeAbout';
-import axios from 'axios';
+import {getCorrectAnswersCount, getDonations, getLeaderboard, getTotalDonated, getUserCount} from '../../api/home';
+import {Leaderboard} from '../../models/leaderboard';
+import {Donation} from '../../models/donation';
 
 export default function Home() {
-    const [correctAnswers, setCorrectAnswers] = useState(0);
-    const [donations, setDonations] = useState(0);
+    const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
+    const [leaderboard, setLeaderboard] = useState<Leaderboard | undefined>(undefined);
+    const [donations, setDonations] = useState<Donation[] | undefined>(undefined);
+    const [totalDonated, setTotalDonated] = useState<number>(0);
     const [userCount, setUserCount] = useState(0);
 
     useEffect(() => {
-        getCorrectAnswers();
-        getUserCount();
+        getCorrectAnswersCount(true).then((count) => {
+            setCorrectAnswerCount(count);
+        });
+        getUserCount().then((count) => {
+            setUserCount(count);
+        });
+        getLeaderboard().then((leaderboard) => {
+            setLeaderboard(leaderboard);
+        });
+        getDonations().then((donations: Donation[]) => {
+            setDonations(donations);
+        });
+        getTotalDonated().then((total: number) => {
+            setTotalDonated(total);
+        });
     }, []);
-
-    const getCorrectAnswers = () => {
-        axios.get('http://localhost:3000/answers?page=1&deleted=0&correct=0').then((response) => {
-            const total = response.data.total;
-            if (total != undefined) {
-                setCorrectAnswers(total);
-            }
-        });
-    };
-
-    const getUserCount = () => {
-        axios.get('http://localhost:3000/users/count').then((response) => {
-            const count = response.data.count;
-            if (count != undefined) {
-                setUserCount(count);
-            }
-        });
-    };
 
     return (
         <div className="home_container">
             <div className="home_inner animated zoomIn">
                 <div className="leaderboard">
-                    <HomeLeaderboard/>
+                    <HomeLeaderboard leaderboard={leaderboard}/>
                 </div>
                 <div className="donators">
-                    <HomeDonators/>
+                    <HomeDonations donations={donations}/>
                 </div>
                 <div className="grains">
-                    <h1>{correctAnswers * 10}</h1>
+                    <h1>{correctAnswerCount * 10}</h1>
                     <p>grains of rice donated</p>
                 </div>
                 <div className="bowls">
-                    <h1>{Math.floor((correctAnswers * 10) / 1000)}</h1>
+                    <h1>{Math.floor((correctAnswerCount * 10) / 1000)}</h1>
                     <p>bowls filled with rice</p>
                 </div>
                 <div className="meals">
-                    <h1>{Math.floor(((correctAnswers * 10) / 1000) / 2)}</h1>
+                    <h1>{Math.floor(((correctAnswerCount * 10) / 1000) / 2)}</h1>
                     <p>meals fed to children</p>
                 </div>
                 <div className="questions">
-                    <h1>{(correctAnswers)}</h1>
+                    <h1>{(correctAnswerCount)}</h1>
                     <p>questions answered</p>
                 </div>
                 <div className="donated">
-                    <h1>${donations}</h1>
+                    <h1>${totalDonated}</h1>
                     <p>donated by FreeCharity</p>
                 </div>
                 <div className="users">
@@ -70,5 +69,5 @@ export default function Home() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
