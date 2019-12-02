@@ -7,8 +7,6 @@ import {Provider} from 'react-redux';
 import App from 'components/App';
 import reducer from './store/reducers/index';
 
-require('../favicon.ico');
-
 const store = createStore(reducer);
 
 const render = () => {
