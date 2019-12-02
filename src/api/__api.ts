@@ -1,1 +1,1 @@
-export const baseUrl = window.location.host + '/api';
+export const baseUrl = 'http://' + window.location.host + '/api';
