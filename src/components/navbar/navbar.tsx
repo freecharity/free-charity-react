@@ -14,7 +14,7 @@ export default function Navbar() {
             <div className="logo" onClick={() => dispatch(toggleSidebar(true))}>
                 <FontAwesomeIcon icon={faBars}/>
             </div>
-            <Link className="brand" to={'/home'}>Free Charity</Link>
+            <Link className="brand" to={'/home'}>🍚 Rice Share 🍚</Link>
             {userLevel > 0 ?
                 <Link className="user" to={'/user/login'}>
                     <div className="user_icon">
