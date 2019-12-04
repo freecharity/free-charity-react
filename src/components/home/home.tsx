@@ -5,6 +5,7 @@ import {getCorrectAnswersCount, getDonations, getTotalDonated, getUserCount} fro
 import {getLeaderboard} from '../../api/leaderboard';
 import {Leaderboard} from '../../models/leaderboard';
 import {Donation} from '../../models/donation';
+import PlayNow from "./homePlayNow";
 
 export default function Home() {
     const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
@@ -64,9 +65,9 @@ export default function Home() {
                     <h1>{userCount}</h1>
                     <p>users signed up</p>
                 </div>
-                {/*<div className="about">*/}
-                {/*    <HomeAbout/>*/}
-                {/*</div>*/}
+                <div className="play-now">
+                    <PlayNow/>
+                </div>
             </div>
         </div>
     );

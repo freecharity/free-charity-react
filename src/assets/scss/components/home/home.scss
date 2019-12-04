@@ -1,5 +1,6 @@
 @import './homeLeaderboard.scss';
 @import './homeDonators.scss';
+@import './homePlayNow.scss';
 
 div.home_inner {
   margin: 0 auto;
@@ -8,14 +9,14 @@ div.home_inner {
 
   gap: 0.75rem;
   display: grid;
-  grid-template-areas: "leaderboard grains about" "leaderboard bowls about" "leaderboard meals about" "donators questions about" "donators donated about" "donators users about";
+  grid-template-areas: "leaderboard grains about" "leaderboard bowls about" "leaderboard meals about" "donators questions about" "donators donated about" "donators users about" "play-now play-now play-now";
 
   @media(max-width: 2000px) {
-    grid-template-areas: "leaderboard grains" "leaderboard bowls" "leaderboard meals" "donators questions" "donators donated" "donators users" "about about";
+    grid-template-areas: "leaderboard grains" "leaderboard bowls" "leaderboard meals" "donators questions" "donators donated" "donators users" "about about" "play-now play-now";
   }
 
   @media(max-width: $mobile-width) {
-    grid-template-areas: "leaderboard" "donators" "grains" "bowls" "meals" "questions" "donated" "users" "about";
+    grid-template-areas: "leaderboard" "donators" "grains" "bowls" "meals" "questions" "donated" "users" "about" "play-now";
     gap: 1rem;
   }
 
@@ -76,5 +77,10 @@ div.home_inner {
   div.about {
     @include panel;
     grid-area: about;
+  }
+
+  div.play-now {
+    @include panel;
+    grid-area: play-now;
   }
 }

@@ -1,0 +1,14 @@
+div.play-now_container {
+
+}
+
+div.play-now_inner {
+  text-align: center;
+
+  button {
+    margin-top: 1rem;
+    @include small-button;
+    max-width: 300px;
+    width: 100%;
+  }
+}
