@@ -18,7 +18,7 @@ export const getQuestions = (categoryName: string): Promise<Question[]> => {
 
 export const postAnswer = (question: Question, selectedAnswer: string, user: User): Promise<Answer> => {
     return new Promise<Answer>(async (resolve, reject) => {
-        let userId = 0; // TODO: make this lookup default account
+        let userId = 0;
         if (user != undefined) {
             userId = user.user_id;
         } else {
