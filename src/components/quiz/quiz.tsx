@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import QuizScore from './quizScore';
 import QuizQuestion from './quizQuestion';
 import {Question} from 'models/question';
@@ -7,6 +8,7 @@ import {getQuestions, postAnswer} from '../../api/quiz';
 import {shuffleArray} from "../../util/common";
 
 export default function Quiz() {
+    const history = useHistory();
     const category = useSelector(state => state.category);
     const user = useSelector(state => state.auth.user);
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -46,7 +48,7 @@ export default function Quiz() {
                 </div>}
             <div className="quiz_inner quiz-select-category">
                 <h2>Select a different category</h2>
-                <button>Select Category</button>
+                <button onClick={() => history.push('/category')}>Select Category</button>
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {sleep} from 'util/common';
 import Answer from './quizAnswer';
 
@@ -13,10 +13,11 @@ interface QuizAnswersProps {
 }
 
 export default function QuizAnswers(props: QuizAnswersProps) {
-
+    const [selected, setSelected] = useState(false);
     const selectAnswer = async (answer: string) => {
         if (!props.locked) {
             props.setLocked(true);
+            setSelected(true);
             await sleep(1000);
             props.postAnswer(answer);
             await loadAnswers();
@@ -26,6 +27,7 @@ export default function QuizAnswers(props: QuizAnswersProps) {
     const loadAnswers = async () => {
         props.setLoading(true);
         await sleep(1000);
+        setSelected(false);
         props.setLoading(false);
         await sleep(1250);
         props.setLocked(false);
@@ -43,6 +45,7 @@ export default function QuizAnswers(props: QuizAnswersProps) {
                     answer={a}
                     locked={props.locked}
                     loading={props.loading}
+                    selected={selected}
                     selectAnswer={selectAnswer}
                     correctAnswer={correctAnswer}
                 />;
