@@ -23,6 +23,7 @@ body {
   // TODO change global font
   font-family: 'Roboto', sans-serif;
   background-color: $light-orange-1;
+  user-select: none;
 }
 
 body * {
