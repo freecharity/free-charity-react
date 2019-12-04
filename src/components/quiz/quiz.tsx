@@ -44,6 +44,10 @@ export default function Quiz() {
                 <div className="quiz_inner animated fadeIn">
                     Loading Quiz...
                 </div>}
+            <div className="quiz_inner quiz-select-category">
+                <h2>Select a different category</h2>
+                <button>Select Category</button>
+            </div>
         </div>
     );
 }

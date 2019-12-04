@@ -4,4 +4,15 @@
 div.quiz_inner {
   @include small-panel;
   overflow: hidden;
+
+  &:not(:first-child) {
+    text-align: center;
+    margin-top: 1rem;
+
+    button {
+      width: 100%;
+      max-width: 300px;
+      @include small-button;
+    }
+  }
 }
