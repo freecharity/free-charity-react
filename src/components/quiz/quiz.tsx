@@ -4,6 +4,7 @@ import QuizScore from './quizScore';
 import QuizQuestion from './quizQuestion';
 import {Question} from 'models/question';
 import {getQuestions, postAnswer} from '../../api/quiz';
+import {shuffleArray} from "../../util/common";
 
 export default function Quiz() {
     const category = useSelector(state => state.category);
@@ -14,7 +15,7 @@ export default function Quiz() {
 
     useEffect(() => {
         getQuestions(category.name).then((questions) => {
-            setQuestions(questions);
+            setQuestions(shuffleArray(questions));
         });
     }, []);
 
