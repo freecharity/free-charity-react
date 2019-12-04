@@ -16,38 +16,41 @@ export default function Leaderboard() {
     return (
         <div className="leaderboard_container">
             <div className="leaderboard_inner animated zoomIn">
-                <h1 className='text-center'>Leaderboard</h1>
-                <h3 className='text-center'>Top Rice Earners</h3>
                 {leaderboard ?
-                    <table className="players">
-                        {leaderboard.members.map((m, i) => {
-                            return <tr className="player">
-                                <td>
-                                    <div className="rank">
-                                        {i + 1}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="avatar">
-                                        <img src={getAvatar(m.avatar)} alt=""/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="details">
-                                        <div className="username">
-                                            {m.username}
+                    <div>
+                        <h1 className='text-center'>Leaderboard</h1>
+                        <h3 className='text-center'>Top Rice Earners</h3>
+                        <table className="players">
+                            {leaderboard.members.map((m, i) => {
+                                return <tr className="player">
+                                    <td>
+                                        <div className="rank">
+                                            {i + 1}
                                         </div>
-                                        <div className="score">
-                                            {m.score}
+                                    </td>
+                                    <td>
+                                        <div className="avatar">
+                                            <img src={getAvatar(m.avatar)} alt=""/>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>;
-                        })}
-                    </table> : 'Loading leaderboard...'}
-                <Link to='/game'>
-                    Back to game
-                </Link>
+                                    </td>
+                                    <td>
+                                        <div className="details">
+                                            <div className="username">
+                                                {m.username}
+                                            </div>
+                                            <div className="score">
+                                                {m.score}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>;
+                            })}
+                        </table>
+                        <Link to='/game'>
+                            Back to game
+                        </Link>
+                    </div>
+                    : 'Loading leaderboard...'}
             </div>
         </div>
     );

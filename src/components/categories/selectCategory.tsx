@@ -43,29 +43,32 @@ export default function SelectCategory() {
     return (
         <div className="select-category_container">
             <div className="select-category_inner animated zoomIn">
-                <h1 className='text-center'>Categories</h1>
-                {groups.map((g, i) => {
-                    return <div className="group" key={i}>
-                        <h3 className='text-center'>{g.group}</h3>
-                        <div className="categories">
-                            {g.categories.map((c, j) => {
-                                return <div className="category"
-                                            key={i + j}
-                                            onClick={() => selectCategory(c.name)}>
-                                    <div className="image">
-                                        <img src={getCategory(c.image)} alt=""/>
-                                    </div>
-                                    <div className="name">
-                                        {c.name}
-                                    </div>
-                                </div>;
-                            })}
-                        </div>
-                    </div>;
-                })}
-                <Link to='/game'>
-                    Back to game
-                </Link>
+                {groups.length != 0 ?
+                    <div>
+                        <h1 className='text-center'>Categories</h1>
+                        {groups.map((g, i) => {
+                            return <div className="group" key={i}>
+                                <h3 className='text-center'>{g.group}</h3>
+                                <div className="categories">
+                                    {g.categories.map((c, j) => {
+                                        return <div className="category"
+                                                    key={i + j}
+                                                    onClick={() => selectCategory(c.name)}>
+                                            <div className="image">
+                                                <img src={getCategory(c.image)} alt=""/>
+                                            </div>
+                                            <div className="name">
+                                                {c.name}
+                                            </div>
+                                        </div>;
+                                    })}
+                                </div>
+                            </div>;
+                        })}
+                        <Link to='/game'>
+                            Back to game
+                        </Link>
+                    </div> : 'Loading categories...'}
             </div>
         </div>
     );
