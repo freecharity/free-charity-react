@@ -1,17 +1,21 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 import {Elements} from 'react-stripe-elements';
-import DonateAmounts from "./donateAmounts";
-
-import DonatePayment from "./donatePayment";
-import Donation from './models/donation';
-import Payment from "./models/payment";
 import Amount from './models/amount';
 
-import jsonFile from 'data/donation_data.json';
+import Payment from "./models/payment";
+import Donation from './models/donation';
+import DonateAmounts from "./donateAmounts";
+import DonatePayment from "./donatePayment";
+
 import {showResult} from "../../store/actions/donateActions";
+import {postPayment} from "../../api/donation";
+
+import jsonFile from 'data/donation_data.json';
 
 export default function DonateForm() {
+    const history = useHistory();
     const dispatch = useDispatch();
     const amounts = jsonFile;
     const [selectedAmount, setSelectedAmount] = useState(amounts[0]);
@@ -26,13 +30,18 @@ export default function DonateForm() {
     };
 
     const submitDonation = async (stripePayment: any) => {
-        if (stripePayment.paymentMethod) {
+        if (stripePayment.token) {
             const payment: Payment = {
-                id: stripePayment.paymentMethod.id,
-                name: stripePayment.paymentMethod.billing_details.name,
+                id: stripePayment.token.id,
+                name: stripePayment.token.card.name,
                 amount: selectedAmount.amountNumber
             };
-            dispatch(showResult(true));
+            postPayment(payment).then((result) => {
+                dispatch(showResult(true));
+                history.push('/home');
+            }).catch(() => {
+                dispatch(showResult(false));
+            });
         } else {
             dispatch(showResult(false));
         }

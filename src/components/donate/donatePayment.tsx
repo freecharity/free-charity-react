@@ -25,22 +25,19 @@ const DonatePayment = (props: DonatePaymentProps) => {
             cardElement = props.elements.getElement('card');
         }
 
-        let payment = undefined;
+        let token = undefined;
         if (props.stripe) {
             // noinspection TypeScriptValidateJSTypes
-            await props.stripe
-                .createPaymentMethod({
-                    type: 'card',
-                    card: cardElement,
-                    billing_details: {name: props.donation.name},
-                })
-                .then((result) => {
-                    payment = result;
-                });
+            await props.stripe.createToken({
+                type: 'card',
+                name: props.donation.name
+            }).then((result) => {
+                token = result;
+            })
         }
 
-        if (payment) {
-            await props.submitDonation(payment);
+        if (token) {
+            await props.submitDonation(token);
         }
         setProcessing(false);
     };
