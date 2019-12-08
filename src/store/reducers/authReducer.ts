@@ -5,9 +5,9 @@ const initialState = {
 };
 
 const auth = (state = initialState, action) => {
-    console.log(action.type);
-    console.log(state);
-    console.log(action);
+    // console.log(action.type);
+    // console.log(state);
+    // console.log(action);
     switch (action.type) {
         case 'SAVE_LOGIN':
             localStorage.setItem('userSession', JSON.stringify({

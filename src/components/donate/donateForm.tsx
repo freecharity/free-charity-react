@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {toggleDonate} from '../../store/actions';
 import {Elements} from 'react-stripe-elements';
 import DonateAmounts from "./donateAmounts";
 
@@ -10,6 +9,7 @@ import Payment from "./models/payment";
 import Amount from './models/amount';
 
 import jsonFile from 'data/donation_data.json';
+import {showResult} from "../../store/actions/donateActions";
 
 export default function DonateForm() {
     const dispatch = useDispatch();
@@ -32,9 +32,9 @@ export default function DonateForm() {
                 name: stripePayment.paymentMethod.billing_details.name,
                 amount: selectedAmount.amountNumber
             };
-            console.log('Submitting payment: ', payment);
+            dispatch(showResult(true));
         } else {
-            dispatch(toggleDonate(false, true));
+            dispatch(showResult(false));
         }
     };
 

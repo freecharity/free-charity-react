@@ -13,7 +13,6 @@ interface DonatePaymentProps {
 }
 
 const DonatePayment = (props: DonatePaymentProps) => {
-    // TODO: Setup processing
     const [processing, setProcessing] = useState(false);
     const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
         setProcessing(true);

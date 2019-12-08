@@ -2,14 +2,14 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheckCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
-import {toggleDonate} from '../../store/actions';
+import {hideResult} from "../../store/actions/donateActions";
 
 export default function DonationResult() {
-    const {closed, success} = useSelector(state => state.donate);
+    const {closed, success} = useSelector(state => state.donateReducer);
     const dispatch = useDispatch();
 
     const closeWindow = () => {
-        dispatch(toggleDonate(true, success));
+        dispatch(hideResult());
     };
 
     const stopPropagation = (e) => {
