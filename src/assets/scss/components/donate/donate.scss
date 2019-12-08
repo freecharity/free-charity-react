@@ -1,6 +1,19 @@
 div.donate_inner {
   @include large-panel;
 
+  // TODO: Refactor
+  .stripe-element {
+    width: 100%;
+    height: 56px;
+    padding-top: 25px;
+    padding-left: 12px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 0px;
+    background-color: white;
+  }
+
   div.amounts {
     display: flex;
     justify-content: center;
@@ -34,7 +47,7 @@ div.donate_inner {
   form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: "d1 d2" "d3 d4" "d5 d5" "d6 d6";
+    grid-template-areas: "d1 d2" "d3 d3" "d4 d4";
     gap: 1rem;
 
     @media(max-width: $mobile-width) {
@@ -56,14 +69,6 @@ div.donate_inner {
 
     div.d4 {
       grid-area: d4;
-    }
-
-    div.d5 {
-      grid-area: d5;
-    }
-
-    div.d6 {
-      grid-area: d6;
     }
 
     div.input-group {
