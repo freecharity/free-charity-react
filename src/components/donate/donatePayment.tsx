@@ -85,9 +85,9 @@ const DonatePayment = (props: DonatePaymentProps) => {
                     </div>
                     <div className="buttons d4">
                         {!processing ?
-                            <Link className={"cancel"} to={"/game"}>Back to game</Link>
+                            <Link className={"cancel"} to={"/home"}>Back to Home</Link>
                             :
-                            <a className={"cancel"}>Back to game</a>}
+                            <a className={"cancel"}>Back to Home</a>}
                         {!processing ?
                             <button>Donate</button>
                             :

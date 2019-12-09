@@ -81,7 +81,7 @@ export default function UserLogin() {
                     <button>Login</button>
                 </form>
                 <div className="back-button">
-                    <Link to={'/game'}>Back to game</Link>
+                    <Link to={'/home'}>Back to Home</Link>
                 </div>
             </div>
         </div>

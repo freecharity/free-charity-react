@@ -65,8 +65,8 @@ export default function SelectCategory() {
                                 </div>
                             </div>;
                         })}
-                        <Link to='/game'>
-                            Back to game
+                        <Link to='/home'>
+                            Back to Home
                         </Link>
                     </div> : 'Loading categories...'}
             </div>

@@ -46,8 +46,8 @@ export default function Leaderboard() {
                                 </tr>;
                             })}
                         </table>
-                        <Link to='/game'>
-                            Back to game
+                        <Link to='/home'>
+                            Back to Home
                         </Link>
                     </div>
                     : 'Loading leaderboard...'}

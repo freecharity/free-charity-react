@@ -44,8 +44,8 @@ export default function UserProfile() {
                     </button>
                     <button
                         className='orange'
-                        onClick={() => history.push('/game')}>
-                        Back to game
+                        onClick={() => history.push('/home')}>
+                        Back to Home
                     </button>
                     <button
                         className='gray'

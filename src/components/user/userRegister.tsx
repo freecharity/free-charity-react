@@ -111,7 +111,7 @@ export default function Login() {
                     Already have an account? <Link to={'/user/login'}>Login</Link>
                 </p>
                 <div className="back-button">
-                    <Link to={'/game'}>Back to game</Link>
+                    <Link to={'/home'}>Back to Home</Link>
                 </div>
             </div>
         </div>
