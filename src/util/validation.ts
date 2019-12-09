@@ -22,3 +22,12 @@ export const validateUsername = (username: string): boolean => {
     alert("User name can only contain letters and numbers!");
     return false;
 };
+
+export const validateNumber = (n: number): boolean => {
+    const num: Number = n;
+    if (num && num > 0) {
+        return true;
+    }
+    alert("Enter a valid number!");
+    return false;
+};
