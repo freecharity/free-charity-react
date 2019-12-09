@@ -6,6 +6,7 @@ import {saveLogin} from '../../store/actions/authActions';
 import {useDispatch} from 'react-redux';
 import {Login} from '../../models/auth';
 import {AxiosError} from 'axios';
+import {validateEmail, validatePasswords, validateUsername} from "../../util/validation";
 
 interface RegisterForm {
     username: string;
@@ -25,16 +26,18 @@ export default function Login() {
     });
 
     const postRegister = () => {
-        if (form.password === form.confirmPassword) {
+        if (validateUsername(form.username) &&
+            validateEmail(form.email) &&
+            validatePasswords(form.password, form.confirmPassword)) {
             registerUser(form.username, form.password, form.email).then((login: Login) => {
                 dispatch(saveLogin(login));
                 history.push('/user/profile');
             }).catch((error: AxiosError) => {
                 const response = error.response;
                 if (response != null) {
-                    const sqlMessage = response.data.sqlMessage;
-                    if (sqlMessage) {
-                        alert(sqlMessage);
+                    const message = response.data.message;
+                    if (message) {
+                        alert(message);
                     } else {
                         alert('An error has occurred!');
                     }
@@ -42,8 +45,6 @@ export default function Login() {
                     alert('An error has occurred!');
                 }
             });
-        } else {
-            alert('Passwords do not match!');
         }
     };
 
