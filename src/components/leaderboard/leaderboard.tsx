@@ -11,7 +11,7 @@ export default function Leaderboard() {
         getLeaderboard(10).then((leaderboard) => {
             setLeaderboard(leaderboard);
         });
-    });
+    }, []);
 
     return (
         <div className="leaderboard_container">
