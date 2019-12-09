@@ -7,6 +7,7 @@ import {getAvatar} from '../../util/avatars';
 import {User} from '../../models/user';
 import {putUser} from '../../api/user';
 import {AxiosError} from 'axios';
+import {updateUser} from "../../store/actions/authActions";
 
 export default function UserProfileEdit() {
     const history = useHistory();
@@ -35,15 +36,16 @@ export default function UserProfileEdit() {
             event.preventDefault();
         }
         if (userProfile.password === userProfile.confirmPassword) {
-            user.avatar = selectedAvatar;
-            user.username = userProfile.username;
-            user.email = userProfile.email;
-            user.password = userProfile.password;
-            putUser(user).then((user: User) => {
-                // dispatch(updateUser(user));
+            const u: User = Object.assign({}, user);
+            u.avatar = selectedAvatar;
+            u.username = userProfile.username;
+            u.email = userProfile.email;
+            u.password = userProfile.password;
+            putUser(u).then((user: User) => {
+                dispatch(updateUser(user));
                 history.push('/user/profile');
             }).catch((error: AxiosError) => {
-                console.log(error);
+                alert('An error occurred when updating profile!');
             });
         } else {
             alert('Passwords do not match!');
